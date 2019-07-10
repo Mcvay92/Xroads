@@ -1,0 +1,36 @@
+.sideBar {
+  background: #f7f9fa;
+
+  width: 240px;
+  min-width: 240px;
+  height: 100%;
+  position: absolute;
+
+  padding-top: 20px;
+  padding-left: 15px;
+}
+
+.pageContent {
+  height: 100%;
+  width: 100%;
+  padding-left: 240px;
+  padding-top: 20px;
+  padding-bottom: 60px;
+  background-color: gainsboro;
+}
+
+.categoryItem {
+  font-weight: 600;
+  color: blue;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.cards-container {
+  width: 85%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 50px;
+}
