@@ -19,6 +19,7 @@
                     email: userEmailAddress,
                     description: req.body.description,
                     stage: req.body.stage,
+                    contact: req.body.contact,
                     start_date: req.body.start_date,
                     logo: req.body.logo,
                     team_name: req.body.team_name,
@@ -62,6 +63,7 @@
                     '_id': userResponse.data._id,
                     'team_name': userResponse.data.team_name,
                     'role': userResponse.data.role,
+                    'contact': userResponse.data.contact,
                     'email': userResponse.data.email,
                     'description': userResponse.data.description,
                     'stage': userResponse.data.stage,
@@ -82,11 +84,11 @@
     userExport.getProfile = async function (req, res) {
         try {
             const userId = req.params.id;
-            console.log(userId, 'userId');
             const selectedFields = {
                 'email': 1,
                 'team_name': 1,
                 'role': 1,
+                'contact': 1,
                 'description': 1,
                 'members': 1,
                 'logo': 1,
@@ -117,6 +119,9 @@
             }
             if (req.body.start_date) {
                 updateFields['start_date'] = req.body.start_date;
+            }
+            if (req.body.contact) {
+                updateFields['contact'] = req.body.contact;
             }
             if (req.body.description) {
                 updateFields['description'] = req.body.description;

@@ -38,6 +38,10 @@ var userSchema = new Schema({
         type: String,
         trim: true
     },
+    contact: {
+        type: String,
+        trim: true
+    },
     logo: {
         type: Number,
         trim: true,
@@ -45,7 +49,7 @@ var userSchema = new Schema({
     },
     members: [{
             name: {type: String},
-            role:  {type: Array},
+            role: {type: Array},
             major: {type: String},
             linkedin: {type: String}
         }],
