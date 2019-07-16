@@ -43,7 +43,7 @@ var userSchema = new Schema({
         trim: true,
         default: 0
     },
-    memebers: [{
+    members: [{
             name: {type: String},
             role:  {type: Array},
             major: {type: String},
