@@ -33,10 +33,6 @@
                 }
                 if (req.body.members) {
                     const memberArray = JSON.parse(req.body.members);
-                    memberArray.map(function (k, v) {
-                        console.log('key', k)
-                        console.log('value', v)
-                    })
                     userData['members'] = JSON.parse(req.body.members)
                 }
                 new User(userData).save(function (error, userResponse) {

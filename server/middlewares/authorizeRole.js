@@ -1,25 +1,27 @@
 const Mongoose = require('mongoose');
 var acl = require('acl');
 acl = new acl(new acl.mongodbBackend(Mongoose.connection.db, 'acl_'));
-console.log(acl, 'acl')
+console.log(Mongoose.connection.db, 'Mongoose.connection.db')
 var roleMiddleware = function (req, res, next) {
-    acl.allow('founder', 'profile', ['view, edit, delete']);
-    next();
-//    if (token) {
-//        jwt.verify(token, config.secret, function (err, decoded) {
-//            if (err) {
-//                res.status(403).send({success: false, message: 'Failed to authenticate access token.'});
-//            } else {
-//                if (decoded.id !== req.params.id) {
-//                    res.status(403).send({success: false, message: 'Failed to authenticate access token.'});
-//                } else {
-//                    req.decoded = decoded;
-//                    next();
-//                }
-//            }
-//        });
-//    } else {
-//        res.status(403).send({success: false, error: 'No access token provided.'});
-//    }
+    acl.allow([
+        {
+            roles: ['founder'],
+            allows: [
+                {
+                    resources: ['/api/getprofile', '/api/editprofile'],
+                    permissions: ['get', 'post', 'put', 'delete'],
+                },
+            ],
+        },
+        {
+            roles: ['co-founder'],
+            allows: [
+                {
+                    resources: ['/api/getprofile'],
+                    permissions: ['get']
+                },
+            ]
+        }
+    ]);
 }
 module.exports = roleMiddleware;
