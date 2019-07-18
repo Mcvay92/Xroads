@@ -7,6 +7,8 @@ const roleMiddleware = require('../middlewares/authorizeRole');
 
 router.post('/signup', userController.signUp);
 router.post('/signin', userController.signIn);
+router.post('/uploadImage',authMiddleware, userController.uploadImage);
+router.post('/deleteImage',authMiddleware, userController.deleteImage);
 router.get('/profile/:id', authMiddleware, roleMiddleware, userController.getProfile);
 router.put('/editprofile/:id', authMiddleware, roleMiddleware, userController.editProfile);
 

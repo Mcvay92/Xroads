@@ -5,13 +5,16 @@ const router = express.Router();
 const Mongoose = require('mongoose');
 const config = require(__dirname + '/config/index');
 const https = require('https');
+const dotenv = require('dotenv');
 var acl = require('acl');
 app.use(express.json({limit: '50mb'}));
+dotenv.config();
+
 
 Mongoose.connect("mongodb://localhost:27017/xroads", {
-    "useNewUrlParser":true,
-    "useFindAndModify":false,
-    "useCreateIndex":true
+    "useNewUrlParser": true,
+    "useFindAndModify": false,
+    "useCreateIndex": true
 }, (error, db) => {
     if (error) {
         throw error;
@@ -21,7 +24,7 @@ Mongoose.connect("mongodb://localhost:27017/xroads", {
 
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use('/uploads', express.static(process.cwd() + '/app/uploads'));
 

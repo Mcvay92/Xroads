@@ -1,12 +1,23 @@
 (function () {
     "use strict";
-    var passwordHash = require('password-hash');
-    var jwt = require('jsonwebtoken');
-    var async = require("async");
-    var startupConfig = require('../config/startup');
-    var config = require('../config/index');
-    var User = require('../models/user.model');
-    var userExport = {};
+    const passwordHash = require('password-hash');
+    const jwt = require('jsonwebtoken');
+    const async = require("async");
+    const aws = require('aws-sdk');
+    const startupConfig = require('../config/startup');
+    const config = require('../config/index');
+    const User = require('../models/user.model');
+    const userExport = {};
+    const  multer = require('multer');
+    const multerS3 = require('multer-s3');
+
+    const s3 = new aws.S3({
+        credentials: {
+            secretAccessKey: process.env.S3_BUCKET_SECRET_ACCESS_KEY,
+            accessKeyId: process.env.S3_BUCKET_ACCESS_KEY_ID,
+            region: process.env.S3_BUCKET_REGION
+        },
+        signatureVersion: 'v4'});
 
     userExport.signUp = async function (req, res) {
         try {
@@ -139,6 +150,84 @@
         } catch (error) {
             res.status(400).send({"status": false, "error": 'catch error'});
         }
+    };
+    userExport.uploadImage = async function (req, res) {
+        const uploadedData = await uploadOnS3(req, res, req.query.type);
+        res.status(200).send({data: uploadedData});
+    };
+    userExport.deleteImage = async function (req, res) {
+        var deleteItems = [];
+        if (req.body.images === null) {
+            res.json({
+                message: 'provide image keys to delete'
+            });
+        }
+        const imageArray = JSON.parse(req.body.images);
+        imageArray.forEach(function (item) {
+            deleteItems.push({Key: item.type+'/'+item.key});
+        });
+
+        var params = {
+            Bucket: process.env.S3_BUCKET_NAME,
+            Delete: {
+                Objects: deleteItems,
+                Quiet: false
+            }
+        };
+
+        s3.deleteObjects(params, function (err, data) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    message: 'somwthing went wrong',
+                    items: data
+                })
+            } else {
+                console.log("Successfully deleted myBucket/myKey", data);
+                res.json({
+                    message: 'images deleted',
+                    items: data
+                });
+            }
+        });
+
+    }
+    function uploadOnS3(req, res, type) {
+        return new Promise((resolve) => {
+            const upload = multer({
+                storage: multerS3({
+                    s3: s3,
+                    bucket: process.env.S3_BUCKET_NAME + '/' + type,
+                    acl: 'public-read',
+                    contentType: multerS3.AUTO_CONTENT_TYPE,
+                    metadata: function (req, file, cb) {
+                        const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
+                        const fileType = (file.mimetype).split('/');
+                        const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
+                        cb(null, {fieldname: file.fieldname, originalname: fullPath});
+                    },
+                    key: function (req, file, cb) {
+                        const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
+                        const fileType = (file.mimetype).split('/');
+                        const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
+                        cb(null, fullPath);
+                    }
+                })
+            }).array("file", 10);
+            upload(req, res, function (err, result) {
+                if (err) {
+                    resolve({error: err, files: null});
+                } else {
+                    let fileArray = [];
+                    if (req.files.length) {
+                        req.files.forEach(function (item) {
+                            fileArray.push(item.key);
+                        });
+                    }
+                    resolve({files: fileArray});
+                }
+            })
+        })
     }
     function isUserEmailExist(email) {
         return new Promise((resolve) => {
@@ -151,6 +240,8 @@
             });
         })
     }
+
+
     function isUserIdExist(userId) {
         return new Promise((resolve) => {
             User.findOne({'_id': userId}, function (error, response) {

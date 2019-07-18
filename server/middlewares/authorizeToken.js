@@ -8,7 +8,8 @@ var authMiddleware = function (req, res, next) {
             if (err) {
                 res.status(403).send({success: false, message: 'Failed to authenticate access token.'});
             } else {
-                if (decoded.id !== req.params.id) {
+                const userId = req.params.id || req.body.id || req.query.id;
+                if (decoded.id !== userId) {
                     res.status(403).send({success: false, message: 'Failed to authenticate access token.'});
                 } else {
                     req.decoded = decoded;

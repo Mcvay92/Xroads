@@ -1,7 +1,7 @@
 const Mongoose = require('mongoose');
 var acl = require('acl');
 acl = new acl(new acl.mongodbBackend(Mongoose.connection.db, 'acl_'));
-console.log(Mongoose.connection.db, 'Mongoose.connection.db')
+//console.log(Mongoose.connection, 'Mongoose.connection.db')
 var roleMiddleware = function (req, res, next) {
     acl.allow([
         {
