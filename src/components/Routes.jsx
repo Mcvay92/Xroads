@@ -7,6 +7,9 @@ import Home from './Home';
 import Calendar from './Calendar';
 import StartupGuide from './StartupGuide/StartupGuide';
 import JobPostingForm from './JobPostingForm';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import Profile from './Profile';
 import HowToStartup from './StartupGuide/HowToStartup.jsx';
 import MentorMatchingForm from './MentorMatchingForm';
 import JobPostDetails from './JobPostDetails';
@@ -18,7 +21,6 @@ import Courses from './Resources/Courses.jsx';
 const JobPostingPage = () => (
     <div>
         <br />
-
         <Button
             id="formbutton"
             variant="contained"
@@ -49,6 +51,9 @@ const Routes = () => (
         <Route exact path="/organizations" component={Organizations} />
         <Route exact path="/incubators" component={Incubators} />
         <Route exact path="/courses" component={Courses} />
+        <Route exact path="/signIn" component={SignIn} />
+        <Route exact path="/signUp" component={SignUp} />
+        <Route exact path="/profile" component={Profile} />
     </div>
 );
 
