@@ -44,7 +44,7 @@
                 }
                 if (req.body.members) {
                     const memberArray = JSON.parse(req.body.members);
-                    userData['members'] = JSON.parse(req.body.members)
+                    userData['members'] = memberArray;
                 }
                 new User(userData).save(function (error, userResponse) {
                     if (error) {
@@ -56,7 +56,7 @@
                 });
             }
         } catch (error) {
-            res.status(400).send(JSON.stringify({"status": false, "error": error}));
+            res.status(400).send(JSON.stringify({"status": false, "error": 'Something Went wrong'}));
         }
     }
     userExport.signIn = async function (req, res) {
