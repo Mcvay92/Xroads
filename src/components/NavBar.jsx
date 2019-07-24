@@ -39,7 +39,7 @@ class NavBar extends React.Component {
         const {isUser, history} = this.props;
         localStorage.removeItem('user');
         localStorage.removeItem('access_token');
-        this.props.history.push('/');
+        this.context.router.history.push('/');
     }
     render() {
         const {classes, isUser} = this.props;
