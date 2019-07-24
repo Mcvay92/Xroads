@@ -39,11 +39,11 @@ class NavBar extends React.Component {
         const {isUser, history} = this.props;
         localStorage.removeItem('user');
         localStorage.removeItem('access_token');
+        this.setState({userSigned: false});
         this.context.router.history.push('/');
     }
     render() {
         const {classes, isUser} = this.props;
-        console.log(isUser, 'isUser')
         const {currentTab, userSigned} = this.state;
         return (
                 <div>

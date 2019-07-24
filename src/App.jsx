@@ -20,6 +20,12 @@ export default class App extends Component {
             isUser: localStorage.getItem('access_token') ? true : false
         };
     }
+    componentDidUpdate() {
+        let isUserValue = localStorage.getItem('access_token') ? true : false
+        if (this.state.isUser !== isUserValue) {
+            this.setState({isUser: isUserValue})
+        }
+    }
     render = () => (
                 <MuiThemeProvider theme={theme}>
                     <div>
