@@ -92,6 +92,6 @@ NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 NavBar.contextTypes = {
-    router: PropTypes.func.isRequired
+//    router: PropTypes.func.isRequired
 };
 export default withStyles(styles)(NavBar);

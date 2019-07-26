@@ -10,10 +10,10 @@ import JobPostingForm from './JobPostingForm';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import Profile from './Profile';
+import AddProfile from './Profile/addProfile';
 import HowToStartup from './StartupGuide/HowToStartup.jsx';
 import MentorMatchingForm from './MentorMatchingForm';
 import JobPostDetails from './JobPostDetails';
-
 import Incubators from './Resources/Incubators.jsx';
 import Organizations from './Resources/Organizations.jsx';
 import Courses from './Resources/Courses.jsx';
@@ -38,7 +38,7 @@ const JobPostingPage = () => (
 );
 
 const Routes = () => (
-    <div>
+    <div className="row mt-10">
         <Route exact path="/" component={Home} />
         <Route exact path="/calendar" component={Calendar} />
         <Route exact path="/postings" component={JobPostingPage} />
@@ -54,6 +54,8 @@ const Routes = () => (
         <Route exact path="/signIn" component={SignIn} />
         <Route exact path="/signUp" component={SignUp} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/editProfile/:id" component={AddProfile} />
+        <Route exact path="/addProfile" component={AddProfile} />
     </div>
 );
 

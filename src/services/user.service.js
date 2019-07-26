@@ -1,8 +1,12 @@
+import config from '../config';
 export const userService = {
     signUp,
     signIn,
+    getAllProfiles,
     getProfile,
-    editProfile
+    editProfile,
+    getAll,
+    logout
 };
 
 function signUp(formData) {
@@ -17,13 +21,13 @@ function signUp(formData) {
             .then(data => {
                 if (data && data.data) {
                     localStorage.setItem('user', JSON.stringify(data.data));
-                    localStorage.setItem('access_token', JSON.stringify(data.access_token));
+                    localStorage.setItem('access_token', data.access_token);
                 }
                 return data;
             });
 }
 function signIn(formData) {
-    console.log(formData, 'formData')
+    console.log(formData, 'formData');
     const requestOptions = {
         method: 'POST',
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -34,22 +38,35 @@ function signIn(formData) {
             .then(handleResponse)
             .then(data => {
                 if (data && data.data) {
-                    localStorage.setItem('user', JSON.stringify(data.data));
-                    localStorage.setItem('access_token', JSON.stringify(data.access_token));
+                     localStorage.setItem('user', JSON.stringify(data.data));
+                    localStorage.setItem('access_token', data.access_token);
                 }
                 return data;
+            });
+}
+function getAllProfiles() {
+    const accessToken = localStorage.getItem('access_token');
+    const requestOptions = {
+        method: 'GET',
+        headers: {'Accept': 'application/json', 'access_token': accessToken}
+    };
+
+    return fetch(`${config.API_PATH}/allProfiles`, requestOptions)
+            .then(handleResponse)
+            .then(user => {
+                return user;
             });
 }
 function getProfile(id) {
     const requestOptions = {
         method: 'GET',
-        headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': JSON.parse(localStorage.getItem('access_token'))},
+        headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token')}
     };
 
     return fetch(`/api/profile/${id}`, requestOptions)
             .then(handleResponse)
-            .then(user => {
-                return user;
+            .then(profiles => {
+                return profiles;
             });
 }
 function editProfile(formData, id) {
@@ -59,7 +76,7 @@ function editProfile(formData, id) {
         body: JSON.stringify(formData)
     };
 
-    return fetch(`/api/profile/edit/${id}`, requestOptions)
+    return fetch(`${process.env.API_PATH}/profile/edit/${id}`, requestOptions)
             .then(handleResponse)
             .then(user => {
                 return user;
@@ -67,8 +84,11 @@ function editProfile(formData, id) {
 }
 
 function logout() {
+      console.log('logout called')
     // remove user from local storage to log user out
     localStorage.removeItem('user');
+    localStorage.removeItem('access_token');
+    window.location.history.push('/')
 }
 
 function getAll() {
@@ -84,16 +104,13 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
+            if (response.status === 401 || 403) {
+                console.log('logout call')
                 logout();
-//                location.reload(true);
             }
-
             const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
+            return (error);
         }
-
         return data;
     });
 }

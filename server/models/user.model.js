@@ -22,37 +22,6 @@ var userSchema = new Schema({
         trim: true,
         required: true
     },
-    description: {
-        type: String,
-        trim: true
-    },
-    stage: {
-        type: String,
-        trim: true
-    },
-    start_date: {
-        type: Date,
-        trim: true
-    },
-    team_name: {
-        type: String,
-        trim: true
-    },
-    contact: {
-        type: String,
-        trim: true
-    },
-    logo: {
-        type: Number,
-        trim: true,
-        default: 0
-    },
-    members: [{
-            name: {type: String},
-            role: {type: Array},
-            major: {type: String},
-            linkedin: {type: String}
-        }],
     role: {
         type: Array
     },

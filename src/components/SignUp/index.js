@@ -36,12 +36,6 @@ class SignUp extends React.Component {
   state = {
       email: '',
       password: '',
-      team_name: '',
-      description: '',
-      stage: '',
-      start_date: '',
-      contact: '',
-      logo: '',
       role: '',
       submitted: false,
       loading: false,
@@ -65,7 +59,7 @@ class SignUp extends React.Component {
         }
 
         this.setState({ loading: true });
-        userService.signUp({email:email, password:password, team_name:team_name, description:description, stage:stage, start_date:start_date, contact:contact, logo:logo, role:role})
+        userService.signUp({email:email, password:password, role:role})
             .then(
                 user => {
                     const { from } = this.props.location.state || { from: { pathname: "/" } };
@@ -108,54 +102,6 @@ class SignUp extends React.Component {
                     margin="normal"
                     required
                 />
-                <TextField
-                    id="team_name"
-                    label="Team Name"
-                    style={{ margin: 8 }}
-                    placeholder="Team Name"
-                    value={this.state.team_name}
-                    onChange={this.handleChange('team_name')}
-                    multiline
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <TextField
-                    id="description"
-                    label="Description"
-                    style={{ margin: 8 }}
-                    placeholder="Description"
-                    value={this.state.description}
-                    onChange={this.handleChange('description')}
-                    multiline
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <TextField
-                    id="description"
-                    label="Stage"
-                    style={{ margin: 8 }}
-                    placeholder="Stage"
-                    value={this.state.stage}
-                    onChange={this.handleChange('stage')}
-                    multiline
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <TextField
-                    id="start_date"
-                    label="Start Date"
-                    style={{ margin: 8 }}
-                    placeholder="Start Date"
-                    value={this.state.start_date}
-                    onChange={this.handleChange('start_date')}
-                    multiline
-                    fullWidth
-                    margin="normal"
-                    required
-                />
                 <NativeSelect
                         native
                          style={{ margin: 8 }}
@@ -171,19 +117,6 @@ class SignUp extends React.Component {
                     <option value={1}>Co-founder</option>
                     <option value={2}>Other</option>
                  </NativeSelect>
-                
-                <TextField
-                    id="contact"
-                    label="Contact"
-                    style={{ margin: 8 }}
-                    placeholder="Contact"
-                    value={this.state.contact}
-                    onChange={this.handleChange('contact')}
-                    multiline
-                    fullWidth
-                    margin="normal"
-                    required
-                />
 
                 <Button variant="contained" className={classes.button} type="submit" id="submitBtn"> Submit </Button>
 
