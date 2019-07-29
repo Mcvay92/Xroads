@@ -6,11 +6,11 @@ var authMiddleware = function (req, res, next) {
     if (token) {
         jwt.verify(token, config.secret, function (err, decoded) {
             if (err) {
-                res.status(403).send({success: false, message: 'Failed to authenticate access token.'});
+                res.status(403).send({success: false,token:'invalid', message: 'Failed to authenticate access token.'});
             } else {
                 const userId = req.params.user_id || req.body.user_id || req.query.user_id;
                 if (userId && decoded.id !== userId) {
-                    res.status(403).send({success: false, message: 'Failed to authenticate access token.'});
+                    res.status(403).send({success: false,token:'invalid', message: 'Failed to authenticate access token.'});
                 } else {
                     req.decoded = decoded;
                     next();
@@ -18,7 +18,7 @@ var authMiddleware = function (req, res, next) {
             }
         });
     } else {
-        res.status(403).send({success: false, error: 'No access token provided.'});
+        res.status(403).send({success: false, token:'invalid',error: 'No access token provided.'});
     }
 }
 module.exports = authMiddleware;

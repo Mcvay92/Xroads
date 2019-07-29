@@ -50,6 +50,7 @@
     profileExport.getSingleProfile = async function (req, res) {
         try {
             const profileId = req.params.id;
+            console.log(profileId, 'profileId')
             const selectedFields = {
                 'team_name': 1,
 //                'role': 1,

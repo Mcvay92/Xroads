@@ -15,13 +15,13 @@ function signUp(formData) {
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
         body: JSON.stringify(formData)
     };
-
     return fetch(`/api/signup`, requestOptions)
             .then(handleResponse)
             .then(data => {
                 if (data && data.data) {
                     localStorage.setItem('user', JSON.stringify(data.data));
                     localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('token_valid', true)
                 }
                 return data;
             });
@@ -33,13 +33,13 @@ function signIn(formData) {
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
         body: JSON.stringify(formData)
     };
-
     return fetch(`/api/signin`, requestOptions)
             .then(handleResponse)
             .then(data => {
                 if (data && data.data) {
-                     localStorage.setItem('user', JSON.stringify(data.data));
+                    localStorage.setItem('user', JSON.stringify(data.data));
                     localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('token_valid', true)
                 }
                 return data;
             });
@@ -57,38 +57,35 @@ function getAllProfiles() {
                 return user;
             });
 }
-function getProfile(id) {
+function getProfile(profileId) {
     const requestOptions = {
         method: 'GET',
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token')}
     };
 
-    return fetch(`/api/profile/${id}`, requestOptions)
+    return fetch(`/api/profile/${profileId}`, requestOptions)
             .then(handleResponse)
             .then(profiles => {
                 return profiles;
             });
 }
-function editProfile(formData, id) {
+function editProfile(formData, profileId) {
     const requestOptions = {
         method: 'PUT',
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
         body: JSON.stringify(formData)
     };
 
-    return fetch(`${process.env.API_PATH}/profile/edit/${id}`, requestOptions)
+    return fetch(`${config.API_PATH}/editprofile/${profileId}`, requestOptions)
             .then(handleResponse)
             .then(user => {
                 return user;
             });
 }
-
 function logout() {
-      console.log('logout called')
-    // remove user from local storage to log user out
     localStorage.removeItem('user');
     localStorage.removeItem('access_token');
-    window.location.history.push('/')
+    localStorage.setItem('token_valid', false);
 }
 
 function getAll() {
@@ -105,8 +102,7 @@ function handleResponse(response) {
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401 || 403) {
-                console.log('logout call')
-                logout();
+                console.log(response.body.token, 'response', response)
             }
             const error = (data && data.message) || response.statusText;
             return (error);
