@@ -1,60 +1,36 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { Form, TextField, SubmitField } from 'react-components-form';
+import Schema from 'form-schema-validation';
 import { userService } from '../../services';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 700,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
+
+const loginSchema = new Schema({
+    email:{
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
 });
-
-
 class SignIn extends React.Component {
   state = {
-            email: '',
-            password: '',
             submitted: false,
             loading: false,
             error: ''
   };
 
-  handleChange = name => (event) => {
-    this.setState({ [name]: event.target.value });
-  };
-
-  handleSubmit = (event) => {
+  handleSubmit(data){
     // Make a network call somewhere
-    event.preventDefault();
-     this.setState({ submitted: true });
-        const { email, password, returnUrl } = this.state;
-
-        // stop here if form is invalid
-        if (!(email && password)) {
+        if (!(data.email && data.password)) {
             return;
         }
 
         this.setState({ loading: true });
-        userService.signIn({email:email, password:password})
+        userService.signIn(data)
             .then(
                 user => {
                     const { from } = this.props.location.state || { from: { pathname: "/" } };
@@ -68,47 +44,23 @@ class SignIn extends React.Component {
     const { classes } = this.props;
 
     return (
-        <div>
+        <div className="col-sm-6 margin-auto float-none">
             <Typography gutterBottom variant="headline" component="h1">Sign In Here</Typography>
-            <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-
-                <TextField
-                    id="email"
-                    label="Email"
-                    style={{ margin: 8 }}
-                    placeholder="Email"
-                    value={this.state.email}
-                    onChange={this.handleChange('email')}
-                    multiline
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-
-                <TextField
-                    id="password"
-                    label="Password"
-                    style={{ margin: 8 }}
-                    placeholder="Password"
-                    value={this.state.password}
-                    onChange={this.handleChange('password')}
-                    multiline
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-
-                <Button variant="contained" className={classes.button} type="submit" id="submitBtn"> Submit </Button>
-            </form>
+            <div  className="form-container">
+             <Form
+        schema={loginSchema}
+        onSubmit={model => this.handleSubmit(model)}
+        onError={(errors, model) => console.log('error', errors, model)}
+    >
+        <TextField name="email" label="Email" className="form-control" wrapperClassName="form-group" type="text" />
+        <TextField name="password" label="Password" className="form-control" wrapperClassName="form-group" type="password" />
+        <SubmitField value="Submit" className="btn btn-success mb-20" />
+    </Form>
             <p>Already a user? Sign In <Link to="/signup">Here</Link></p>
+        </div>
         </div>
     );
   }
 }
 
-SignIn.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SignIn);
+export default (SignIn);

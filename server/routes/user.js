@@ -5,6 +5,8 @@ const profileController = require('../controllers/profile.controller');
 const authMiddleware = require('../middlewares/authorizeToken');
 const roleMiddleware = require('../middlewares/authorizeRole');
 
+const multer = require('multer');
+const upload = multer();
 
 router.post('/signup', userController.signUp);
 router.post('/signin', userController.signIn);

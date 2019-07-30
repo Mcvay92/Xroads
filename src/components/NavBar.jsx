@@ -17,19 +17,19 @@ import Tab from '@material-ui/core/Tab';
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import App from '../App';
 const styles = theme => ({
-fontFamilys: {
-fontFamily: 'Adamina, serif',
-        flexWrap: 'wrap',
-},
+        fontFamilys: {
+        fontFamily: 'Adamina, serif',
+        flexWrap: 'wrap'
+        },
         mr20: {
-        marginRight: '20px',
+        marginRight: '20px'
         },
         hide: {
         display: 'none'
         },
         currentNav: {
         position: 'absolute',
-                right: '0px'
+        right: '0px'
         }
 });
 
@@ -37,12 +37,14 @@ class NavBar extends React.Component {
     constructor(props) {
     super(props);
         this.state = {
-        currentTab: 0,
-        isOpen:localStorage.getItem('token_valid') === 'true' ? false : true,
-        userSigned: localStorage.getItem('access_token') ? true : false
+            currentTab: 0,
+            isOpen:(localStorage.getItem('token_valid') === 'true') ? false : true,
+            isDialog:typeof localStorage.getItem('access_token') !== 'string' ? false : true,
+            userSigned: localStorage.getItem('access_token') ? true : false
         };
-        this.logout = this.logout.bind(this)
-        this.handleClose = this.handleClose.bind(this)
+        console.log(typeof localStorage.getItem('access_token') !== 'string', this.state.isOpen, this.state.isDialog)
+        this.logout = this.logout.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
     logout() {
         const {isUser, history} = this.props;
@@ -50,17 +52,11 @@ class NavBar extends React.Component {
         localStorage.removeItem('access_token');
         this.setState({userSigned: false});
         localStorage.setItem('token_valid', false);
-        this.context.router.history.push('/signIn');
+        this.context.router.history.push('/signin');
     }
     handleClose(){
         this.setState({isOpen:false});
-         this.context.router.history.push('/signIn');
-    }
-    componentWillUpdate() {
-         console.log("componentWillRecieveProps()");
-    }
-    componentWillReceiveProps() {
-         console.log("componentWillRecieveProps()", this.props);
+         this.context.router.history.push('/signin');
     }
     shouldComponentUpdate(nextProps, nextState) 
     { 
@@ -68,14 +64,12 @@ class NavBar extends React.Component {
         return true; 
     } 
     componentDidUpdate() {
-        console.log('update component')
         const {isValidToken, isUser} = this.props;
-        console.log(isUser, 'isUser');
-        console.log(isValidToken, 'isValidToken');
+        console.log(this.context.router, 'this.props');
     }
     render() {
     const {classes, isUser} = this.props;
-    const {currentTab, userSigned, isOpen} = this.state;
+    const {currentTab, userSigned, isOpen, isDialog} = this.state;
             return (
                     <div>
                         <AppBar position="static">
@@ -99,10 +93,10 @@ class NavBar extends React.Component {
                                         to="/mentorMatchingForm"
                                         />
                                     {!this.props.isUser && (
-                                    <Tab id="signin" label="SignIn" component={Link} to="/signin" />
+                                    <Tab id="signin" label="Sign In" component={Link} to="/signin" />
                                             )}
                                     {!this.props.isUser && (
-                                    <Tab id="signup" label="SignUp" component={Link} to="/signup" />
+                                    <Tab id="signup" label="Sign Up" component={Link} to="/signup" />
                                             )}
                                     {this.props.isUser && (
                                     <Tab id="profile" label="Profile" component={Link} to="/profile" />
@@ -113,17 +107,15 @@ class NavBar extends React.Component {
                                 </Tabs>
                             </Toolbar>
                         </AppBar>
+                        {isDialog &&
                         <Dialog
                             open={this.state.isOpen}
                             onClose={this.handleClose}
                             aria-labelledby="draggable-dialog-title"
                             >
-                            <DialogTitle id="draggable-dialog-title">
-                                Access Token Expired
-                            </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                   Please login again to continue.
+                                   Please login to continue.
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -131,13 +123,13 @@ class NavBar extends React.Component {
                                     Ok
                                 </Button>
                             </DialogActions>
-                        </Dialog>
+                        </Dialog>}
                     </div>
                     )
             }
 }
 NavBar.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
 };
 NavBar.contextTypes = {
     router: PropTypes.object.isRequired

@@ -6,6 +6,8 @@ export const userService = {
     getProfile,
     editProfile,
     getAll,
+    addProfile,
+    uploadImage,
     logout
 };
 
@@ -69,10 +71,36 @@ function getProfile(profileId) {
                 return profiles;
             });
 }
+function addProfile(formData) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token')},
+        body: JSON.stringify(formData)
+    };
+
+    return fetch(`/api/addProfile`, requestOptions)
+            .then(handleResponse)
+            .then(profiles => {
+                return profiles;
+            });
+}
+function uploadImage(formData) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data', 'access_token': localStorage.getItem('access_token')},
+        body: formData
+    };
+
+    return fetch(`/uploadImage?type=logo`, requestOptions)
+            .then(handleResponse)
+            .then(profiles => {
+                return profiles;
+            });
+}
 function editProfile(formData, profileId) {
     const requestOptions = {
         method: 'PUT',
-        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+        headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token')},
         body: JSON.stringify(formData)
     };
 

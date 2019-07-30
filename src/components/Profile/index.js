@@ -58,7 +58,7 @@ class Profile extends React.Component {
     render() {
         const {classes} = this.props;
         const {profileData} = this.state;
-        let profiles;
+        let profiles = null;
         if (this.state.profileData != null) {
             profiles = this.state.profileData.map((item, key) =>
                 <tr key={item._id}>
@@ -71,27 +71,31 @@ class Profile extends React.Component {
             );
         }
         return (
-                <div className="row mt-30">
                     <div className="col-12">
+                    <div className="text-align-right"><Link to="/addProfile" className="btn btn-info">Add New Profile</Link></div>
                         <h4>All profiles</h4>
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Sr</th>
-                                    <th>Team Name</th>
-                                    <th>Stage</th>
-                                    <th>Start Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            {profileData && profiles &&
-                                    <tbody>
-                                        {profiles}
-                                    </tbody>
-                            }
-                        </table>
+                        {profileData  != null && profiles != null &&
+                                    <table className="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr</th>
+                                                <th>Team Name</th>
+                                                <th>Stage</th>
+                                                <th>Start Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                            
+                                        <tbody>
+                                            {profiles}
+                                        </tbody>
+                                    </table>}
+                        {profileData && profileData.length || profiles == null &&
+                                    <div>
+                                        No profile added.
+                                    </div>}
+                
                     </div>
-                </div>
                 );
     }
 }

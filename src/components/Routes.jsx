@@ -51,8 +51,8 @@ const Routes = () => (
         <Route exact path="/organizations" component={Organizations} />
         <Route exact path="/incubators" component={Incubators} />
         <Route exact path="/courses" component={Courses} />
-        <Route exact path="/signIn" component={SignIn} />
-        <Route exact path="/signUp" component={SignUp} />
+        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/signup" component={SignUp} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/editProfile/:id" component={AddProfile} />
         <Route exact path="/addProfile" component={AddProfile} />

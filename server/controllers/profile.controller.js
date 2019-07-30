@@ -20,6 +20,7 @@
 
     profileExport.addProfile = async function (req, res) {
         try {
+            console.log('req.body', req.body)
             var profileData = {
                 user_id: req.body.user_id,
                 description: req.body.description,
@@ -29,11 +30,9 @@
                 logo: req.body.logo,
                 team_name: req.body.team_name
             };
-//            if (req.body.role) {
-//                profileData['role'] = JSON.parse(req.body.role);
-//            }
+
             if (req.body.members) {
-                const memberArray = JSON.parse(req.body.members);
+                const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
                 profileData['members'] = memberArray;
             }
             new Profile(profileData).save(function (error, profileResponse) {
@@ -125,7 +124,7 @@
 //                updateFields['role'] = JSON.parse(req.body.role);
 //            }
             if (req.body.members) {
-                const memberArray = JSON.parse(req.body.members);
+                const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
                 updateFields['members'] = memberArray;
             }
             Profile.update({'_id': profileId}, updateFields, function (error, response) {

@@ -30,3 +30,25 @@
         transform: rotate(360deg);
     }
 }
+.members-heading{
+    margin:20px 0;
+}
+.margin-auto.float-none{
+    margin:auto;
+    float:none;  
+}
+.mt-10{
+    margin-top: 10px;
+}
+.mt-50{
+    margin-top: 50px;
+}
+.mt-30{
+    margin-top:30px;
+}
+.mb-20{
+    margin-bottom: 20px;
+}
+.text-align-right{
+    text-align: right;
+}

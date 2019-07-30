@@ -1,11 +1,10 @@
 export default {
     API_PATH: "/api",
     stages: {
-        0: 'Idea',
-        1: 'Market Research',
-        2: 'Production',
-        3: 'MVP',
-        4: 'Other'
+        0: 'Idea/market research',
+        1: 'Prototype development/team formation',
+        2: 'Private beta',
+        3: 'Public beta'
     },
     roles: {
         0: 'Founder',
@@ -15,11 +14,10 @@ export default {
     },
     stageSelect:[
         {label: 'Select Stage', value: ''},
-        {label: 'Idea', value: '0'},
-        {label: 'Market Research', value: '1'},
-        {label: 'Production', value: '2'},
-        {label: 'MVP', value: '3'},
-        {label: 'Other', value: '4'}
+        {label: 'Idea/market research', value: '0'},
+        {label: 'Prototype development/team formation', value: '1'},
+        {label: 'Private beta', value: '2'},
+        {label: 'Public beta', value: '3'},
     ],
     roleSelect: [
         {label: 'Select Role', value: ''},
@@ -29,3 +27,5 @@ export default {
         {label: 'other User', value: '3'}
     ]
 }
+
+
