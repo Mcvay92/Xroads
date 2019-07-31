@@ -30,9 +30,8 @@ var profileSchema = new Schema({
         trim: true
     },
     logo: {
-        type: Number,
+        type: String,
         trim: true,
-        default: 0
     },
     members: [{
             name: {type: String, required: 'Member name is required.'},

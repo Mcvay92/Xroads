@@ -75,7 +75,7 @@ function getProfile(profileId) {
 function addProfile(formData) {
     const requestOptions = {
         method: 'POST',
-        headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token')},
+        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data', 'access_token': localStorage.getItem('access_token')},
         body: JSON.stringify(formData)
     };
 
@@ -101,14 +101,14 @@ function uploadImage(formData) {
 function editProfile(formData, profileId) {
     const requestOptions = {
         method: 'PUT',
-        headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token')},
-        body: JSON.stringify(formData)
+        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data', 'access_token': localStorage.getItem('access_token')},
+         body: JSON.stringify(formData)
     };
 
     return fetch(`${config.API_PATH}/editprofile/${profileId}`, requestOptions)
             .then(response => response.json())
-            .then(user => {
-                return user;
+            .then(resp => {
+                return resp;
             });
 }
 function logout() {

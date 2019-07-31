@@ -115,7 +115,7 @@ export default class AddProfile extends React.Component {
     submitProfile(data){
         let userData= JSON.parse(localStorage.getItem('user'));
         data['user_id'] = userData._id;
-        this.setState({loading: true});
+        this.setState({loading: true, successMsg:null, errorMsg:null});
         if (this.state.profileId){
             this.updateProfilesData(data, this.state.profileId)
         } else{
@@ -128,7 +128,7 @@ export default class AddProfile extends React.Component {
                 <div className="col-sm-6 margin-auto float-none">
                     <Typography gutterBottom variant="headline" component="h1">{this.state.profileId ? "Edit" : "Add"} Profile</Typography>
                     <Form
-                        schema={profileSchema}
+                        schema={profileSchema} encType="multipart/form-data"
                         onSubmit={data => this.submitProfile(data)} className="custom-form"
                         onError={(errors) => console.log('error', errors)}
                         >        

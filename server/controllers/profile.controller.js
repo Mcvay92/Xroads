@@ -9,7 +9,6 @@
     const profileExport = {};
     const  multer = require('multer');
     const multerS3 = require('multer-s3');
-
     const s3 = new aws.S3({
         credentials: {
             secretAccessKey: process.env.S3_BUCKET_SECRET_ACCESS_KEY,
@@ -20,7 +19,6 @@
 
     profileExport.addProfile = async function (req, res) {
         try {
-//            console.log('req.body', req.body)
             var profileData = {
                 user_id: req.body.user_id,
                 description: req.body.description,
@@ -35,7 +33,7 @@
             if (req.body.members) {
                 var memebers = [];
                 const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
-                  memberArray.map((v,k)=>{
+                memberArray.map((v, k) => {
                     memebers.push({
                         'name': v.name,
                         'role': v.role,
@@ -53,13 +51,12 @@
                 }
             });
         } catch (error) {
-            res.status(422).send({"status": false,  error});
+            res.status(422).send({"status": false, error});
         }
     };
     profileExport.getSingleProfile = async function (req, res) {
         try {
             const profileId = req.params.id;
-            console.log(profileId, 'profileId');
             const selectedFields = {
                 'team_name': 1,
                 'role': 1,
@@ -111,45 +108,12 @@
             res.status(422).send({"status": false, error});
         }
     };
+//    profileExport.editProfile = async function (req, res) {
+//        const uploadedData = await uploadOnS3WithData(req, res, 'logo');
+//        res.status(200).send(uploadedData);
+//    };
     profileExport.editProfile = async function (req, res) {
-        try {
-            const profileId = req.params.id;
-            const updateFields = {};
-            if (req.body.team_name) {
-                updateFields['team_name'] = req.body.team_name;
-            }
-            if (req.body.start_date) {
-                updateFields['start_date'] = req.body.start_date;
-            }
-            if (req.body.stage) {
-                updateFields['stage'] = req.body.stage;
-            }
-            if (req.body.contact) {
-                updateFields['contact'] = req.body.contact;
-            }
-            if (req.body.description) {
-                updateFields['description'] = req.body.description;
-            }
-            if (req.body.role) {
-                updateFields['role'] = req.body.role;
-            }
-            if (req.body.members) {
-                const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
-                updateFields['members'] = memberArray;
-            }
-            Profile.updateOne({'_id': profileId}, updateFields, function (error, response) {
-                if (error) {
-                    res.status(422).send({status: false, error});
-                } else {
-                    res.status(200).send({status: true, "data": response});
-                }
-            });
-        } catch (error) {
-            res.status(422).send({"status": false, error});
-        }
-    };
-    profileExport.uploadImage = async function (req, res) {
-        const uploadedData = await uploadOnS3(req, res, req.query.type);
+        const uploadedData = await uploadOnS3WithData(req, res, 'logo');
         res.status(200).send({data: uploadedData});
     };
     profileExport.deleteImage = async function (req, res) {
@@ -188,7 +152,7 @@
             }
         });
     };
-    function uploadOnS3(req, res, type) {
+    function uploadOnS3WithData(req, res, type) {
         return new Promise((resolve) => {
             const upload = multer({
                 storage: multerS3({
@@ -197,30 +161,62 @@
                     acl: 'public-read',
                     contentType: multerS3.AUTO_CONTENT_TYPE,
                     metadata: function (req, file, cb) {
+                        console.log(file, 'file')
                         const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
                         const fileType = (file.mimetype).split('/');
                         const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
                         cb(null, {fieldname: file.fieldname, originalname: fullPath});
                     },
                     key: function (req, file, cb) {
+                         console.log(file, 'file')
                         const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
                         const fileType = (file.mimetype).split('/');
                         const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
                         cb(null, fullPath);
                     }
                 })
-            }).array("file", 10);
+            }).array("logo", 10);
             upload(req, res, function (err, result) {
                 if (err) {
-                    resolve({error: err, files: null});
+                    console.log('inside err', err)
+                    resolve({status: false, err});
                 } else {
-                    let fileArray = [];
+                    let updateFields = {};
                     if (req.files.length) {
                         req.files.forEach(function (item) {
-                            fileArray.push(item.key);
+                            updateFields['logo'] = item.key;
                         });
                     }
-                    resolve({files: fileArray});
+                    const profileId = req.params.id;
+                    if (req.body.team_name) {
+                        updateFields['team_name'] = req.body.team_name;
+                    }
+                    if (req.body.start_date) {
+                        updateFields['start_date'] = req.body.start_date;
+                    }
+                    if (req.body.stage) {
+                        updateFields['stage'] = req.body.stage;
+                    }
+                    if (req.body.contact) {
+                        updateFields['contact'] = req.body.contact;
+                    }
+                    if (req.body.description) {
+                        updateFields['description'] = req.body.description;
+                    }
+                    if (req.body.role) {
+                        updateFields['role'] = req.body.role;
+                    }
+                    if (req.body.members) {
+                        const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
+                        updateFields['members'] = memberArray;
+                    }
+                    Profile.updateOne({'_id': profileId}, updateFields, function (error, response) {
+                        if (error) {
+                            resolve({status: false, error});
+                        } else {
+                            resolve({status: true, "data": response});
+                        }
+                    });
                 }
             });
         });
