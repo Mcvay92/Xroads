@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
-        validator = require('validator'),
-        bcrypt = require('bcrypt'),
-        Schema = mongoose.Schema;
+validator = require('validator'),
+bcrypt = require('bcrypt'),
+Schema = mongoose.Schema;
+const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 var validateLocalStrategyEmail = function (email) {
     return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email, {require_tld: false}));
@@ -10,20 +11,17 @@ var validateLocalStrategyEmail = function (email) {
 var userSchema = new Schema({
     email: {
         type: String,
-        unique: true,
+        unique: 'Email already exist.',
         lowercase: true,
         trim: true,
         match: /.+\@.+\..+/,
-        required: true,
+        required: 'Email is required.',
         validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
     },
     password: {
         type: String,
         trim: true,
-        required: true
-    },
-    role: {
-        type: Array
+        required: 'Password is required.'
     },
     created_on: {
         type: Date,
@@ -39,6 +37,5 @@ userSchema.methods.verifyPassword = function (password, cb) {
         cb(null, isMatch);
     });
 };
-
-// Export the Mongoose model
+userSchema.plugin(beautifyUnique);
 module.exports = mongoose.model('User', userSchema);

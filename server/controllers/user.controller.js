@@ -27,15 +27,11 @@
                 res.status(422).send({"status": false, "error": 'Email Address (' + userEmailAddress + ') already exist.'});
             } else {
                 var userData = {
-                    email: userEmailAddress,
-                    description: req.body.description,
+                    email: userEmailAddress
                 }
                 if (req.body.password != null && req.body.password != 'null') {
                     const hashedPassword = passwordHash.generate(req.body.password);
                     userData['password'] = hashedPassword;
-                }
-                if (req.body.role) {
-                    userData['role'] = JSON.parse(req.body.role)
                 }
                 new User(userData).save(function (error, userResponse) {
                     if (error) {

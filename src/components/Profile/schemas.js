@@ -30,6 +30,9 @@ export const profileSchema = new Schema({
     user_id: {
         type: String
     },
+    role: {
+        type: String
+    },
     description: {
         type: String,
         errorStyles: "alert"

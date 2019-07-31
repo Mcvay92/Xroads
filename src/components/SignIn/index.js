@@ -5,7 +5,10 @@ import { Form, TextField, SubmitField } from 'react-components-form';
 import Schema from 'form-schema-validation';
 import { userService } from '../../services';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
+const errorClasses = {
+    className: 'alert alert-danger',
+    fieldClassName:'has-error'
+};
 const loginSchema = new Schema({
     email:{
         type: String,
@@ -52,15 +55,15 @@ const {errorMsg, successMsg} = this.state;
         schema={loginSchema}
         onSubmit={model => this.handleSubmit(model)}
         onError={(errors, model) => console.log('error', errors, model)}
-    >
-        <TextField name="email" label="Email" className="form-control" wrapperClassName="form-group" type="text" />
-        <TextField name="password" label="Password" className="form-control" wrapperClassName="form-group" type="password" />
+        >
+        <TextField name="email" label="Email" className="form-control" errorStyles={errorClasses} wrapperClassName="form-group" type="text" />
+        <TextField name="password" label="Password" className="form-control" errorStyles={errorClasses} wrapperClassName="form-group" type="password" />
         <SubmitField value="Submit" className="btn btn-success mb-20" />
          {errorMsg &&
                         <div className="alert alert-danger">{errorMsg}</div>}
                         {successMsg &&
                         <div className="alert alert-success">{successMsg}</div>}
-    </Form>
+            </Form>
             <p>Already a user? Sign In <Link to="/signup">Here</Link></p>
         </div>
         </div>

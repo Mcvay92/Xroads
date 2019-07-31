@@ -20,11 +20,12 @@
 
     profileExport.addProfile = async function (req, res) {
         try {
-            console.log('req.body', req.body)
+//            console.log('req.body', req.body)
             var profileData = {
                 user_id: req.body.user_id,
                 description: req.body.description,
                 stage: req.body.stage,
+                role: req.body.role,
                 contact: req.body.contact,
                 start_date: req.body.start_date,
                 logo: req.body.logo,
@@ -32,27 +33,36 @@
             };
 
             if (req.body.members) {
+                var memebers = [];
                 const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
-                profileData['members'] = memberArray;
+                  memberArray.map((v,k)=>{
+                    memebers.push({
+                        'name': v.name,
+                        'role': v.role,
+                        'major': v.major,
+                        'linkedin': v.linkedin
+                    })
+                })
+                profileData['members'] = memebers;
             }
             new Profile(profileData).save(function (error, profileResponse) {
                 if (error) {
-                    res.status(422).send({"status": false, "error": error});
+                    res.status(422).send({"status": false, error});
                 } else {
-                    res.status(200).send({status: true, "data": profileResponse});
+                    res.status(200).send({"status": true, "data": profileResponse});
                 }
             });
         } catch (error) {
-            res.status(422).send({"status": false, "error": error});
+            res.status(422).send({"status": false,  error});
         }
     };
     profileExport.getSingleProfile = async function (req, res) {
         try {
             const profileId = req.params.id;
-            console.log(profileId, 'profileId')
+            console.log(profileId, 'profileId');
             const selectedFields = {
                 'team_name': 1,
-//                'role': 1,
+                'role': 1,
                 'contact': 1,
                 'description': 1,
                 'members': 1,
@@ -62,13 +72,13 @@
             };
             Profile.findOne({'_id': profileId}, selectedFields, function (error, response) {
                 if (error) {
-                    res.status(422).send({status: true, "data": error});
+                    res.status(422).send({status: false, error});
                 } else {
                     res.status(200).send({status: true, "data": response});
                 }
             });
         } catch (error) {
-            res.status(422).send({"status": false, "error": error});
+            res.status(422).send({"status": false, error});
         }
     };
     profileExport.getAllProfiles = async function (req, res) {
@@ -82,7 +92,7 @@
             }
             const selectedFields = {
                 'team_name': 1,
-//                'role': 1,
+                'role': 1,
                 'contact': 1,
                 'description': 1,
                 'members': 1,
@@ -92,13 +102,13 @@
             };
             Profile.find(query, selectedFields, function (error, response) {
                 if (error) {
-                    res.status(422).send({status: true, "data": error});
+                    res.status(422).send({status: false, error});
                 } else {
                     res.status(200).send({status: true, "data": response});
                 }
             });
         } catch (error) {
-            res.status(422).send({"status": false, "error": error});
+            res.status(422).send({"status": false, error});
         }
     };
     profileExport.editProfile = async function (req, res) {
@@ -120,22 +130,22 @@
             if (req.body.description) {
                 updateFields['description'] = req.body.description;
             }
-//            if (req.body.role) {
-//                updateFields['role'] = JSON.parse(req.body.role);
-//            }
+            if (req.body.role) {
+                updateFields['role'] = req.body.role;
+            }
             if (req.body.members) {
                 const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
                 updateFields['members'] = memberArray;
             }
-            Profile.update({'_id': profileId}, updateFields, function (error, response) {
+            Profile.updateOne({'_id': profileId}, updateFields, function (error, response) {
                 if (error) {
-                    res.status(422).send({status: true, "data": error});
+                    res.status(422).send({status: false, error});
                 } else {
                     res.status(200).send({status: true, "data": response});
                 }
             });
         } catch (error) {
-            res.status(422).send({"status": false, "error": 'catch error'});
+            res.status(422).send({"status": false, error});
         }
     };
     profileExport.uploadImage = async function (req, res) {

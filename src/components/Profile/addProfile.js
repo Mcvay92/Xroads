@@ -26,6 +26,7 @@ const ProfileForm = (props) => {
             <TextField  value={profileData ? profileData.team_name : null}  name="team_name" errorStyles={errorClasses} className="form-control"  label="Team Name" placeholder="Team Name" wrapperClassName="form-group" />
             <TextField value={profileData ? profileData.description : null} name="description" errorStyles={errorClasses} className="form-control"  label="Description" placeholder="Description" wrapperClassName="form-group" />
             <TextField value={profileData ? profileData.contact : null} name="contact" errorStyles={errorClasses} className="form-control"  label="Contact" placeholder="Contact" wrapperClassName="form-group" />
+            <TextField value={profileData ? profileData.role : null} name="role" errorStyles={errorClasses} className="form-control"  label="Role" placeholder="Role" wrapperClassName="form-group" />
             <SelectField value={profileData ? profileData.stage : 0} name="stage" errorStyles={errorClasses} className="form-control" options={stageOject} label="Stage"  wrapperClassName="form-group"/>
             <DateField value={profileData ? new Date(profileData.start_date) : null} name="start_date" errorStyles={errorClasses} className="form-control"  label="Start Date"  wrapperClassName="form-group"/>
             <div className="members-heading"><b>Members:</b></div>
@@ -34,7 +35,7 @@ const ProfileForm = (props) => {
                     <TextField name="name"  label="Member Name" className="form-control" wrapperClassName="form-group"/>
                     <TextField name="major" label="Major" className="form-control" wrapperClassName="form-group"/>
                     <TextField name="linkedin"  label="LinkedIn Link" className="form-control" wrapperClassName="form-group"/>
-                    <SelectField name="role"  className="form-control" multiple={true} options={roleOject} defaultOption={0} label="Member Role"  wrapperClassName="form-group"/>                                   
+                   <TextField value={profileData ? profileData.role : null} name="role" errorStyles={errorClasses} className="form-control"  label="Member Role" placeholder="Member Role" wrapperClassName="form-group" />                               
                 </ObjectField>
             </ListField>
             <FileField name="logo" className="form-control" label="Logo"  wrapperClassName="form-group"></FileField>
@@ -66,7 +67,7 @@ export default class AddProfile extends React.Component {
             .then(
                 response => {
                 if(response.status == true){
-                             this.setState({profileData: response.data,successMsg: 'Profile added successfully',loading: false});
+                             this.setState({profileData: response.data,successMsg: 'Profile updated successfully',loading: false});
                         }else{
                              this.setState({erroMsg: response.error});
                         }
@@ -90,7 +91,13 @@ export default class AddProfile extends React.Component {
                         if(response.status == true){
                              this.setState({profileData: response.data,successMsg: 'Profile added successfully',loading: false});
                         }else{
-                             this.setState({erroMsg: response.error});
+                            let erroMsg = null
+                            console.log(response.error['errors'], 'errors');
+                            let errors = response.error['errors'];
+                            Object.keys(errors).map((k)=>{
+                                erroMsg = errors[k].message;
+                            })
+                             this.setState({errorMsg: erroMsg});
                         }
                 },
                     error => this.setState({error: error, loading: false})
@@ -129,13 +136,13 @@ export default class AddProfile extends React.Component {
                         <ProfileForm profiledata={this.state.profileData} /> }
                         {!this.state.profileData &&
                         <ProfileForm profiledata={null}/> }
-                        <div className="mt50">
-                            <SubmitField className="btn btn-success" value="Save"/>         
-                        </div>
                          {errorMsg &&
                         <div className="alert alert-danger">{errorMsg}</div>}
                         {successMsg &&
                         <div className="alert alert-success">{successMsg}</div>}
+                        <div className="mt-50">
+                            <SubmitField className="btn btn-success" value="Save"/>         
+                        </div>
                     </Form>
                 </div>
         );

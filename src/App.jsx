@@ -31,7 +31,7 @@ export default class App extends Component {
     render = () => (
                 <MuiThemeProvider theme={theme}>
                     <NavBar isUser={this.state.isUser} validToken={this.state.isValidToken}/>
-                    <div className="container mt-50">
+                    <div className="container mt-50 mb-50">
                         <Routes />
                     </div>
                 </MuiThemeProvider>
