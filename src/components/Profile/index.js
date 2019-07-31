@@ -9,27 +9,7 @@ import config from '../../config';
 import moment from 'moment';
 import { BrowserRouter as Router, Route, Link }
 from 'react-router-dom';
-const styles = theme => ({
-        container: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        textField: {
-            marginLeft: theme.spacing.unit,
-            marginRight: theme.spacing.unit,
-            width: 700,
-        },
-        dense: {
-            marginTop: 19,
-        },
-        menu: {
-            width: 200,
-        },
-        button: {
-            margin: theme.spacing.unit,
-        },
-    });
-class Profile extends React.Component {
+export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,7 +39,7 @@ class Profile extends React.Component {
         const {classes} = this.props;
         const {profileData} = this.state;
         let profiles = null;
-        if (this.state.profileData != null) {
+        if (this.state.profileData != null && this.state.profileData.length > 0) {
             profiles = this.state.profileData.map((item, key) =>
                 <tr key={item._id}>
                     <td>{key + 1}</td>
@@ -71,10 +51,10 @@ class Profile extends React.Component {
             );
         }
         return (
-                    <div className="col-12">
+                <div className="col-12">
                     <div className="text-align-right"><Link to="/addProfile" className="btn btn-info">Add New Profile</Link></div>
-                        <h4>All profiles</h4>
-                        {profileData  != null && profiles != null &&
+                    <h4 className="mb-20">All profiles</h4>
+                    {profileData != null && profileData.length > 0 && profiles != null &&
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr>
@@ -85,23 +65,16 @@ class Profile extends React.Component {
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
-                            
                                         <tbody>
                                             {profiles}
                                         </tbody>
                                     </table>}
-                        {profileData && profileData.length || profiles == null &&
-                                    <div>
-                                        No profile added.
+                    {profileData && profileData.length == 0 &&
+                                    <div className="alert alert-info">
+                                        No profile added yet.
                                     </div>}
-                
-                    </div>
+                </div>
                 );
     }
 }
 
-Profile.propTypes = {
-    // eslint-disable-next-line react/forbid-prop-types
-    classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(Profile);

@@ -6,8 +6,7 @@ import Button from '@material-ui/core/Button';
 import { userService } from '../../services';
 import { Form, TextField,SelectField, SubmitField } from 'react-components-form';
 import Schema from 'form-schema-validation';
-import { BrowserRouter as Router, Route, Link }
-from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const signupSchema = new Schema({
     email:{
@@ -17,33 +16,35 @@ const signupSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    role: {
-        type: String,
-        required: true
     }
 });
-
-
 class SignUp extends React.Component {
     state = {
             submitted: false,
             loading: false,
-            error: ''
+            errorMsg: null,
+            successMsg: null
     };
-    handleSubmit(data){
-        this.setState({ submitted: true });
-        this.setState({ loading: true });
-        userService.signUp(data)
+    handleSubmit(fromData){
+        this.setState({ submitted: true ,loading: true , errorMsg:null, successMsg:null});
+        userService.signUp(fromData)
         .then(
-            user => {
+            data => {
             const { from } = this.props.location.state || { from: { pathname: "/" } };
+                if(data.status == true){
+                    this.setState({successMsg: 'You are signed up successfully.'})
+                    setTimeout(()=>{
                     this.props.history.push(from);
+                    },1000)
+                }else{
+                    this.setState({errorMsg: data.error})
+                }
             },
-            error => this.setState({ error, loading: false })
+            error => this.setState({ error})
         );
 }
 render() {
+    const {errorMsg, successMsg} = this.state;
         return (
                 <div className="col-sm-6 margin-auto float-none">
                     <Typography gutterBottom variant="headline" component="h1">Sign In Here</Typography>
@@ -55,9 +56,12 @@ render() {
                             >
                             <TextField name="email" label="Email" className="form-control" wrapperClassName="form-group" type="text" />
                             <TextField name="password" label="Password" className="form-control" wrapperClassName="form-group" type="password" />
-                            <SelectField name="role"  className="form-control" multiple={true} options={config.roleSelect} defaultOption={0} label="Member Role"  wrapperClassName="form-group"/>                                             
                             <SubmitField value="Submit" className="btn btn-success mb-20" />
                         </Form>
+                        {errorMsg &&
+                        <div className="alert alert-danger">{errorMsg}</div>}
+                        {successMsg &&
+                        <div className="alert alert-success">{successMsg}</div>}
                         <p>Already a user? Sign In <Link to="/signup">Here</Link></p>
                     </div>
                 </div>

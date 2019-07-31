@@ -3,10 +3,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const router = express.Router();
 const Mongoose = require('mongoose');
+const multer = require('multer');
 const config = require(__dirname + '/config/index');
 const https = require('https');
 const dotenv = require('dotenv');
 var acl = require('acl');
+var upload = multer();
 app.use(express.json({limit: '50mb'}));
 dotenv.config();
 
@@ -31,7 +33,7 @@ app.use(function (req, res, next) {
 
 
 app.use(bodyParser.json());
-
+app.use(upload.array()); 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use('/uploads', express.static(process.cwd() + '/app/uploads'));

@@ -37,13 +37,13 @@
             }
             new Profile(profileData).save(function (error, profileResponse) {
                 if (error) {
-                    res.status(400).send({"status": false, "error": error});
+                    res.status(422).send({"status": false, "error": error});
                 } else {
                     res.status(200).send({status: true, "data": profileResponse});
                 }
             });
         } catch (error) {
-            res.status(400).send({"status": false, "error": error});
+            res.status(422).send({"status": false, "error": error});
         }
     };
     profileExport.getSingleProfile = async function (req, res) {
@@ -62,13 +62,13 @@
             };
             Profile.findOne({'_id': profileId}, selectedFields, function (error, response) {
                 if (error) {
-                    res.status(400).send({status: true, "data": error});
+                    res.status(422).send({status: true, "data": error});
                 } else {
                     res.status(200).send({status: true, "data": response});
                 }
             });
         } catch (error) {
-            res.status(400).send({"status": false, "error": error});
+            res.status(422).send({"status": false, "error": error});
         }
     };
     profileExport.getAllProfiles = async function (req, res) {
@@ -92,13 +92,13 @@
             };
             Profile.find(query, selectedFields, function (error, response) {
                 if (error) {
-                    res.status(400).send({status: true, "data": error});
+                    res.status(422).send({status: true, "data": error});
                 } else {
                     res.status(200).send({status: true, "data": response});
                 }
             });
         } catch (error) {
-            res.status(400).send({"status": false, "error": error});
+            res.status(422).send({"status": false, "error": error});
         }
     };
     profileExport.editProfile = async function (req, res) {
@@ -129,13 +129,13 @@
             }
             Profile.update({'_id': profileId}, updateFields, function (error, response) {
                 if (error) {
-                    res.status(400).send({status: true, "data": error});
+                    res.status(422).send({status: true, "data": error});
                 } else {
                     res.status(200).send({status: true, "data": response});
                 }
             });
         } catch (error) {
-            res.status(400).send({"status": false, "error": 'catch error'});
+            res.status(422).send({"status": false, "error": 'catch error'});
         }
     };
     profileExport.uploadImage = async function (req, res) {

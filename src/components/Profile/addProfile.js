@@ -46,7 +46,8 @@ export default class AddProfile extends React.Component {
         submitted: false,
         loading: false,
         profileId: false,
-        error: ''
+        errorMsg: null,
+        successMsg: null
     };
     handleChange = name => (event) => {
         this.setState({[name]: event.target.value});
@@ -64,7 +65,11 @@ export default class AddProfile extends React.Component {
         userService.editProfile(formData, profileId)
             .then(
                 response => {
-                this.setState({profileData: response.data, loading: false});
+                if(response.status == true){
+                             this.setState({profileData: response.data,successMsg: 'Profile added successfully',loading: false});
+                        }else{
+                             this.setState({erroMsg: response.error});
+                        }
                         },
                 error => this.setState({error: error, loading: false})
             );
@@ -82,7 +87,11 @@ export default class AddProfile extends React.Component {
         userService.addProfile(formData)
             .then(
                     response => {
-                    this.setState({profileData: response.data, loading: false});
+                        if(response.status == true){
+                             this.setState({profileData: response.data,successMsg: 'Profile added successfully',loading: false});
+                        }else{
+                             this.setState({erroMsg: response.error});
+                        }
                 },
                     error => this.setState({error: error, loading: false})
                 );
@@ -107,6 +116,7 @@ export default class AddProfile extends React.Component {
         }
     };
     render() {
+        const {errorMsg, successMsg} = this.state;
         return (
                 <div className="col-sm-6 margin-auto float-none">
                     <Typography gutterBottom variant="headline" component="h1">{this.state.profileId ? "Edit" : "Add"} Profile</Typography>
@@ -122,6 +132,10 @@ export default class AddProfile extends React.Component {
                         <div className="mt50">
                             <SubmitField className="btn btn-success" value="Save"/>         
                         </div>
+                         {errorMsg &&
+                        <div className="alert alert-danger">{errorMsg}</div>}
+                        {successMsg &&
+                        <div className="alert alert-success">{successMsg}</div>}
                     </Form>
                 </div>
         );

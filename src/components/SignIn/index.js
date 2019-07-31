@@ -20,29 +20,30 @@ class SignIn extends React.Component {
   state = {
             submitted: false,
             loading: false,
-            error: ''
+            errorMsg: null,
+            successMsg: null
   };
-
-  handleSubmit(data){
-    // Make a network call somewhere
-        if (!(data.email && data.password)) {
-            return;
-        }
-
-        this.setState({ loading: true });
-        userService.signIn(data)
+  handleSubmit(fromData){
+        this.setState({ loading: true,submitted:true , errorMsg:null, successMsg:null});
+        userService.signIn(fromData)
             .then(
-                user => {
+                data => {
                     const { from } = this.props.location.state || { from: { pathname: "/" } };
+                    if(data.status == true){
+                    this.setState({successMsg: 'You are signed in successfully.'})
+                    setTimeout(()=>{
                     this.props.history.push(from);
+                    },1000)
+                }else{
+                    this.setState({errorMsg: data.error})
+                }
                 },
                 error => this.setState({ error, loading: false })
             );
   }
-
   render() {
     const { classes } = this.props;
-
+const {errorMsg, successMsg} = this.state;
     return (
         <div className="col-sm-6 margin-auto float-none">
             <Typography gutterBottom variant="headline" component="h1">Sign In Here</Typography>
@@ -55,6 +56,10 @@ class SignIn extends React.Component {
         <TextField name="email" label="Email" className="form-control" wrapperClassName="form-group" type="text" />
         <TextField name="password" label="Password" className="form-control" wrapperClassName="form-group" type="password" />
         <SubmitField value="Submit" className="btn btn-success mb-20" />
+         {errorMsg &&
+                        <div className="alert alert-danger">{errorMsg}</div>}
+                        {successMsg &&
+                        <div className="alert alert-success">{successMsg}</div>}
     </Form>
             <p>Already a user? Sign In <Link to="/signup">Here</Link></p>
         </div>

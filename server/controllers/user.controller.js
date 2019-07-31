@@ -24,7 +24,7 @@
             const userEmailAddress = (req.body.email).toLowerCase();
             var checkEmail = await isUserEmailExist(userEmailAddress);
             if (checkEmail != null && checkEmail.data != null) {
-                res.status(400).send({"status": false, "error": 'Email Address (' + userEmailAddress + ') already exist.'});
+                res.status(422).send({"status": false, "error": 'Email Address (' + userEmailAddress + ') already exist.'});
             } else {
                 var userData = {
                     email: userEmailAddress,
@@ -39,7 +39,7 @@
                 }
                 new User(userData).save(function (error, userResponse) {
                     if (error) {
-                        res.status(400).send({"status": false, "error": error});
+                        res.status(422).send({"status": false, "error": error});
                     } else {
                         var token = jwt.sign({email: req.body.email, id: userResponse._id}, config.secret, {expiresIn: '24h'});
                         res.status(200).send({status: true, "data": userResponse, "access_token": token});
@@ -47,7 +47,7 @@
                 });
             }
         } catch (error) {
-            res.status(400).send(JSON.stringify({"status": false, "error": 'Something Went wrong'}));
+            res.status(422).send(JSON.stringify({"status": false, "error": 'Something Went wrong'}));
         }
     }
     userExport.signIn = async function (req, res) {
@@ -55,7 +55,7 @@
             const userEmailAddress = (req.body.email).toLowerCase();
             var userResponse = await isUserEmailExist(userEmailAddress);
             if (userResponse != null && userResponse.data == null) {
-                res.status(400).send({"status": false, "error": 'Email Address (' + userEmailAddress + ') not found. Please sign up.'});
+                res.status(422).send({"status": false, "error": 'Email Address (' + userEmailAddress + ') not found. Please sign up.'});
             } else {
                 const selectedFields = {
                     '_id': userResponse.data._id,
@@ -70,7 +70,7 @@
                 }
             }
         } catch (error) {
-            res.status(400).send(JSON.stringify({"status": false, "error": error}));
+            res.status(422).send(JSON.stringify({"status": false, "error": error}));
         }
     }
     

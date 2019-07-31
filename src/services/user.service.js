@@ -18,7 +18,7 @@ function signUp(formData) {
         body: JSON.stringify(formData)
     };
     return fetch(`/api/signup`, requestOptions)
-            .then(handleResponse)
+            .then(response => response.json())
             .then(data => {
                 if (data && data.data) {
                     localStorage.setItem('user', JSON.stringify(data.data));
@@ -26,17 +26,18 @@ function signUp(formData) {
                     localStorage.setItem('token_valid', true)
                 }
                 return data;
-            });
+            }).catch(error => {
+        return error;
+    });
 }
 function signIn(formData) {
-    console.log(formData, 'formData');
     const requestOptions = {
         method: 'POST',
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
         body: JSON.stringify(formData)
     };
     return fetch(`/api/signin`, requestOptions)
-            .then(handleResponse)
+            .then(response => response.json())
             .then(data => {
                 if (data && data.data) {
                     localStorage.setItem('user', JSON.stringify(data.data));
@@ -54,7 +55,7 @@ function getAllProfiles() {
     };
 
     return fetch(`${config.API_PATH}/allProfiles`, requestOptions)
-            .then(handleResponse)
+            .then(response => response.json())
             .then(user => {
                 return user;
             });
@@ -66,7 +67,7 @@ function getProfile(profileId) {
     };
 
     return fetch(`/api/profile/${profileId}`, requestOptions)
-            .then(handleResponse)
+            .then(response => response.json())
             .then(profiles => {
                 return profiles;
             });
@@ -79,7 +80,7 @@ function addProfile(formData) {
     };
 
     return fetch(`/api/addProfile`, requestOptions)
-            .then(handleResponse)
+            .then(response => response.json())
             .then(profiles => {
                 return profiles;
             });
@@ -92,7 +93,7 @@ function uploadImage(formData) {
     };
 
     return fetch(`/uploadImage?type=logo`, requestOptions)
-            .then(handleResponse)
+            .then(response => response.json())
             .then(profiles => {
                 return profiles;
             });
@@ -105,7 +106,7 @@ function editProfile(formData, profileId) {
     };
 
     return fetch(`${config.API_PATH}/editprofile/${profileId}`, requestOptions)
-            .then(handleResponse)
+            .then(response => response.json())
             .then(user => {
                 return user;
             });
@@ -122,19 +123,5 @@ function getAll() {
 //        headers: authHeader()
     };
 
-    return fetch(`/api/users`, requestOptions).then(handleResponse);
-}
-
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401 || 403) {
-                console.log(response.body.token, 'response', response)
-            }
-            const error = (data && data.message) || response.statusText;
-            return (error);
-        }
-        return data;
-    });
+    return fetch(`/api/users`, requestOptions).then(response => response.json());
 }
