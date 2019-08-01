@@ -11,7 +11,5 @@ router.post('/addProfile', authMiddleware, profileController.addProfile);
 router.get('/allProfiles', authMiddleware, profileController.getAllProfiles);
 router.get('/profile/:id', authMiddleware, profileController.getSingleProfile);
 router.put('/editprofile/:id', authMiddleware, profileController.editProfile);
-//router.post('/uploadImage/:id',authMiddleware, profileController.uploadImage);
-router.post('/deleteImage/:id',authMiddleware, profileController.deleteImage);
 
 module.exports = router;

@@ -25,7 +25,7 @@ Mongoose.connect("mongodb://localhost:27017/xroads", {
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers,Origin, X-Requested-With,content-type, Content-Type, Accept, access_token, user_id, access-control-allow-origin');
+    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers,Origin,mimeType, X-Requested-With,content-type, Content-Type, Accept, access_token, user_id, access-control-allow-origin');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });

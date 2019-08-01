@@ -101,8 +101,8 @@ function uploadImage(formData) {
 function editProfile(formData, profileId) {
     const requestOptions = {
         method: 'PUT',
-        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data', 'access_token': localStorage.getItem('access_token')},
-         body: JSON.stringify(formData)
+        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data',"mimeType": "multipart/form-data", 'access_token': localStorage.getItem('access_token')},
+         body: formData
     };
 
     return fetch(`${config.API_PATH}/editprofile/${profileId}`, requestOptions)

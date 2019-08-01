@@ -16,38 +16,68 @@
             region: process.env.S3_BUCKET_REGION
         },
         signatureVersion: 'v4'});
-
+    const upload = multer({
+        storage: multerS3({
+            s3: s3,
+            bucket: process.env.S3_BUCKET_NAME + '/logo',
+            acl: 'public-read',
+            contentType: multerS3.AUTO_CONTENT_TYPE,
+            metadata: function (req, file, cb) {
+                const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
+                const fileType = (file.mimetype).split('/');
+                const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
+                cb(null, {fieldname: file.fieldname, originalname: fullPath});
+            },
+            key: function (req, file, cb) {
+                const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
+                const fileType = (file.mimetype).split('/');
+                const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
+                cb(null, fullPath);
+            }
+        })
+    }).array("logo", 10);
     profileExport.addProfile = async function (req, res) {
         try {
-            var profileData = {
-                user_id: req.body.user_id,
-                description: req.body.description,
-                stage: req.body.stage,
-                role: req.body.role,
-                contact: req.body.contact,
-                start_date: req.body.start_date,
-                logo: req.body.logo,
-                team_name: req.body.team_name
-            };
-
-            if (req.body.members) {
-                var memebers = [];
-                const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
-                memberArray.map((v, k) => {
-                    memebers.push({
-                        'name': v.name,
-                        'role': v.role,
-                        'major': v.major,
-                        'linkedin': v.linkedin
-                    })
-                })
-                profileData['members'] = memebers;
-            }
-            new Profile(profileData).save(function (error, profileResponse) {
-                if (error) {
-                    res.status(422).send({"status": false, error});
+            upload(req, res, function (err, result) {
+                if (err) {
+                    res.status(422).send({"status": false, err});
                 } else {
-                    res.status(200).send({"status": true, "data": profileResponse});
+                    var profileData = {
+                        user_id: req.body.user_id,
+                        description: req.body.description,
+                        stage: req.body.stage,
+                        role: req.body.role,
+                        contact: req.body.contact,
+                        start_date: req.body.start_date,
+                        logo: req.body.logo,
+                        team_name: req.body.team_name
+                    };
+                    if (req.files.length) {
+                        req.files.forEach(function (item) {
+                            profileData['logo'] = item.key;
+                        });
+                    }
+
+                    if (req.body.members) {
+                        var memebers = [];
+                        const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
+                        memberArray.map((v, k) => {
+                            memebers.push({
+                                'name': v.name,
+                                'role': v.role,
+                                'major': v.major,
+                                'linkedin': v.linkedin
+                            })
+                        })
+                        profileData['members'] = memebers;
+                    }
+                    new Profile(profileData).save(function (error, profileResponse) {
+                        if (error) {
+                            res.status(422).send({"status": false, error});
+                        } else {
+                            res.status(200).send({"status": true, "data": profileResponse});
+                        }
+                    });
                 }
             });
         } catch (error) {
@@ -108,118 +138,49 @@
             res.status(422).send({"status": false, error});
         }
     };
-//    profileExport.editProfile = async function (req, res) {
-//        const uploadedData = await uploadOnS3WithData(req, res, 'logo');
-//        res.status(200).send(uploadedData);
-//    };
     profileExport.editProfile = async function (req, res) {
-        const uploadedData = await uploadOnS3WithData(req, res, 'logo');
-        res.status(200).send({data: uploadedData});
-    };
-    profileExport.deleteImage = async function (req, res) {
-        var deleteItems = [];
-        if (req.body.images === null) {
-            res.json({
-                message: 'provide image keys to delete'
-            });
-        }
-        const imageArray = JSON.parse(req.body.images);
-        imageArray.forEach(function (item) {
-            deleteItems.push({Key: item.type + '/' + item.key});
-        });
-
-        var params = {
-            Bucket: process.env.S3_BUCKET_NAME,
-            Delete: {
-                Objects: deleteItems,
-                Quiet: false
-            }
-        };
-
-        s3.deleteObjects(params, function (err, data) {
+        upload(req, res, function (err, result) {
             if (err) {
-                console.log(err);
-                res.json({
-                    message: 'somwthing went wrong',
-                    items: data
-                });
+                res.status(422).send({status: false, err});
             } else {
-                console.log("Successfully deleted myBucket/myKey", data);
-                res.json({
-                    message: 'images deleted',
-                    items: data
-                });
-            }
-        });
-    };
-    function uploadOnS3WithData(req, res, type) {
-        return new Promise((resolve) => {
-            const upload = multer({
-                storage: multerS3({
-                    s3: s3,
-                    bucket: process.env.S3_BUCKET_NAME + '/' + type,
-                    acl: 'public-read',
-                    contentType: multerS3.AUTO_CONTENT_TYPE,
-                    metadata: function (req, file, cb) {
-                        console.log(file, 'file')
-                        const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
-                        const fileType = (file.mimetype).split('/');
-                        const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
-                        cb(null, {fieldname: file.fieldname, originalname: fullPath});
-                    },
-                    key: function (req, file, cb) {
-                         console.log(file, 'file')
-                        const fileName = (file.originalname).substring(0, 4).trim().replace(/ /g, "_");
-                        const fileType = (file.mimetype).split('/');
-                        const fullPath = Date.now() + "_" + fileName.trim() + '.' + fileType[1];
-                        cb(null, fullPath);
-                    }
-                })
-            }).array("logo", 10);
-            upload(req, res, function (err, result) {
-                if (err) {
-                    console.log('inside err', err)
-                    resolve({status: false, err});
-                } else {
-                    let updateFields = {};
-                    if (req.files.length) {
-                        req.files.forEach(function (item) {
-                            updateFields['logo'] = item.key;
-                        });
-                    }
-                    const profileId = req.params.id;
-                    if (req.body.team_name) {
-                        updateFields['team_name'] = req.body.team_name;
-                    }
-                    if (req.body.start_date) {
-                        updateFields['start_date'] = req.body.start_date;
-                    }
-                    if (req.body.stage) {
-                        updateFields['stage'] = req.body.stage;
-                    }
-                    if (req.body.contact) {
-                        updateFields['contact'] = req.body.contact;
-                    }
-                    if (req.body.description) {
-                        updateFields['description'] = req.body.description;
-                    }
-                    if (req.body.role) {
-                        updateFields['role'] = req.body.role;
-                    }
-                    if (req.body.members) {
-                        const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
-                        updateFields['members'] = memberArray;
-                    }
-                    Profile.updateOne({'_id': profileId}, updateFields, function (error, response) {
-                        if (error) {
-                            resolve({status: false, error});
-                        } else {
-                            resolve({status: true, "data": response});
-                        }
+                let updateFields = {};
+                if (req.files.length) {
+                    req.files.forEach(function (item) {
+                        updateFields['logo'] = item.key;
                     });
                 }
-            });
+                const profileId = req.params.id;
+                if (req.body.team_name) {
+                    updateFields['team_name'] = req.body.team_name;
+                }
+                if (req.body.start_date) {
+                    updateFields['start_date'] = req.body.start_date;
+                }
+                if (req.body.stage) {
+                    updateFields['stage'] = req.body.stage;
+                }
+                if (req.body.contact) {
+                    updateFields['contact'] = req.body.contact;
+                }
+                if (req.body.description) {
+                    updateFields['description'] = req.body.description;
+                }
+                if (req.body.role) {
+                    updateFields['role'] = req.body.role;
+                }
+                if (req.body.members) {
+                    const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
+                    updateFields['members'] = memberArray;
+                }
+                Profile.updateOne({'_id': profileId}, updateFields, function (error, response) {
+                    if (error) {
+                        res.status(422).send({status: false, error});
+                    } else {
+                        res.status(200).send({status: true, "data": response});
+                    }
+                });
+            }
         });
-    }
+    };
     module.exports = profileExport;
 })();
