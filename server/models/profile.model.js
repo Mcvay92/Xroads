@@ -15,6 +15,10 @@ var profileSchema = new Schema({
         type: String,
         trim: true
     },
+    status: {
+        type: String,
+        default: 'active'
+    },
     start_date: {
         type: Date,
         trim: true
