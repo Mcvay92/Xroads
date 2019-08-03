@@ -1,5 +1,6 @@
 export default {
     API_PATH: "/api",
+    LOGO_IMG_PATH: "https://crossroad-test.s3.us-east-2.amazonaws.com/logo/",
     stages: {
         0: 'Idea/market research',
         1: 'Prototype development/team formation',

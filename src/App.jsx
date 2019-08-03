@@ -23,7 +23,7 @@ export default class App extends Component {
     }
     componentDidUpdate() {
         let isUserValue = localStorage.getItem('access_token') ? true : false;
-        let validToken = localStorage.getItem('token_valid');
+        let validToken = localStorage.getItem('token_valid') === 'true' ? true : false;
         if (this.state.isUser !== isUserValue) {
             this.setState({isUser: isUserValue, isValidToken:validToken})
         }

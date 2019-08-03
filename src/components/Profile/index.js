@@ -1,38 +1,82 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import {Delete, Edit} from '@material-ui/icons';
 import { userService } from '../../services';
 import config from '../../config';
 import moment from 'moment';
-import { BrowserRouter as Router, Route, Link }
-from 'react-router-dom';
-export default class Profile extends React.Component {
+import {  Link } from 'react-router-dom';
+ class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             profileData: null,
             submitted: false,
             loading: false,
+            isOpen:(localStorage.getItem('token_valid') === 'true') ? false : true,
+            isDialog:typeof localStorage.getItem('access_token') !== 'string' ? false : true,
             error: ''
         };
         this.getProfilesData = this.getProfilesData.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+//        this.deleteProfileId = this.deleteProfileId.bind(this);
+    }
+    
+    deleteProfileId(deleteProfileId) {
+        console.log(deleteProfileId,'deleteProfileId');
+//        userService.deleteSingleProfile(this.state.deleteProfileId)
+//                .then(
+//                    response => {
+//                    if(response.token === 'invalid'){
+//                        this.setState({
+//                            isDialog:false,
+//                            isOpen:true
+//                         });
+//                    }else{
+//                        this.setState({
+//                            isDialog:true,
+//                            isOpen:false
+//                         });
+//                    }
+//                    },
+//                    error => {
+//                        console.log(error, 'error');
+//                        this.setState({error: error, loading: false});
+//                    }
+//                );
     }
     getProfilesData() {
         userService.getAllProfiles()
                 .then(
-                        response => {
-                            this.setState({profileData: response.data, loading: false})
-                        },
-                        error => this.setState({error: error, loading: false})
+                    response => {
+                    if(response.token == 'invalid'){
+                        this.setState({
+                            isDialog:false,
+                            isOpen:true
+                         });
+                    }else{
+                        this.setState({
+                            isDialog:true,
+                            isOpen:false,
+                            profileData:response.data
+                         });
+                    }
+                    },
+                    error => {
+                        this.setState({error: error, loading: false});
+                    }
                 );
     }
+    handleClose(){
+        this.setState({isOpen:false});
+         this.context.router.history.push('/signin');
+    }
     componentDidMount() {
-        this.setState({loading: true});
-        let userObject = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-        let userId = userObject != null ? userObject._id : null;
         this.getProfilesData();
     }
     render() {
@@ -46,7 +90,7 @@ export default class Profile extends React.Component {
                     <td>{item.team_name}</td>
                     <td>{config.stages[item.stage]}</td>
                     <td>{moment(new Date(item.start_date)).format("LL")}</td>
-                    <td><Link className="mr-30" to={`/editProfile/${item._id}`}><Edit/></Link> <Link to={`/deleteProfile/${item._id}`}><Delete/></Link></td>
+                    <td><Link className="mr-30" to={`/editProfile/${item._id}`}><Edit/></Link></td>
                 </tr>
             );
         }
@@ -73,8 +117,28 @@ export default class Profile extends React.Component {
                                     <div className="alert alert-info">
                                         No profile added yet.
                                     </div>}
+                    {(this.state.isDialog == false || this.state.isOpen == true) &&
+                        <Dialog
+                            open={this.state.isOpen}
+                            onClose={this.handleClose}
+                            aria-labelledby="draggable-dialog-title"
+                            >
+                            <DialogContent>
+                                <DialogContentText>
+                                   Your session is expired. Please login to continue.
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Ok
+                                </Button>
+                            </DialogActions>
+                        </Dialog>}
                 </div>
                 );
     }
 }
-
+Profile.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+export default Profile;

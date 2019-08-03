@@ -1,6 +1,7 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import {withRouter} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import PropTypes from 'prop-types';
@@ -42,9 +43,7 @@ class NavBar extends React.Component {
             isDialog:typeof localStorage.getItem('access_token') !== 'string' ? false : true,
             userSigned: localStorage.getItem('access_token') ? true : false
         };
-        console.log(typeof localStorage.getItem('access_token') !== 'string', this.state.isOpen, this.state.isDialog)
         this.logout = this.logout.bind(this);
-        this.handleClose = this.handleClose.bind(this);
     }
     logout() {
         const {isUser, history} = this.props;
@@ -54,19 +53,12 @@ class NavBar extends React.Component {
         localStorage.setItem('token_valid', false);
         this.context.router.history.push('/signin');
     }
-    handleClose(){
-        this.setState({isOpen:false});
-         this.context.router.history.push('/signin');
-    }
+    
     shouldComponentUpdate(nextProps, nextState) 
     { 
-        console.log("shouldComponentUpdate()", nextProps); 
         return true; 
     } 
-    componentDidUpdate() {
-        const {isValidToken, isUser} = this.props;
-        console.log(this.context.router, 'this.props');
-    }
+      
     render() {
     const {classes, isUser} = this.props;
     const {currentTab, userSigned, isOpen, isDialog} = this.state;
@@ -107,23 +99,7 @@ class NavBar extends React.Component {
                                 </Tabs>
                             </Toolbar>
                         </AppBar>
-                        {isDialog &&
-                        <Dialog
-                            open={this.state.isOpen}
-                            onClose={this.handleClose}
-                            aria-labelledby="draggable-dialog-title"
-                            >
-                            <DialogContent>
-                                <DialogContentText>
-                                   Please login to continue.
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={this.handleClose} color="primary">
-                                    Ok
-                                </Button>
-                            </DialogActions>
-                        </Dialog>}
+                        
                     </div>
                     )
             }

@@ -11,5 +11,6 @@ router.post('/addProfile', authMiddleware, profileController.addProfile);
 router.get('/allProfiles', authMiddleware, profileController.getAllProfiles);
 router.get('/profile/:id', authMiddleware, profileController.getSingleProfile);
 router.put('/editprofile/:id', authMiddleware, profileController.editProfile);
+router.delete('/deleteprofile/:id', authMiddleware, profileController.deleteProfile);
 
 module.exports = router;

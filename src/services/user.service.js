@@ -7,7 +7,7 @@ export const userService = {
     editProfile,
     getAll,
     addProfile,
-    uploadImage,
+    deleteSingleProfile ,
     logout
 };
 
@@ -23,7 +23,7 @@ function signUp(formData) {
                 if (data && data.data) {
                     localStorage.setItem('user', JSON.stringify(data.data));
                     localStorage.setItem('access_token', data.access_token);
-                    localStorage.setItem('token_valid', true)
+                    localStorage.setItem('token_valid', true);
                 }
                 return data;
             }).catch(error => {
@@ -56,9 +56,13 @@ function getAllProfiles() {
 
     return fetch(`${config.API_PATH}/allProfiles`, requestOptions)
             .then(response => response.json())
-            .then(user => {
-                return user;
-            });
+            .then(data => {
+                console.log(data)
+                if (data.token == 'invalid') {
+                    localStorage.setItem('token_valid', false);
+                }
+                return data;
+            })
 }
 function getProfile(profileId) {
     const requestOptions = {
@@ -69,45 +73,58 @@ function getProfile(profileId) {
     return fetch(`/api/profile/${profileId}`, requestOptions)
             .then(response => response.json())
             .then(profiles => {
+                console.log(profiles)
+                if (profiles.token == 'invalid') {
+                    localStorage.setItem('token_valid', false);
+                }
                 return profiles;
-            });
+            }).catch(error=>console.log('error', error));
 }
 function addProfile(formData) {
     const requestOptions = {
         method: 'POST',
-        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data', 'access_token': localStorage.getItem('access_token')},
-        body: JSON.stringify(formData)
+        headers: {'Accept': 'application/json', 'access_token': localStorage.getItem('access_token')},
+        body: formData
     };
 
     return fetch(`/api/addProfile`, requestOptions)
             .then(response => response.json())
             .then(profiles => {
+                  if (profiles.token == 'invalid') {
+                    localStorage.setItem('token_valid', false);
+                }
                 return profiles;
             });
 }
-function uploadImage(formData) {
-    const requestOptions = {
-        method: 'POST',
-        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data', 'access_token': localStorage.getItem('access_token')},
-        body: formData
-    };
 
-    return fetch(`/uploadImage?type=logo`, requestOptions)
-            .then(response => response.json())
-            .then(profiles => {
-                return profiles;
-            });
-}
 function editProfile(formData, profileId) {
     const requestOptions = {
         method: 'PUT',
-        headers: {'Accept': 'application/json', 'Content-Type': 'multipart/form-data',"mimeType": "multipart/form-data", 'access_token': localStorage.getItem('access_token')},
-         body: formData
+        headers: {'Accept': 'application/json',  'access_token': localStorage.getItem('access_token')},
+        body: formData
     };
 
     return fetch(`${config.API_PATH}/editprofile/${profileId}`, requestOptions)
             .then(response => response.json())
-            .then(resp => {
+            .then(resp => {  
+                if (resp.token == 'invalid') {
+                    localStorage.setItem('token_valid', false);
+                }
+                return resp;
+            });
+}
+function deleteSingleProfile (profileId) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {'Accept': 'application/json',  'access_token': localStorage.getItem('access_token')},
+    };
+
+    return fetch(`${config.API_PATH}/deleteprofile/${profileId}`, requestOptions)
+            .then(response => response.json())
+            .then(resp => {  
+                if (resp.token == 'invalid') {
+                    localStorage.setItem('token_valid', false);
+                }
                 return resp;
             });
 }

@@ -1,13 +1,16 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import { Link } from 'react-router-dom';
 import { Form, TextField, ObjectField, ErrorsContainer, ListField, DateField, SelectField, SubmitField } from 'react-components-form';
 import { userService } from '../../services';
 import { profileSchema } from './schemas';
 import FileField from '../common/FileField';
-import HiddenField from '../common/HiddenField';
 import config from '../../config';
 const addButtonProp = { className: 'button button-info', value:'Add Memeber' };
 const removeButtonProp = { className: 'button button-info', value:'Remove Memeber' };
@@ -15,11 +18,11 @@ const errorClasses = {
     className: 'alert alert-danger',
     fieldClassName:'has-error'
 };
+
 const ProfileForm = (props) => {
     let addButtonProp = { className: 'btn btn-info mt-30 mb-20', value:'Add Memeber' };
     let removeButtonProp = { className: 'btn btn-info', value:'Remove Memeber' };
     let profileData = props.profiledata;
-    let roleOject = config.roleSelect;
     let stageOject = config.stageSelect;
     return (
         <div className="form-container">
@@ -38,25 +41,58 @@ const ProfileForm = (props) => {
                    <TextField value={profileData ? profileData.role : null} name="role" errorStyles={errorClasses} className="form-control"  label="Member Role" placeholder="Member Role" wrapperClassName="form-group" />                               
                 </ObjectField>
             </ListField>
-            <FileField name="logo" className="form-control" label="Logo"  wrapperClassName="form-group"></FileField>
+            {profileData && profileData.logo && 
+            <div className="form-group">
+            <FileField name="logo" id="imageupload" className="form-control" label="Logo" wrapperClassName="img-outer" imgSrc={config.LOGO_IMG_PATH+profileData.logo}></FileField>
+        </div>}
+            {profileData === null && <FileField name="logo" id="imageupload"  className="form-control" label="Logo" wrapperClassName="form-group"></FileField>}
         </div>
         )
 }
-export default class AddProfile extends React.Component {
-    state = {
-        submitted: false,
-        loading: false,
-        profileId: false,
-        errorMsg: null,
-        successMsg: null
-    };
+ class AddProfile extends React.Component {
+    constructor(props){
+         super(props);
+          this.state = {
+                submitted: false,
+                loading: false,
+                profileId: false,
+                fileUploaded: false,
+                isOpen:(localStorage.getItem('token_valid') === 'true') ? false : true,
+                isDialog:typeof localStorage.getItem('access_token') !== 'string' ? false : true,
+                errorMsg: null,
+                successMsg: null
+            };
+    this.submitProfile = this.submitProfile.bind(this);
+    this.getProfilesData = this.getProfilesData.bind(this);
+    this.tokenHandler = this.tokenHandler.bind(this);
+    this.updateProfilesData = this.updateProfilesData.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    }
+    handleClose(){
+        this.setState({isOpen:false});
+         this.context.router.history.push('/signin');
+    }
     handleChange = name => (event) => {
         this.setState({[name]: event.target.value});
+    }
+    tokenHandler(response){
+         if(response && response.token == 'invalid'){
+                        this.setState({
+                            isDialog:false,
+                            isOpen:true
+                         });
+                    }else{
+                        this.setState({
+                            isDialog:true,
+                            isOpen:false
+                         });
+                    }
     }
     getProfilesData(profileId) {
         userService.getProfile(profileId)
         .then(
             response => {
+                this.tokenHandler(response);
             this.setState({profileData: response.data, loading: false});
                     },
             error => this.setState({error: error, loading: false})
@@ -66,20 +102,15 @@ export default class AddProfile extends React.Component {
         userService.editProfile(formData, profileId)
             .then(
                 response => {
+                    this.tokenHandler(response);
                 if(response.status == true){
-                             this.setState({profileData: response.data,successMsg: 'Profile updated successfully',loading: false});
-                        }else{
+                        this.setState({successMsg: 'Profile updated successfully.',loading: false});
+                        setTimeout(()=>{
+                              this.context.router.history.push('/profile');
+                        },1000);
+                    }else{
                              this.setState({erroMsg: response.error});
                         }
-                        },
-                error => this.setState({error: error, loading: false})
-            );
-    }
-    uploadImage(fileData) {
-        userService.uploadImage(fileData)
-            .then(
-                response => {
-                this.setState({profileData: response.data, loading: false});
                         },
                 error => this.setState({error: error, loading: false})
             );
@@ -88,11 +119,14 @@ export default class AddProfile extends React.Component {
         userService.addProfile(formData)
             .then(
                     response => {
+                        this.tokenHandler(response);
                         if(response.status == true){
-                             this.setState({profileData: response.data,successMsg: 'Profile added successfully',loading: false});
+                             this.setState({successMsg: 'Profile added successfully.',loading: false});
+                              setTimeout(()=>{
+                              this.context.router.history.push('/profile');
+                        },1000);
                         }else{
                             let erroMsg = null
-                            console.log(response.error['errors'], 'errors');
                             let errors = response.error['errors'];
                             Object.keys(errors).map((k)=>{
                                 erroMsg = errors[k].message;
@@ -105,21 +139,34 @@ export default class AddProfile extends React.Component {
     }
     componentWillMount() {
         const {match: {params}} = this.props;
-        console.log(this.state.profileData, 'this.state.profileData - before')
         if (params.id !== undefined){
             this.getProfilesData(params.id);
             this.setState({profileId:params.id})
         }
-        console.log(this.state.profileData, 'this.state.profileData - after')
     }
     submitProfile(data){
         let userData= JSON.parse(localStorage.getItem('user'));
         data['user_id'] = userData._id;
+        const imagedata = document.querySelector('input[type="file"]').files[0];
+            data['logo'] = imagedata;
+            data = data;
         this.setState({loading: true, successMsg:null, errorMsg:null});
+        var form = new FormData();
+        form.append('team_name', data.team_name);
+        form.append('user_id', data.user_id);
+        form.append('role', data.role);
+        form.append('description', data.description);
+        form.append('stage', data.stage);
+        form.append('start_date', data.start_date);
+        form.append('contact', data.contact);
+        if(data && data.logo){
+         form.append('logo',  data.logo);
+        }
+        form.append('members', JSON.stringify(data.members));
         if (this.state.profileId){
-            this.updateProfilesData(data, this.state.profileId)
+            this.updateProfilesData(form, this.state.profileId)
         } else{
-            this.addProfilesData(data)
+            this.addProfilesData(form)
         }
     };
     render() {
@@ -141,10 +188,31 @@ export default class AddProfile extends React.Component {
                         {successMsg &&
                         <div className="alert alert-success">{successMsg}</div>}
                         <div className="mt-50">
-                            <SubmitField className="btn btn-success" value="Save"/>         
+                            <SubmitField className="btn btn-success" value={this.state.profileData ? "Update":"Save"}/>         
                         </div>
                     </Form>
+                     {(this.state.isDialog == false || this.state.isOpen == true) &&
+                        <Dialog
+                            open={this.state.isOpen}
+                            onClose={this.handleClose}
+                            aria-labelledby="draggable-dialog-title"
+                            >
+                            <DialogContent>
+                                <DialogContentText>
+                                  Your session is expired. Please login to continue. 
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Ok
+                                </Button>
+                            </DialogActions>
+                        </Dialog>}
                 </div>
         );
     }
 };
+AddProfile.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+export default AddProfile;

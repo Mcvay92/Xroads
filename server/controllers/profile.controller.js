@@ -50,7 +50,8 @@
                         contact: req.body.contact,
                         start_date: req.body.start_date,
                         logo: req.body.logo,
-                        team_name: req.body.team_name
+                        team_name: req.body.team_name,
+                        status: 'active'
                     };
                     if (req.files.length) {
                         req.files.forEach(function (item) {
@@ -97,7 +98,7 @@
                 'stage': 1,
                 'start_date': 1
             };
-            Profile.findOne({'_id': profileId}, selectedFields, function (error, response) {
+            Profile.findOne({'_id': profileId, status: 'active'}, selectedFields, function (error, response) {
                 if (error) {
                     res.status(422).send({status: false, error});
                 } else {
@@ -112,7 +113,8 @@
         try {
             const userId = req.decoded.id;
             var query = {
-                'user_id': userId
+                'user_id': userId,
+                status: 'active'
             };
             if (req.query.team_name) {
                 query['team_name'] = req.query.team_name; //for filteration of profiles
@@ -172,13 +174,23 @@
                     const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
                     updateFields['members'] = memberArray;
                 }
-                Profile.updateOne({'_id': profileId}, updateFields, function (error, response) {
+                Profile.updateOne({'_id': profileId, status: 'active'}, updateFields, function (error, response) {
                     if (error) {
                         res.status(422).send({status: false, error});
                     } else {
                         res.status(200).send({status: true, "data": response});
                     }
                 });
+            }
+        });
+    };
+    profileExport.deleteProfile = async function (req, res) {
+        const profileId = req.params.id;
+        Profile.updateOne({'_id': profileId}, {status: 'inactive'}, function (error, response) {
+            if (error) {
+                res.status(422).send({status: false, error});
+            } else {
+                res.status(200).send({status: true, "data": response});
             }
         });
     };
