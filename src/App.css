@@ -89,3 +89,13 @@
     left: 0;
     opacity: 0;
 }
+.form-group{
+    position: relative;
+}
+.btn.btn-close.close{
+    position: absolute;
+    top: 30px;
+    cursor: pointer;
+    font-weight: 400;
+    left: 180px;
+}

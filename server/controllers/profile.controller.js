@@ -167,6 +167,10 @@
                 if (req.body.description) {
                     updateFields['description'] = req.body.description;
                 }
+                console.log(req.body.removeLogo, updateFields['logo'], typeof req.body.removeLogo)
+                if (req.body.removeLogo && req.body.removeLogo === 'true' && (updateFields['logo'] == undefined || null)){
+                    updateFields['logo'] = null;
+                }
                 if (req.body.role) {
                     updateFields['role'] = req.body.role;
                 }

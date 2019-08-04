@@ -18,11 +18,12 @@ const errorClasses = {
     className: 'alert alert-danger',
     fieldClassName:'has-error'
 };
-
+let removeImageData = false;
 const ProfileForm = (props) => {
     let addButtonProp = { className: 'btn btn-info mt-30 mb-20', value:'Add Memeber' };
     let removeButtonProp = { className: 'btn btn-info', value:'Remove Memeber' };
     let profileData = props.profiledata;
+    console.log(profileData, 'profileData', typeof profileData)
     let stageOject = config.stageSelect;
     return (
         <div className="form-container">
@@ -44,11 +45,21 @@ const ProfileForm = (props) => {
             {profileData && profileData.logo && 
             <div className="form-group">
             <FileField name="logo" id="imageupload" className="form-control" label="Logo" wrapperClassName="img-outer" imgSrc={config.LOGO_IMG_PATH+profileData.logo}></FileField>
-        </div>}
-            {profileData === null && <FileField name="logo" id="imageupload"  className="form-control" label="Logo" wrapperClassName="form-group"></FileField>}
+            <span id="remove-image" className="btn btn-close close" onClick={removeImage}>X</span>    
+    </div>}
+            {(profileData == null || (profileData && !profileData.logo)) && <FileField name="logo" id="imageupload"  className="form-control" label="Logo" wrapperClassName="form-group"></FileField>}
         </div>
         )
 }
+const removeImage =()=>{
+        console.log('removeImage');
+       var imgLayer =  document.getElementsByClassName('img-layer');
+       var imgOuter =  document.getElementsByClassName('img-outer');
+       document.getElementById('remove-image').remove();
+       imgLayer[0].remove();
+       imgOuter[0].classList.remove('img-outer');
+       removeImageData  = true;
+    }
  class AddProfile extends React.Component {
     constructor(props){
          super(props);
@@ -56,6 +67,7 @@ const ProfileForm = (props) => {
                 submitted: false,
                 loading: false,
                 profileId: false,
+                profileData: null,
                 fileUploaded: false,
                 isOpen:(localStorage.getItem('token_valid') === 'true') ? false : true,
                 isDialog:typeof localStorage.getItem('access_token') !== 'string' ? false : true,
@@ -151,6 +163,7 @@ const ProfileForm = (props) => {
             data['logo'] = imagedata;
             data = data;
         this.setState({loading: true, successMsg:null, errorMsg:null});
+        console.log(removeImageData, 'removeImageData', data['logo'])
         var form = new FormData();
         form.append('team_name', data.team_name);
         form.append('user_id', data.user_id);
@@ -161,6 +174,9 @@ const ProfileForm = (props) => {
         form.append('contact', data.contact);
         if(data && data.logo){
          form.append('logo',  data.logo);
+        }
+        if(data && data.logo == undefined && removeImageData){
+            form.append('removeLogo',  removeImageData);
         }
         form.append('members', JSON.stringify(data.members));
         if (this.state.profileId){
