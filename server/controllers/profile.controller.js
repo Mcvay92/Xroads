@@ -167,8 +167,7 @@
                 if (req.body.description) {
                     updateFields['description'] = req.body.description;
                 }
-                console.log(req.body.removeLogo, updateFields['logo'], typeof req.body.removeLogo)
-                if (req.body.removeLogo && req.body.removeLogo === 'true' && (updateFields['logo'] == undefined || null)){
+                if (req.body.removeLogo && req.body.removeLogo === 'true' && (updateFields['logo'] == undefined || null)) {
                     updateFields['logo'] = null;
                 }
                 if (req.body.role) {
@@ -176,7 +175,20 @@
                 }
                 if (req.body.members) {
                     const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
-                    updateFields['members'] = memberArray;
+                   let memebers = [];
+                    memberArray.map((v, k) => {
+                        var member = {
+                            'name': v.name,
+                            'role': v.role,
+                            'major': v.major,
+                            'linkedin': v.linkedin
+                        }
+                        if (v._id != '') {
+                            member['_id'] = v._id
+                        }
+                        memebers.push(member);
+                    })
+                    updateFields['members'] = memebers;
                 }
                 Profile.updateOne({'_id': profileId, status: 'active'}, updateFields, function (error, response) {
                     if (error) {
