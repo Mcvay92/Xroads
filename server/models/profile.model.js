@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 var profileSchema = new Schema({
-    user_id:{
+    user_id: {
         type: Schema.ObjectId,
         required: 'User Id is required.'
     },
@@ -26,7 +26,7 @@ var profileSchema = new Schema({
     team_name: {
         type: String,
         trim: true,
-        required:'Team name is required',
+        required: 'Team name is required',
         unique: 'Team Name must be unique.'
     },
     contact: {
@@ -43,7 +43,26 @@ var profileSchema = new Schema({
             major: {type: String},
             linkedin: {type: String}
         }],
-    role: {
+    roles: [{
+            name: {type: String, required: 'Role name is required.'}
+        }],
+    git: {
+        type: String,
+        trim: true
+    },
+    facebook: {
+        type: String,
+        trim: true
+    },
+    instagram: {
+        type: String,
+        trim: true
+    },
+    linkedin: {
+        type: String,
+        trim: true
+    },
+    inbox: {
         type: String,
         trim: true
     },

@@ -46,7 +46,11 @@
                         user_id: req.body.user_id,
                         description: req.body.description,
                         stage: req.body.stage,
-                        role: req.body.role,
+                        git: req.body.git,
+                        facebook: req.body.facebook,
+                        instagram: req.body.instagram,
+                        linkedin: req.body.linkedin,
+                        inbox: req.body.inbox,
                         contact: req.body.contact,
                         start_date: req.body.start_date,
                         logo: req.body.logo,
@@ -58,7 +62,6 @@
                             profileData['logo'] = item.key;
                         });
                     }
-
                     if (req.body.members) {
                         var memebers = [];
                         const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
@@ -71,6 +74,16 @@
                             })
                         })
                         profileData['members'] = memebers;
+                    }
+                    if (req.body.roles) {
+                        var roles = [];
+                        const rolesArray = typeof req.body.roles == 'string' ? JSON.parse(req.body.roles) : req.body.roles;
+                        rolesArray.map((v, k) => {
+                            roles.push({
+                                'name': v.name 
+                            })
+                        })
+                        profileData['roles'] = roles;
                     }
                     new Profile(profileData).save(function (error, profileResponse) {
                         if (error) {
@@ -90,13 +103,18 @@
             const profileId = req.params.id;
             const selectedFields = {
                 'team_name': 1,
-                'role': 1,
+                'roles': 1,
                 'contact': 1,
                 'description': 1,
                 'members': 1,
                 'logo': 1,
                 'stage': 1,
-                'start_date': 1
+                'start_date': 1,
+                'git': 1,
+                'facebook': 1,
+                'instagram': 1,
+                'linkedin': 1,
+                'inbox': 1
             };
             Profile.findOne({'_id': profileId, status: 'active'}, selectedFields, function (error, response) {
                 if (error) {
@@ -121,13 +139,18 @@
             }
             const selectedFields = {
                 'team_name': 1,
-                'role': 1,
+                'roles': 1,
                 'contact': 1,
                 'description': 1,
                 'members': 1,
                 'logo': 1,
                 'stage': 1,
-                'start_date': 1
+                'start_date': 1,
+                'git': 1,
+                'facebook': 1,
+                'instagram': 1,
+                'linkedin': 1,
+                'inbox': 1
             };
             Profile.find(query, selectedFields, function (error, response) {
                 if (error) {
@@ -167,15 +190,42 @@
                 if (req.body.description) {
                     updateFields['description'] = req.body.description;
                 }
+                if (req.body.git) {
+                    updateFields['git'] = req.body.git;
+                }
+                if (req.body.facebook) {
+                    updateFields['facebook'] = req.body.facebook;
+                }
+                if (req.body.instagram) {
+                    updateFields['instagram'] = req.body.instagram;
+                }
+                if (req.body.linkedin) {
+                    updateFields['linkedin'] = req.body.linkedin;
+                }
+                if (req.body.inbox) {
+                    updateFields['inbox'] = req.body.inbox;
+                }
                 if (req.body.removeLogo && req.body.removeLogo === 'true' && (updateFields['logo'] == undefined || null)) {
                     updateFields['logo'] = null;
                 }
-                if (req.body.role) {
-                    updateFields['role'] = req.body.role;
+                if (req.body.roles) {
+                    updateFields['roles'] = req.body.role;
+                    const roleArray = typeof req.body.roles == 'string' ? JSON.parse(req.body.roles) : req.body.roles;
+                    let roles = [];
+                    roleArray.map((v, k) => {
+                        var role = {
+                            'name': v.name
+                        }
+                        if (v._id != '') {
+                            role['_id'] = v._id
+                        }
+                        roles.push(role);
+                    })
+                    updateFields['roles'] = roles;
                 }
                 if (req.body.members) {
                     const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
-                   let memebers = [];
+                    let memebers = [];
                     memberArray.map((v, k) => {
                         var member = {
                             'name': v.name,
