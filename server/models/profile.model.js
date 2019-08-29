@@ -5,6 +5,7 @@ const beautifyUnique = require('mongoose-beautiful-unique-validation');
 var profileSchema = new Schema({
     user_id: {
         type: Schema.ObjectId,
+        ref: 'User',
         required: 'User Id is required.'
     },
     description: {

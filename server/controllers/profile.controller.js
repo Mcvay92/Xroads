@@ -80,7 +80,7 @@
                         const rolesArray = typeof req.body.roles == 'string' ? JSON.parse(req.body.roles) : req.body.roles;
                         rolesArray.map((v, k) => {
                             roles.push({
-                                'name': v.name 
+                                'name': v.name
                             })
                         })
                         profileData['roles'] = roles;
@@ -127,7 +127,7 @@
             res.status(422).send({"status": false, error});
         }
     };
-    profileExport.getAllProfiles = async function (req, res) {
+    profileExport.getAllUserProfiles = async function (req, res) {
         try {
             const userId = req.decoded.id;
             var query = {
@@ -159,6 +159,42 @@
                     res.status(200).send({status: true, "data": response});
                 }
             });
+        } catch (error) {
+            res.status(422).send({"status": false, error});
+        }
+    };
+    profileExport.getAllProfiles = async function (req, res) {
+        try {
+            var query = {
+                status: 'active'
+            };
+            if (req.query.team_name) {
+                query['team_name'] = req.query.team_name; //for filteration of profiles
+            }
+            const selectedFields = {
+                'team_name': 1,
+                'roles': 1,
+                'contact': 1,
+                'user_id': 1,
+                'description': 1,
+                'members': 1,
+                'logo': 1,
+                'stage': 1,
+                'start_date': 1,
+                'git': 1,
+                'facebook': 1,
+                'instagram': 1,
+                'linkedin': 1,
+                'inbox': 1
+            };
+            Profile.find(query).select(selectedFields).populate({path: 'user_id', 'select':{'email':1}}).
+                    exec(function (error, response) {
+                        if (error) {
+                            res.status(422).send({status: false, error});
+                        } else {
+                            res.status(200).send({status: true, "data": response});
+                        }
+                    });
         } catch (error) {
             res.status(422).send({"status": false, error});
         }
