@@ -7,16 +7,25 @@
         "@material-ui/icons": "^1.1.1",
         "acl": "^0.4.11",
         "ajv": "^6.9.1",
+        "aws-sdk": "^2.494.0",
         "axios": "^0.18.0",
         "bcrypt": "^3.0.6",
         "body-parser": "^1.18.3",
         "chromedriver": "^2.46.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.0.0",
         "express": "^4.16.4",
         "express-pino-logger": "^4.0.0",
+        "form-schema-validation": "^1.17.1",
+        "fs": "0.0.1-security",
         "geckodriver": "^1.15.1",
         "generate-password": "^1.4.2",
         "jsonwebtoken": "^8.5.1",
+        "moment": "^2.24.0",
         "mongoose": "^5.6.4",
+        "mongoose-beautiful-unique-validation": "^7.1.1",
+        "multer": "^1.4.2",
+        "multer-s3": "^2.9.0",
         "mysql": "^2.16.0",
         "node-env-run": "^3.0.2",
         "nodemailer": "^6.0.0",
@@ -26,6 +35,7 @@
         "pino-colada": "^1.4.4",
         "prop-types": "^15.7.2",
         "react": "^16.8.2",
+        "react-components-form": "^3.7.1",
         "react-cucumber": "^1.0.7",
         "react-dom": "^16.8.2",
         "react-router": "^4.3.1",
@@ -64,5 +74,9 @@
         "dev": "run-p server start",
         "cucumbers": "cucumber-js ./features"
     },
-    "proxy": "http://localhost:3001"
+    "proxy": {
+        "/api/": {
+            "target": "http://localhost:3001"
+        }
+    }
 }

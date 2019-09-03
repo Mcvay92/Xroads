@@ -4,38 +4,36 @@ import Routes from './components/Routes';
 import './App.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
-
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 const theme = createMuiTheme({
-  palette: {
-    primary: { main: '#000000' }, // Purple and green play nicely together.'
-    secondary: { main: '#33373d' },
-  },
-  typography: { useNextVariants: true },
+    palette: {
+        primary: {main: '#000000'}, 
+        secondary: {main: '#33373d'},
+    },
+    typography: {useNextVariants: true},
 });
 
 export default class App extends Component {
-  /*
-  //Below is an example of how to call the node js backend
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      greeting: ''
-    };
-     fetch(`/api/database`)
-            .then(response => response.json())
-            .then(state => this.setState(state));
-  }
-  //This would then go into the render function in this example
-  <p>{this.state.greeting}</p>
-*/
-
-  render = () => (
-      <MuiThemeProvider theme={theme}>
-          <div>
-              <NavBar />
-              <Routes />
-          </div>
-      </MuiThemeProvider>
-  );
+    constructor(props) {
+        super(props);
+        this.state = {
+            isUser: localStorage.getItem('access_token') ? true : false,
+            isValidToken: localStorage.getItem('token_valid')
+        };
+    }
+    componentDidUpdate() {
+        let isUserValue = localStorage.getItem('access_token') ? true : false;
+        let validToken = localStorage.getItem('token_valid') === 'true' ? true : false;
+        if (this.state.isUser !== isUserValue) {
+            this.setState({isUser: isUserValue, isValidToken:validToken})
+        }
+    }
+    render = () => (
+                <MuiThemeProvider theme={theme}>
+                    <NavBar isUser={this.state.isUser} validToken={this.state.isValidToken}/>
+                    <div className="container mt-50 mb-50">
+                        <Routes />
+                    </div>
+                </MuiThemeProvider>
+                );
 }

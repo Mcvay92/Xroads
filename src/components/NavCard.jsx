@@ -20,9 +20,8 @@ export default ({
     <div style={{ padding: 20 }}>
         <Card>
             <CardMedia style={{ height: 0, paddingTop: '56.25%' }} image={imagelink} title="Title" />
-
             <CardContent>
-                <Typography gutterBottom variant="h3">
+                <Typography gutterBottom variant="display3">
                     {content}
                 </Typography>
                 <Button id={id} variant="outlined" label="Jobs" component={Link} to={to}>

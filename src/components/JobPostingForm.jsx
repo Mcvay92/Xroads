@@ -51,7 +51,7 @@ class TextFields extends React.Component {
       return;
     }
 
-    fetch(`/api/addJob?name=${encodeURIComponent(this.state.answer1)}&description=${encodeURIComponent(this.state.answer2)}&skills=${encodeURIComponent(this.state.answer3)}&qualifications=${encodeURIComponent(this.state.answer4)}&extra=${encodeURIComponent(this.state.answer5)}&contact=${encodeURIComponent(this.state.answer6)}`)
+    fetch(`http://localhost:3001/api/addJob?name=${encodeURIComponent(this.state.answer1)}&description=${encodeURIComponent(this.state.answer2)}&skills=${encodeURIComponent(this.state.answer3)}&qualifications=${encodeURIComponent(this.state.answer4)}&extra=${encodeURIComponent(this.state.answer5)}&contact=${encodeURIComponent(this.state.answer6)}`)
       .then(response => response.json())
       .then((state) => {
         console.log(state);
