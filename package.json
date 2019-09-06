@@ -38,6 +38,7 @@
         "react-components-form": "^3.7.1",
         "react-cucumber": "^1.0.7",
         "react-dom": "^16.8.2",
+        "react-items-carousel": "^2.3.7",
         "react-router": "^4.3.1",
         "react-router-dom": "^4.3.1",
         "react-test-renderer": "^16.8.3",
