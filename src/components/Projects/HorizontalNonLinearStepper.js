@@ -4,8 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
@@ -27,14 +25,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-  return [
-    'Select campaign settings',
-    'Create an ad group',
-    'Create an ad',
-    'Select campaign settings',
-    'Create an ad group',
-    'Create an ad',
-  ];
+  return ['get idea', 'collect fund', 'Create an ad', 'sell'];
 }
 
 function getStepContent(step) {

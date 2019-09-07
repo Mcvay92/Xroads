@@ -12,12 +12,25 @@ const socialMediaDimensions = { height: '30px', width: '30px' };
 export default class Projects extends Component {
   constructor() {
     super();
-    this.state = { activeMemberIndex: 0, activeRoleIndex: 0  };
+    this.state = { activeMemberIndex: 0, activeRoleIndex: 0};
   }
+
+  getCardsNum = (cardsType) => {
+    if (window.innerWidth > 800) {
+      if (cardsType === 0) {
+        return 4;
+      }
+      return 3;
+    }
+    if (window.innerWidth < 800 && window.innerWidth > 400) {
+      return 2;
+    }
+    return 1;
+  };
 
   render() {
     return (
-        <div className="col-sm-10 margin-auto float-none">
+        <div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
             <Grid container justify="center" alignItems="center" direction="column">
                 <Avatar alt="Remy Sharp" src="https://bit.ly/2IjUqrM" style={avatarDimensions} />
                 <br />
@@ -86,23 +99,15 @@ export default class Projects extends Component {
                     </li>
                 </ul>
                 <HorizontalNonLinearStepper />
-                
-                <div
-                    style={{
-                      padding: '0 60px',
-                      maxWidth: 600,
-                      margin: '0 auto',
-                      marginTop: '20px',
-                    }}
-                >
-                <Typography gutterBottom variant="headline" component="h3">
-            Members
-                </Typography>
+                <div className="carousel">
+                    <Typography gutterBottom variant="headline" component="h3">
+              Members
+                    </Typography>
                     <ItemsCarousel
                         gutter={12}
                         activePosition="center"
                         chevronWidth={60}
-                        numberOfCards={4}
+                        numberOfCards={this.getCardsNum(0)}
                         slidesToScroll={1}
                         outsideChevron
                         showSlither={false}
@@ -113,43 +118,28 @@ export default class Projects extends Component {
                         leftChevron={<p className="card-controller">{'<'}</p>}
                     >
                         {Array.from(new Array(10)).map((_, i) => (
-                            <div     style={{
-                                textAlign:"center",
-                                paddingTop:"20px",
-                                border:"1px solid black",                                
-                            }}>
+                            <div className="card-wrapper">
                                 <div
+                                    className="card-image card-image-round"
                                     style={{
-                                        height: "80px",
-                                        width:"80px",
-                                        margin:"0 auto",
-                                        background: 'url(https://image.flaticon.com/icons/svg/181/181549.svg)',
-                                        borderRadius: "50%"
+                                      background: 'url(https://image.flaticon.com/icons/svg/181/181549.svg)',
                                     }}
-                            />
+                                />
                                 <p>Full Name</p>
                             </div>
                         ))}
                     </ItemsCarousel>
                 </div>
 
-
-                <div
-                    style={{
-                      padding: '0 60px',
-                      maxWidth: 600,
-                      margin: '0 auto',
-                      marginTop: '20px',
-                    }}
-                >
-                <Typography gutterBottom variant="headline" component="h3">
-            Roles Available
-                </Typography>
+                <div className="carousel">
+                    <Typography gutterBottom variant="headline" component="h3">
+              Roles Available
+                    </Typography>
                     <ItemsCarousel
                         gutter={12}
                         activePosition="center"
                         chevronWidth={60}
-                        numberOfCards={3}
+                        numberOfCards={this.getCardsNum(1)}
                         slidesToScroll={1}
                         outsideChevron
                         showSlither={false}
@@ -160,25 +150,18 @@ export default class Projects extends Component {
                         leftChevron={<p className="card-controller">{'<'}</p>}
                     >
                         {Array.from(new Array(10)).map((_, i) => (
-                            <div     style={{
-                                textAlign:"center",
-                                paddingTop:"20px",
-                                border:"1px solid black",                                
-                            }}>
+                            <div className="card-wrapper">
                                 <div
+                                    className="card-image"
                                     style={{
-                                        height: "80px",
-                                        width:"80px",
-                                        margin:"0 auto",
-                                        background: 'url(https://image.flaticon.com/icons/svg/1063/1063299.svg)',
+                                      background: 'url(https://image.flaticon.com/icons/svg/1063/1063299.svg)',
                                     }}
-                            />
+                                />
                                 <p>Role</p>
                             </div>
                         ))}
                     </ItemsCarousel>
                 </div>
-
             </Grid>
         </div>
     );
