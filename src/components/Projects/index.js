@@ -1,18 +1,43 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ItemsCarousel from 'react-items-carousel';
 import HorizontalNonLinearStepper from './HorizontalNonLinearStepper';
 
+Modal.setAppElement('#root');
+
+
 const avatarDimensions = { height: '190px', width: '190px' };
 const socialMediaDimensions = { height: '30px', width: '30px' };
+const closeStyle = {width: '100%', background: 'black', color: 'white', border: 'none', cursor: 'pointer'};
+const customStyles = {  
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 export default class Projects extends Component {
   constructor() {
     super();
-    this.state = { activeMemberIndex: 0, activeRoleIndex: 0};
+    this.state = { activeMemberIndex: 0, activeRoleIndex: 0, modalIsOpen: false };
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({roleMail:"ex@example.com", roleNum:"0021286854355" }, ()=>{this.setState({modalIsOpen: true})});
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
   getCardsNum = (cardsType) => {
@@ -150,7 +175,10 @@ export default class Projects extends Component {
                         leftChevron={<p className="card-controller">{'<'}</p>}
                     >
                         {Array.from(new Array(10)).map((_, i) => (
-                            <div className="card-wrapper">
+                            <div 
+                                className="card-wrapper card-wrapper-clickable"
+                                onClick={this.openModal}
+                                >
                                 <div
                                     className="card-image"
                                     style={{
@@ -163,6 +191,29 @@ export default class Projects extends Component {
                     </ItemsCarousel>
                 </div>
             </Grid>
+            <Modal
+                isOpen={this.state.modalIsOpen}
+                onRequestClose={this.closeModal}
+                style={customStyles}
+                contentLabel="Role Contacts"
+            >
+                <h5>Contacts</h5>
+                <p>
+                    Email:
+                    {this.state.roleMail}
+                </p>
+                <p>
+                    Number:
+                    {this.state.roleNum}
+                </p>
+                <button
+                    type="button"
+                    onClick={this.closeModal}
+                    style={closeStyle}
+                >
+                close
+                </button>
+            </Modal>
         </div>
     );
   }

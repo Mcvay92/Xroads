@@ -146,6 +146,10 @@
   border: 1px solid black;
 }
 
+.card-wrapper-clickable {
+  cursor: pointer;
+}
+
 .card-image {
   height: 80px;
   width: 80px;
