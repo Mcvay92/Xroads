@@ -97,13 +97,13 @@ export default class Projects extends Component {
       return <div />;
     }
     const {
-      description, team_name, stage, members, roles, profileLogo,
+      description, team_name, stage, members, roles, logo,
     } = this.state.profileData;
 
     return (
         <div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
             <Grid container justify="center" alignItems="center" direction="column">
-                <Avatar alt="team logo" src={profileLogo || addImage} style={avatarDimensions} />
+                <Avatar alt="team logo" src={`https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` || addImage} style={avatarDimensions} />
                 <br />
                 <Typography gutterBottom variant="headline" component="h2">
                     {team_name}
