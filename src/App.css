@@ -136,8 +136,8 @@
 .carousel {
   padding: 0 60px;
   max-width: 100%;
-  margin: 0 auto;
   margin-top: 20px;
+  align-self: flex-start;
 }
 
 .card-wrapper {
@@ -154,8 +154,17 @@
   height: 80px;
   width: 80px;
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 .card-image-round {
   border-radius: 50%;
+}
+
+.close-modal-button {
+  width: 100%;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
 }

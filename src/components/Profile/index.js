@@ -87,7 +87,7 @@ import {  Link } from 'react-router-dom';
             profiles = this.state.profileData.map((item, key) =>
                 <tr key={item._id}>
                     <td>{key + 1}</td>
-                    <td>{item.team_name}</td>
+                    <td><Link to={`/profile/${item._id}`}>{item.team_name}</Link></td>
                     <td>{config.stages[item.stage]}</td>
                     <td>{moment(new Date(item.start_date)).format("LL")}</td>
                     <td><Link className="mr-30" to={`/editProfile/${item._id}`}><Edit/></Link></td>

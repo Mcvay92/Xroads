@@ -50,7 +50,7 @@ const Routes = () => (
         <Route exact path="/mentorMatchingForm" component={MentorMatchingForm} />
 
         <Route exact path="/organizations" component={Organizations} />
-        <Route exact path="/projects" component={Projects} />
+        <Route exact path="/profile/:id" component={Projects} />
         <Route exact path="/incubators" component={Incubators} />
         <Route exact path="/courses" component={Courses} />
         <Route exact path="/signin" component={SignIn} />

@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
+import { userService } from '../../services';
 
 const styles = theme => ({
   root: {
@@ -25,7 +25,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-  return ['get idea', 'collect fund', 'Create an ad', 'sell'];
+  return ['Idea/market research', 'Prototype', 'Private beta', 'Public beta'];
 }
 
 function getStepContent(step) {
@@ -43,12 +43,23 @@ function getStepContent(step) {
 
 class HorizontalNonLinearAlternativeLabelStepper extends React.Component {
   state = {
-    lastCompletedStep: null,
+    lastCompletedStep: this.props.currentStage,
   };
 
   totalSteps = () => getSteps().length;
 
+  getFormData = object => Object.keys(object).reduce((formData, key) => {
+    formData.append(key, object[key]);
+    return formData;
+  }, new FormData());
+
   handleStep = step => () => {
+    // const updatedData = { ...this.props.profileData };
+    // updatedData.stage =  step;
+
+    // userService
+    //   .editProfile(this.getFormData(updatedData), updatedData._id)
+    //   .then(res => console.log(res));
     this.setState({
       lastCompletedStep: step,
     });
@@ -92,9 +103,5 @@ class HorizontalNonLinearAlternativeLabelStepper extends React.Component {
     );
   }
 }
-
-HorizontalNonLinearAlternativeLabelStepper.propTypes = {
-  classes: PropTypes.object,
-};
 
 export default withStyles(styles)(HorizontalNonLinearAlternativeLabelStepper);
