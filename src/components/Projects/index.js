@@ -48,6 +48,7 @@ export default class Projects extends Component {
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.logoUploader = React.createRef();
   }
 
   componentDidMount() {
@@ -79,6 +80,32 @@ export default class Projects extends Component {
     this.setState({ modalIsOpen: false });
   }
 
+  updatePhoto(logo) {
+
+    const data = this.state.profileData;
+    const userData = JSON.parse(localStorage.getItem('user'));
+    data.user_id = userData._id;
+    const imagedata = document.querySelector('input[type="file"]').files[0];
+    data.logo = imagedata;
+    const form = new FormData();
+    form.append('team_name', data.team_name);
+    form.append('user_id', data.user_id);
+    form.append('description', data.description);
+    form.append('stage', data.stage);
+    form.append('start_date', data.start_date);
+    form.append('contact', data.contact);
+    if (data && logo) {
+      form.append('logo', logo);
+    }
+    form.append('members', JSON.stringify(data.members));
+    form.append('roles', JSON.stringify(data.roles));
+      
+    userService
+      .editProfile(form, data._id)
+      .then(() => document.location.reload()).catch(err => console.error(err));
+      
+  }
+
   getCardsNum = (cardsType) => {
     if (window.innerWidth > 800) {
       if (cardsType === 0) {
@@ -103,8 +130,27 @@ export default class Projects extends Component {
     return (
         <div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
             <Grid container justify="center" alignItems="center" direction="column">
-                <Avatar alt="team logo" src={`https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` || addImage} style={avatarDimensions} />
+                <Avatar
+                    alt="team logo"
+                    src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : addImage}
+                    style={avatarDimensions}
+                    onClick={(e) => {
+                      if (!logo) {
+                        this.logoUploader.current.click();
+                      }
+                    }}
+                />
                 <br />
+                <input
+                    type="file"
+                    id="file"
+                    ref={this.logoUploader}
+                    style={{ display: 'none' }}
+                    onChange={(event) => {
+                      const newLogo = event.target.files[0];
+                      this.updatePhoto(newLogo);
+                    }}
+                />
                 <Typography gutterBottom variant="headline" component="h2">
                     {team_name}
                 </Typography>
