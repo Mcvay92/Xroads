@@ -54,15 +54,27 @@ class HorizontalNonLinearAlternativeLabelStepper extends React.Component {
   }, new FormData());
 
   handleStep = step => () => {
-    // const updatedData = { ...this.props.profileData };
-    // updatedData.stage =  step;
+    const data = { ...this.props.profileData };
+    data.stage =  step;
+    
 
-    // userService
-    //   .editProfile(this.getFormData(updatedData), updatedData._id)
-    //   .then(res => console.log(res));
-    this.setState({
-      lastCompletedStep: step,
-    });
+    const userData = JSON.parse(localStorage.getItem('user'));
+    data.user_id = userData._id;
+    const form = new FormData();
+    form.append('team_name', data.team_name);
+    form.append('user_id', data.user_id);
+    form.append('description', data.description);
+    form.append('stage', data.stage);
+    form.append('start_date', data.start_date);
+    form.append('contact', data.contact);
+    form.append('members', JSON.stringify(data.members));
+    form.append('roles', JSON.stringify(data.roles));
+
+    userService
+      .editProfile(form, data._id)
+      .then(() => this.setState({
+        lastCompletedStep: step,
+      })).catch(err => console.error(err));
   };
 
   isStepComplete(step) {
