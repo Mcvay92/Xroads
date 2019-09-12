@@ -161,6 +161,19 @@
   border-radius: 50%;
 }
 
+.normal-cards-view {
+  padding-left: 60px;
+  padding-right: 60px;
+  align-self: flex-start;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.normal-cards-view > div {
+  display: flex;
+  justify-content: space-between;
+}
+
 .close-modal-button {
   width: 100%;
   background: black;

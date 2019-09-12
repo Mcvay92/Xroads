@@ -127,69 +127,123 @@ export default class Projects extends Component {
                     ))}
                 </ul>
                 <HorizontalNonLinearStepper currentStage={stage} profileData={this.state.profileData} />
-                <div className="carousel">
-                    <Typography gutterBottom variant="headline" component="h3">
-              Members
-                    </Typography>
-                    <ItemsCarousel
-                        gutter={12}
-                        activePosition="center"
-                        chevronWidth={60}
-                        numberOfCards={this.getCardsNum(0)}
-                        slidesToScroll={1}
-                        outsideChevron
-                        showSlither={false}
-                        firstAndLastGutter={false}
-                        activeItemIndex={this.state.activeMemberIndex}
-                        requestToChangeActive={value => this.setState({ activeMemberIndex: value })}
-                        rightChevron={<p className="card-controller">{'>'}</p>}
-                        leftChevron={<p className="card-controller">{'<'}</p>}
-                    >
-                        {Array.from(new Array(members.length < 4 ? 5 : members.length + 1)).map((_, i) => (
-                            <div className="card-wrapper">
-                                <div
-                                    className="card-image"
-                                    style={{
-                                      background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
-                                    }}
-                                />
-                                <p>{members[i] ? members[i].name : 'Add Member'}</p>
-                            </div>
-                        ))}
-                    </ItemsCarousel>
-                </div>
 
-                <div className="carousel">
-                    <Typography gutterBottom variant="headline" component="h3">
-              Roles Available
-                    </Typography>
-                    <ItemsCarousel
-                        gutter={12}
-                        activePosition="center"
-                        chevronWidth={60}
-                        numberOfCards={this.getCardsNum(1)}
-                        slidesToScroll={1}
-                        outsideChevron
-                        showSlither={false}
-                        firstAndLastGutter={false}
-                        activeItemIndex={this.state.activeRoleIndex}
-                        requestToChangeActive={value => this.setState({ activeRoleIndex: value })}
-                        rightChevron={<p className="card-controller">{'>'}</p>}
-                        leftChevron={<p className="card-controller">{'<'}</p>}
-                    >
-                        {Array.from(new Array(roles.length < 3 ? 4 : roles.length + 1)).map((_, i) => (
-                            <div className="card-wrapper card-wrapper-clickable" onClick={this.openModal}>
+                {members.length >= this.getCardsNum(0) ? (
+                    <div className="carousel">
+                        <Typography gutterBottom variant="headline" component="h3">
+                members Available
+                        </Typography>
+                        <ItemsCarousel
+                            gutter={12}
+                            activePosition="center"
+                            chevronWidth={60}
+                            numberOfCards={this.getCardsNum(0)}
+                            slidesToScroll={1}
+                            outsideChevron
+                            showSlither={false}
+                            firstAndLastGutter={false}
+                            activeItemIndex={this.state.activeMemberIndex}
+                            requestToChangeActive={value => this.setState({ activeMemberIndex: value })}
+                            rightChevron={<p className="card-controller">{'>'}</p>}
+                            leftChevron={<p className="card-controller">{'<'}</p>}
+                        >
+                            {Array.from(new Array(members.length + 1)).map((_, i) => (
+                                <div className="card-wrapper">
+                                    <div
+                                        className="card-image"
+                                        style={{
+                                          background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
+                                        }}
+                                    />
+                                    <p>{members[i] ? members[i].name : 'Add Role'}</p>
+                                </div>
+                            ))}
+                        </ItemsCarousel>
+                    </div>
+                ) : (
+                    <div className="normal-cards-view">
+                        <Typography gutterBottom variant="headline" component="h3">
+                Team members
+                        </Typography>
+                        <div>
+                            {Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
                                 <div
-                                    className="card-image"
-                                    style={{
-                                      background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
-                                    }}
-                                />
-                                <p>{roles[i] ? roles[i].name : 'Add Role'}</p>
-                            </div>
-                        ))}
-                    </ItemsCarousel>
-                </div>
+                                    className="card-wrapper"
+                                    style={{ width: `${Math.round(100 / this.getCardsNum(0)) - 1.5}%` }}
+                                >
+                                    <div
+                                        className="card-image"
+                                        style={{
+                                        background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
+                                      }}
+                                    />
+                                    <p>{members[i] ? members[i].name : 'Add Role'}</p>
+                                </div>
+                            ))}
+                            {' '}
+                        </div>
+                        {' '}
+                    </div>
+                )}
+
+                {roles.length >= this.getCardsNum(1) ? (
+                    <div className="carousel">
+                        <Typography gutterBottom variant="headline" component="h3">
+                Roles Available
+                        </Typography>
+                        <ItemsCarousel
+                            gutter={12}
+                            activePosition="center"
+                            chevronWidth={60}
+                            numberOfCards={this.getCardsNum(1)}
+                            slidesToScroll={1}
+                            outsideChevron
+                            showSlither={false}
+                            firstAndLastGutter={false}
+                            activeItemIndex={this.state.activeRoleIndex}
+                            requestToChangeActive={value => this.setState({ activeRoleIndex: value })}
+                            rightChevron={<p className="card-controller">{'>'}</p>}
+                            leftChevron={<p className="card-controller">{'<'}</p>}
+                        >
+                            {Array.from(new Array(roles.length + 1)).map((_, i) => (
+                                <div className="card-wrapper card-wrapper-clickable" onClick={this.openModal}>
+                                    <div
+                                        className="card-image"
+                                        style={{
+                                          background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
+                                        }}
+                                    />
+                                    <p>{roles[i] ? roles[i].name : 'Add Role'}</p>
+                                </div>
+                            ))}
+                        </ItemsCarousel>
+                    </div>
+                ) : (
+                    <div className="normal-cards-view">
+                        <Typography gutterBottom variant="headline" component="h3">
+                Roles Available
+                        </Typography>
+                        <div>
+                            {Array.from(new Array(this.getCardsNum(1))).map((_, i) => (
+                                <div
+                                    className="card-wrapper card-wrapper-clickable"
+                                    onClick={this.openModal}
+                                    style={{ width: `${Math.round(100 / this.getCardsNum(1)) - 1.5}%` }}
+                                >
+                                    <div
+                                        className="card-image"
+                                        style={{
+                                        background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
+                                      }}
+                                    />
+                                    <p>{roles[i] ? roles[i].name : 'Add Role'}</p>
+                                </div>
+                            ))}
+                            {' '}
+                        </div>
+                        {' '}
+                    </div>
+                )}
             </Grid>
             <Modal
                 isOpen={this.state.modalIsOpen}
