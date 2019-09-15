@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import Modal from 'react-modal';
@@ -72,288 +73,289 @@ export default class Projects extends Component {
       });
   }
 
-  openModal() {
-    this.setState({ roleMail: 'ex@example.com', roleNum: '0021286854355' }, () => {
-      this.setState({ modalIsOpen: true });
-    });
-  }
-
-  closeModal() {
-    this.setState({ modalIsOpen: false });
-  }
-
-  updatePhoto(logo) {
-    const data = this.state.profileData;
-    const userData = JSON.parse(localStorage.getItem('user'));
-    data.user_id = userData._id;
-    const imagedata = document.querySelector('input[type="file"]').files[0];
-    data.logo = imagedata;
-    const form = new FormData();
-    form.append('team_name', data.team_name);
-    form.append('user_id', data.user_id);
-    form.append('description', data.description);
-    form.append('stage', data.stage);
-    form.append('start_date', data.start_date);
-    form.append('contact', data.contact);
-    if (data && logo) {
-      form.append('logo', logo);
-    }
-    form.append('members', JSON.stringify(data.members));
-    form.append('roles', JSON.stringify(data.roles));
-
-    userService
-      .editProfile(form, data._id)
-      .then(() => document.location.reload())
-      .catch(err => console.error(err));
-  }
-
-  getCardsNum = (cardsType) => {
-    if (window.innerWidth > 800) {
-      if (cardsType === 0) {
-        return 4;
+    getCardsNum = (cardsType) => {
+      if (window.innerWidth > 800) {
+        if (cardsType === 0) {
+          return 4;
+        }
+        return 3;
       }
-      return 3;
-    }
-    if (window.innerWidth < 800 && window.innerWidth > 400) {
-      return 2;
-    }
-    return 1;
-  };
+      if (window.innerWidth < 800 && window.innerWidth > 400) {
+        return 2;
+      }
+      return 1;
+    };
 
-  render() {
-    if (this.state.isLoading) {
-      return <div />;
+    openModal() {
+      this.setState({ roleMail: 'ex@example.com', roleNum: '0021286854355' }, () => {
+        this.setState({ modalIsOpen: true });
+      });
     }
-    const {
-      description, team_name, stage, members, roles, logo,
-    } = this.state.profileData;
 
-    return (
-        <div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
-            <Grid container justify="center" alignItems="center" direction="column">
-                <Avatar
-                    alt="team logo"
-                    src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : addImage}
-                    style={avatarDimensions}
-                    onClick={(e) => {
-                      if (!logo) {
-                        this.logoUploader.current.click();
-                      }
-                    }}
-                />
-                <br />
-                <input
-                    type="file"
-                    id="file"
-                    ref={this.logoUploader}
-                    style={{ display: 'none' }}
-                    onChange={(event) => {
-                      const newLogo = event.target.files[0];
-                      this.updatePhoto(newLogo);
-                    }}
-                />
-                <Typography gutterBottom variant="headline" component="h2">
-                    {team_name}
-                </Typography>
-                <ReadMoreAndLess
-                    ref={this.ReadMore}
-                    className="read-more-content"
-                    charLimit={250}
-                    readMoreText="Read more"
-                    readLessText=""
-                >
-                    {description}
-                </ReadMoreAndLess>
-                <ul className="social-media-list">
-                    {socialMediaIcons.map(icon => (
-                        <li className="social-media-item" key={icon}>
-                            <a href="/">
-                                <Avatar src={icon} style={socialMediaDimensions} />
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-                <HorizontalNonLinearStepper currentStage={stage} profileData={this.state.profileData} />
+    closeModal() {
+      this.setState({ modalIsOpen: false });
+    }
 
-                {members.length >= this.getCardsNum(0) ? (
-                    <div className="carousel">
-                        <Typography gutterBottom variant="headline" component="h3">
+    updatePhoto(logo) {
+      const data = this.state.profileData;
+      const userData = JSON.parse(localStorage.getItem('user'));
+      data.user_id = userData._id;
+      const imagedata = document.querySelector('input[type="file"]').files[0];
+      data.logo = imagedata;
+      const form = new FormData();
+      form.append('team_name', data.team_name);
+      form.append('user_id', data.user_id);
+      form.append('description', data.description);
+      form.append('stage', data.stage);
+      form.append('start_date', data.start_date);
+      form.append('contact', data.contact);
+      if (data && logo) {
+        form.append('logo', logo);
+      }
+      form.append('members', JSON.stringify(data.members));
+      form.append('roles', JSON.stringify(data.roles));
+
+      userService
+        .editProfile(form, data._id)
+        .then(() => document.location.reload())
+        .catch(err => console.error(err));
+    }
+
+    render() {
+      if (this.state.isLoading) {
+        return <div />;
+      }
+      const {
+        description, team_name, stage, members, roles, logo,
+      } = this.state.profileData;
+
+      return (
+          <div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
+              <Grid container justify="center" alignItems="center" direction="column">
+                  <Avatar
+                      alt="team logo"
+                      src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : addImage}
+                      style={avatarDimensions}
+                      onClick={(e) => {
+                        if (!logo) {
+                          this.logoUploader.current.click();
+                        }
+                      }}
+                  />
+                  <br />
+                  <input
+                      type="file"
+                      id="file"
+                      ref={this.logoUploader}
+                      style={{ display: 'none' }}
+                      onChange={(event) => {
+                        const newLogo = event.target.files[0];
+                        this.updatePhoto(newLogo);
+                      }}
+                  />
+                  <Typography gutterBottom variant="headline" component="h2">
+                      {team_name}
+                  </Typography>
+                  <ReadMoreAndLess
+                      ref={this.ReadMore}
+                      className="read-more-content"
+                      charLimit={250}
+                      readMoreText="Read more"
+                      readLessText=""
+                  >
+                      {description}
+                  </ReadMoreAndLess>
+                  <ul className="social-media-list">
+                      {socialMediaIcons.map(icon => (
+                          <li className="social-media-item" key={icon}>
+                              <a href="/">
+                                  <Avatar src={icon} style={socialMediaDimensions} />
+                              </a>
+                          </li>
+                      ))}
+                  </ul>
+                  <HorizontalNonLinearStepper currentStage={stage} profileData={this.state.profileData} />
+
+                  {members.length >= this.getCardsNum(0) ? (
+                      <div className="carousel">
+                          <Typography gutterBottom variant="headline" component="h3">
                 members Available
-                        </Typography>
-                        <ItemsCarousel
-                            gutter={12}
-                            activePosition="center"
-                            chevronWidth={60}
-                            numberOfCards={this.getCardsNum(0)}
-                            slidesToScroll={1}
-                            outsideChevron
-                            showSlither={false}
-                            firstAndLastGutter={false}
-                            activeItemIndex={this.state.activeMemberIndex}
-                            requestToChangeActive={value => this.setState({ activeMemberIndex: value })}
-                            rightChevron={<p className="card-controller">{'>'}</p>}
-                            leftChevron={<p className="card-controller">{'<'}</p>}
-                        >
-                            {Array.from(new Array(members.length + 1)).map((_, i) => (
-                                <MaterialCard>
-                                    <div
-                                        className="card-image"
-                                        style={{
-                                          background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
-                                        }}
-                                    />
-                                    <Typography gutterBottom variant="body1" component="p">
-                                        {members[i] ? members[i].name : 'Add Member'}
-                                    </Typography>
-                                    {members[i] ? (
-                                        <Typography gutterBottom variant="body1" component="p">
-                                            {members[i].major}
-                                        </Typography>
-                                    ) : null}
-                                    {members[i] ? (
-                                        <Typography gutterBottom variant="body1" component="p">
-                                            {members[i].role}
-                                        </Typography>
-                                    ) : null}
-                                    
-                                        {members[i] ? (
-                                        <a href={members[i].linkedin} style={{position:'absolute', right:0, bottom:0 }}>
-                                            <img src={linkedinLogoSquare}  style={{width:"28px", height:"28px" }}/>
-                                      </a>
-                                    ) : null}
-                                    
+                          </Typography>
+                          <ItemsCarousel
+                              gutter={12}
+                              activePosition="center"
+                              chevronWidth={60}
+                              numberOfCards={this.getCardsNum(0)}
+                              slidesToScroll={1}
+                              outsideChevron
+                              showSlither={false}
+                              firstAndLastGutter={false}
+                              activeItemIndex={this.state.activeMemberIndex}
+                              requestToChangeActive={value => this.setState({ activeMemberIndex: value })}
+                              rightChevron={<p className="card-controller">{'>'}</p>}
+                              leftChevron={<p className="card-controller">{'<'}</p>}
+                          >
+                              {Array.from(new Array(members.length + 1)).map((_, i) => (
+                                  <MaterialCard>
+                                      <div
+                                          className="card-image"
+                                          style={{
+                                            background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
+                                          }}
+                                      />
+                                      <Typography gutterBottom variant="body1" component="p">
+                                          {members[i] ? members[i].name : 'Add Member'}
+                                      </Typography>
+                                      {members[i] ? (
+                                          <Typography gutterBottom variant="body1" component="p">
+                                              {members[i].major}
+                                          </Typography>
+                                      ) : null}
+                                      {members[i] ? (
+                                          <Typography gutterBottom variant="body1" component="p">
+                                              {members[i].role}
+                                          </Typography>
+                                      ) : null}
 
-                                </MaterialCard>
-                            ))}
-                        </ItemsCarousel>
-                    </div>
-                ) : (
-                    <div className="normal-cards-view">
-                        <Typography gutterBottom variant="headline" component="h3">
+                                      {members[i] ? (
+                                          <a
+                                              href={members[i].linkedin}
+                                              style={{ position: 'absolute', right: 0, bottom: 0 }}
+                                          >
+                                              <img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
+                                          </a>
+                                      ) : null}
+                                  </MaterialCard>
+                              ))}
+                          </ItemsCarousel>
+                      </div>
+                  ) : (
+                      <div className="normal-cards-view">
+                          <Typography gutterBottom variant="headline" component="h3">
                 Team members
-                        </Typography>
-                        <div>
-                            {Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
-                                <MaterialCard
-                                    CustomWidth={`${Math.round(100 / this.getCardsNum(0)) - 1.5}%`}
-                                >
-                                    <div
-                                        className="card-image"
-                                        style={{
-                                          background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
-                                        }}
-                                    />
-                                    <Typography gutterBottom variant="body1" component="p">
-                                        {members[i] ? members[i].name : 'Add Member'}
-                                    </Typography>
-                                    {members[i] ? (
-                                        <Typography gutterBottom variant="body1" component="p">
-                                            {members[i].major}
-                                        </Typography>
-                                    ) : null}
-                                    {members[i] ? (
-                                        <Typography gutterBottom variant="body1" component="p">
-                                            {members[i].role}
-                                        </Typography>
-                                    ) : null}
-                                    
-                                        {members[i] ? (
-                                        <a href={members[i].linkedin} style={{position:'absolute', right:0, bottom:0 }}>
-                                            <img src={linkedinLogoSquare} style={{width:"28px", height:"28px" }}/>
-                                      </a>
-                                    ) : null}
-                                    
+                          </Typography>
+                          <div>
+                              {Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
+                                  <MaterialCard CustomWidth={`${Math.round(100 / this.getCardsNum(0)) - 1.5}%`}>
+                                      <div
+                                          className="card-image"
+                                          style={{
+                                            background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
+                                          }}
+                                      />
+                                      <Typography gutterBottom variant="body1" component="p">
+                                          {members[i] ? members[i].name : 'Add Member'}
+                                      </Typography>
+                                      {members[i] ? (
+                                          <Typography gutterBottom variant="body1" component="p">
+                                              {members[i].major}
+                                          </Typography>
+                                      ) : null}
+                                      {members[i] ? (
+                                          <Typography gutterBottom variant="body1" component="p">
+                                              {members[i].role}
+                                          </Typography>
+                                      ) : null}
 
-                                </MaterialCard>
-                            ))}
-                            {' '}
-                        </div>
-                        {' '}
-                    </div>
-                )}
+                                      {members[i] ? (
+                                          <a
+                                              href={members[i].linkedin}
+                                              style={{ position: 'absolute', right: 0, bottom: 0 }}
+                                          >
+                                              <img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
+                                          </a>
+                                      ) : null}
+                                  </MaterialCard>
+                              ))}
+                              {' '}
+                          </div>
+                          {' '}
+                      </div>
+                  )}
 
-
-
-
-                {roles.length >= this.getCardsNum(1) ? (
-                    <div className="carousel">
-                        <Typography gutterBottom variant="headline" component="h3">
+                  {roles.length >= this.getCardsNum(1) ? (
+                      <div className="carousel">
+                          <Typography gutterBottom variant="headline" component="h3">
                 Roles Available
-                        </Typography>
-                        <ItemsCarousel
-                            gutter={12}
-                            activePosition="center"
-                            chevronWidth={60}
-                            numberOfCards={this.getCardsNum(1)}
-                            slidesToScroll={1}
-                            outsideChevron
-                            showSlither={false}
-                            firstAndLastGutter={false}
-                            activeItemIndex={this.state.activeRoleIndex}
-                            requestToChangeActive={value => this.setState({ activeRoleIndex: value })}
-                            rightChevron={<p className="card-controller">{'>'}</p>}
-                            leftChevron={<p className="card-controller">{'<'}</p>}
-                        >
-                            {Array.from(new Array(roles.length + 1)).map((_, i) => (
-                                <div className="card-wrapper card-wrapper-clickable" onClick={this.openModal}>
-                                    <div
-                                        className="card-image"
-                                        style={{
-                                          background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
-                                        }}
-                                    />
-                                    <p>{roles[i] ? roles[i].name : 'Add Role'}</p>
-                                </div>
-                            ))}
-                        </ItemsCarousel>
-                    </div>
-                ) : (
-                    <div className="normal-cards-view">
-                        <Typography gutterBottom variant="headline" component="h3">
+                          </Typography>
+                          <ItemsCarousel
+                              gutter={12}
+                              activePosition="center"
+                              chevronWidth={60}
+                              numberOfCards={this.getCardsNum(1)}
+                              slidesToScroll={1}
+                              outsideChevron
+                              showSlither={false}
+                              firstAndLastGutter={false}
+                              activeItemIndex={this.state.activeRoleIndex}
+                              requestToChangeActive={value => this.setState({ activeRoleIndex: value })}
+                              rightChevron={<p className="card-controller">{'>'}</p>}
+                              leftChevron={<p className="card-controller">{'<'}</p>}
+                          >
+                              {Array.from(new Array(roles.length + 1)).map((_, i) => (
+                                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                                  <div className="card-wrapper card-wrapper-clickable" onClick={this.openModal}>
+                                      <div
+                                          className="card-image"
+                                          style={{
+                                            background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
+                                          }}
+                                      />
+                                      <p>{roles[i] ? roles[i].name : 'Add Role'}</p>
+                                  </div>
+                              ))}
+                          </ItemsCarousel>
+                      </div>
+                  ) : (
+                      <div className="normal-cards-view">
+                          <Typography gutterBottom variant="headline" component="h3">
                 Roles Available
-                        </Typography>
-                        <div>
-                            {Array.from(new Array(this.getCardsNum(1))).map((_, i) => (
-                                <div
-                                    className="card-wrapper card-wrapper-clickable"
-                                    onClick={this.openModal}
-                                    style={{ width: `${Math.round(100 / this.getCardsNum(1)) - 1.5}%` }}
-                                >
-                                    <div
-                                        className="card-image"
-                                        style={{
-                                        background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
-                                      }}
-                                    />
-                                    <p>{roles[i] ? roles[i].name : 'Add Role'}</p>
-                                </div>
-                            ))}
-                            {' '}
-                        </div>
-                        {' '}
-                    </div>
-                )}
-            </Grid>
-            <Modal
-                isOpen={this.state.modalIsOpen}
-                onRequestClose={this.closeModal}
-                style={customStyles}
-                contentLabel="Role Contacts"
-            >
-                <h5>Contacts</h5>
-                <p>
+                          </Typography>
+                          <div>
+                              {Array.from(new Array(this.getCardsNum(1))).map((_, i) => (
+                                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                                // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                                  <div
+                                      className="card-wrapper card-wrapper-clickable"
+                                      onClick={this.openModal}
+                                      style={{ width: `${Math.round(100 / this.getCardsNum(1)) - 1.5}%` }}
+                                  >
+                                      <div
+                                          className="card-image"
+                                          style={{
+                                            background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
+                                          }}
+                                      />
+                                      <p>{roles[i] ? roles[i].name : 'Add Role'}</p>
+                                  </div>
+                              ))}
+                              {' '}
+                          </div>
+                          {' '}
+                      </div>
+                  )}
+              </Grid>
+              <Modal
+                  isOpen={this.state.modalIsOpen}
+                  onRequestClose={this.closeModal}
+                  style={customStyles}
+                  contentLabel="Role Contacts"
+              >
+                  <h5>Contacts</h5>
+                  <p>
             Email:
-                    {this.state.roleMail}
-                </p>
-                <p>
+                      {this.state.roleMail}
+                  </p>
+                  <p>
             Number:
-                    {this.state.roleNum}
-                </p>
-                <button type="button" onClick={this.closeModal} className="close-modal-button">
+                      {this.state.roleNum}
+                  </p>
+                  <button type="button" onClick={this.closeModal} className="close-modal-button">
             close
-                </button>
-            </Modal>
-        </div>
-    );
-  }
+                  </button>
+              </Modal>
+          </div>
+      );
+    }
 }
