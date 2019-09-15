@@ -8,8 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import ItemsCarousel from 'react-items-carousel';
 import { userService } from '../../services';
 import HorizontalNonLinearStepper from './HorizontalNonLinearStepper';
+import MaterialCard from './MaterialCard';
 import facebookLogo from '../../assets/images/facebook.svg';
 import linkedinLogo from '../../assets/images/linkedin.svg';
+import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
 import twitterLogo from '../../assets/images/twitter.svg';
 import githubLogo from '../../assets/images/github.svg';
 import phoneLogo from '../../assets/images/phone.svg';
@@ -81,7 +83,6 @@ export default class Projects extends Component {
   }
 
   updatePhoto(logo) {
-
     const data = this.state.profileData;
     const userData = JSON.parse(localStorage.getItem('user'));
     data.user_id = userData._id;
@@ -99,11 +100,11 @@ export default class Projects extends Component {
     }
     form.append('members', JSON.stringify(data.members));
     form.append('roles', JSON.stringify(data.roles));
-      
+
     userService
       .editProfile(form, data._id)
-      .then(() => document.location.reload()).catch(err => console.error(err));
-      
+      .then(() => document.location.reload())
+      .catch(err => console.error(err));
   }
 
   getCardsNum = (cardsType) => {
@@ -194,15 +195,35 @@ export default class Projects extends Component {
                             leftChevron={<p className="card-controller">{'<'}</p>}
                         >
                             {Array.from(new Array(members.length + 1)).map((_, i) => (
-                                <div className="card-wrapper">
+                                <MaterialCard>
                                     <div
                                         className="card-image"
                                         style={{
                                           background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
                                         }}
                                     />
-                                    <p>{members[i] ? members[i].name : 'Add Role'}</p>
-                                </div>
+                                    <Typography gutterBottom variant="body1" component="p">
+                                        {members[i] ? members[i].name : 'Add Member'}
+                                    </Typography>
+                                    {members[i] ? (
+                                        <Typography gutterBottom variant="body1" component="p">
+                                            {members[i].major}
+                                        </Typography>
+                                    ) : null}
+                                    {members[i] ? (
+                                        <Typography gutterBottom variant="body1" component="p">
+                                            {members[i].role}
+                                        </Typography>
+                                    ) : null}
+                                    
+                                        {members[i] ? (
+                                        <a href={members[i].linkedin} style={{position:'absolute', right:0, bottom:0 }}>
+                                            <img src={linkedinLogoSquare}  style={{width:"28px", height:"28px" }}/>
+                                      </a>
+                                    ) : null}
+                                    
+
+                                </MaterialCard>
                             ))}
                         </ItemsCarousel>
                     </div>
@@ -213,24 +234,46 @@ export default class Projects extends Component {
                         </Typography>
                         <div>
                             {Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
-                                <div
-                                    className="card-wrapper"
-                                    style={{ width: `${Math.round(100 / this.getCardsNum(0)) - 1.5}%` }}
+                                <MaterialCard
+                                    CustomWidth={`${Math.round(100 / this.getCardsNum(0)) - 1.5}%`}
                                 >
                                     <div
                                         className="card-image"
                                         style={{
-                                        background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
-                                      }}
+                                          background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
+                                        }}
                                     />
-                                    <p>{members[i] ? members[i].name : 'Add Role'}</p>
-                                </div>
+                                    <Typography gutterBottom variant="body1" component="p">
+                                        {members[i] ? members[i].name : 'Add Member'}
+                                    </Typography>
+                                    {members[i] ? (
+                                        <Typography gutterBottom variant="body1" component="p">
+                                            {members[i].major}
+                                        </Typography>
+                                    ) : null}
+                                    {members[i] ? (
+                                        <Typography gutterBottom variant="body1" component="p">
+                                            {members[i].role}
+                                        </Typography>
+                                    ) : null}
+                                    
+                                        {members[i] ? (
+                                        <a href={members[i].linkedin} style={{position:'absolute', right:0, bottom:0 }}>
+                                            <img src={linkedinLogoSquare} style={{width:"28px", height:"28px" }}/>
+                                      </a>
+                                    ) : null}
+                                    
+
+                                </MaterialCard>
                             ))}
                             {' '}
                         </div>
                         {' '}
                     </div>
                 )}
+
+
+
 
                 {roles.length >= this.getCardsNum(1) ? (
                     <div className="carousel">

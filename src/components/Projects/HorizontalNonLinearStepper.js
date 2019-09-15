@@ -7,7 +7,8 @@ import { userService } from '../../services';
 
 const styles = theme => ({
   root: {
-    width: '90%',
+    width: '100%',
+    overflow:"auto"
   },
   button: {
     marginRight: theme.spacing.unit,
@@ -25,7 +26,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-  return ['Idea/market research', 'Prototype', 'Private beta', 'Public beta'];
+  return ['Idea/market research', 'Prototype development/team formation', 'Private beta', 'Public beta'];
 }
 
 function getStepContent(step) {

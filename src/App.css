@@ -111,6 +111,7 @@
   list-style: none;
   display: flex;
   padding: 0;
+  margin-top: 20px;
 }
 
 .social-media-list .social-media-item {
@@ -151,8 +152,8 @@
 }
 
 .card-image {
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
   margin: 0 auto;
   margin-bottom: 10px;
 }
