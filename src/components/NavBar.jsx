@@ -1,43 +1,46 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { withRouter } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
 import { withStyles } from '@material-ui/core/styles';
-import Tab from '@material-ui/core/Tab';
 import {
-  BrowserRouter as Router, Route, Link, Redirect,
+  BrowserRouter as Router, Route, Link, Redirect, NavLink,
 } from 'react-router-dom';
-
-import ListSubheader from '@material-ui/core/ListSubheader';
+import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
-import App from '../App';
 import startupProfileSymbol from '../assets/images/rocket.svg';
 import joinTeamSymbol from '../assets/images/team.svg';
 import localResourcesSymbol from '../assets/images/book.svg';
 import startProjectSymbol from '../assets/images/add.svg';
+import logoutSymbol from '../assets/images/logout.svg';
+
+
+// import ListSubheader from '@material-ui/core/ListSubheader';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import Typography from '@material-ui/core/Typography';
+// import Tab from '@material-ui/core/Tab';
+// import { withRouter } from 'react-router-dom';
+// import Divider from '@material-ui/core/Divider';
+// import Dialog from '@material-ui/core/Dialog';
+// import DialogActions from '@material-ui/core/DialogActions';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+// import Button from '@material-ui/core/Button';
+// import DialogTitle from '@material-ui/core/DialogTitle';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import App from '../App';
+// import Collapse from '@material-ui/core/Collapse';
+// import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import DraftsIcon from '@material-ui/icons/Drafts';
+// import SendIcon from '@material-ui/icons/Send';
+// import ExpandLess from '@material-ui/icons/ExpandLess';
+// import ExpandMore from '@material-ui/icons/ExpandMore';
+// import StarBorder from '@material-ui/icons/StarBorder';
+// import Toolbar from '@material-ui/core/Toolbar';
+
 
 const styles = theme => ({
   fontFamilys: {
@@ -73,6 +76,9 @@ const styles = theme => ({
     width: '13%',
     height: '13%',
     marginLeft: '5px',
+  },
+  white: {
+    color: 'white',
   },
 });
 
@@ -111,29 +117,38 @@ class NavBar extends React.Component {
             <AppBar position="static">
                 <div style={{ width: '250px' }}>
                     <List component="nav" className={classes.root}>
-                        <ListItem button className={classes.tab} component={Link} {...{ to: '/' }}>
+                        <ListItem button className={classes.tab} component={NavLink} {...{ to: '/' }}>
                             <ListItemAvatar className={classes.squareAvatar}>
                                 <Avatar
                                     alt="Avatar"
                                     className={classes.avatarSmall}
-                                    src="https://images.vexels.com/media/users/3/155299/isolated/preview/1988d1faba4d059eb4461d955af5cf61-x-mark-scribble-by-vexels.png"
+                                    src="https://i-love-png.com/images/cropped-x.png"
                                 />
                             </ListItemAvatar>
                             <ListItemText primary="X Roads" />
                         </ListItem>
-                        <Divider />
+                        <hr />
                         <ListItem
                             button
                             className={classes.tab}
-                            component={Link}
-                            {...{ to: this.props.isUser ? '/profile' : '/signin' }}
+                            component={NavLink}
+                            {...{
+                              to: isUser ? '/profile' : '/signin',
+                              activeClassName: 'selected-nav',
+                              exact: true,
+                            }}
                         >
                             <ListItemAvatar className={classes.squareAvatar}>
                                 <Avatar alt="Avatar" className={classes.avatarSmall} src={startupProfileSymbol} />
                             </ListItemAvatar>
-                            <ListItemText primary={this.props.isUser ? 'Startup Profile' : 'sign in'} />
+                            <ListItemText primary={isUser ? 'Startup Profile' : 'sign in'} />
                         </ListItem>
-                        <ListItem button className={classes.tab} component={Link} {...{ to: '/' }}>
+                        <ListItem
+                            button
+                            className={classes.tab}
+                            component={NavLink}
+                            {...{ to: '/', activeClassName: 'selected-nav', exact: true }}
+                        >
                             <ListItemAvatar className={classes.squareAvatar}>
                                 <Avatar alt="Avatar" className={classes.avatarSmall} src={joinTeamSymbol} />
                             </ListItemAvatar>
@@ -142,20 +157,39 @@ class NavBar extends React.Component {
                         <ListItem
                             button
                             className={classes.tab}
-                            component={Link}
-                            {...{ to: '/howtostartup' }}
+                            component={NavLink}
+                            {...{ to: '/organizations', activeClassName: 'selected-nav', exact: true }}
                         >
                             <ListItemAvatar className={classes.squareAvatar}>
                                 <Avatar alt="Avatar" className={classes.avatarSmall} src={localResourcesSymbol} />
                             </ListItemAvatar>
                             <ListItemText primary="local Resources" />
                         </ListItem>
-                        <ListItem button className={classes.tab} component={Link} {...{ to: '/addProfile' }}>
+                        <ListItem
+                            button
+                            className={classes.tab}
+                            component={NavLink}
+                            {...{ to: '/addProfile', activeClassName: 'selected-nav', exact: true }}
+                        >
                             <ListItemAvatar className={classes.squareAvatar}>
                                 <Avatar alt="Avatar" className={classes.avatarSmall} src={startProjectSymbol} />
                             </ListItemAvatar>
-                            <ListItemText primary="start your dream project" />
+                            <ListItemText primary="start a project" />
                         </ListItem>
+                        {isUser ? (
+                            <ListItem
+                                button
+                                className={classes.tab}
+                                component={NavLink}
+                                {...{ to: '/signin', activeClassName: 'selected-nav', exact: true }}
+                                onClick={()=>{this.logout()}}
+                            >
+                                <ListItemAvatar className={classes.squareAvatar}>
+                                    <Avatar alt="Avatar" className={classes.avatarSmall} src={logoutSymbol} />
+                                </ListItemAvatar>
+                                <ListItemText primary="logout" />
+                            </ListItem>
+                        ) : null}
                     </List>
                 </div>
             </AppBar>

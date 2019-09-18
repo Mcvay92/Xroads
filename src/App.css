@@ -145,6 +145,25 @@
 nav {
   height: 100vh;
   margin-left: -13px;
+  background: black !important;
+}
+
+nav > a > div > span {
+  color: white !important;
+}
+
+nav > a > div > img,
+nav > a > div > span {
+  opacity: 0.7;
+}
+
+nav > a:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+nav > a:hover > div > img,
+nav > a:hover > div > span {
+  opacity: 0.9;
 }
 
 .overlay {
@@ -171,4 +190,36 @@ nav {
 .burger-menu-symbol .line {
   height: 4px;
   background: black;
+}
+
+a.selected-nav {
+  position: relative;
+}
+
+a.selected-nav:after {
+  position: absolute;
+  content: "";
+  width: 5px;
+  height: 44px;
+  background: white;
+  left: 13px;
+}
+a.selected-nav,
+a.selected-nav:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+a.selected-nav span {
+  color: white !important;
+  opacity: 1;
+}
+
+a.selected-nav img {
+  opacity: 1;
+}
+
+hr {
+  color: white;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 0;
 }
