@@ -145,26 +145,39 @@
 nav {
   height: 100vh;
   margin-left: -13px;
-  background: black !important;
+  background: #f0f0ea !important;
+  padding-top: 0;
+}
+
+nav > a:first-child {
+  background: #f7cf02;
+  color: black;
+}
+
+nav > a:first-child:hover {
+  background: #f7cf02;
 }
 
 nav > a > div > span {
-  color: white !important;
+  color: #848381 !important;
 }
 
-nav > a > div > img,
+nav > a:first-child > div > span {
+  color: black !important;
+}
+/* nav > a > div > img,
 nav > a > div > span {
   opacity: 0.7;
 }
 
-nav > a:hover {
+/* nav > a:hover {
   background: rgba(255, 255, 255, 0.1) !important;
-}
+} 
 
 nav > a:hover > div > img,
 nav > a:hover > div > span {
   opacity: 0.9;
-}
+} */
 
 .overlay {
   position: fixed;
@@ -200,17 +213,24 @@ a.selected-nav:after {
   position: absolute;
   content: "";
   width: 5px;
-  height: 44px;
-  background: white;
+  height: 100%;
+  background: black;
   left: 13px;
 }
+
 a.selected-nav,
 a.selected-nav:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(0, 0, 0, 0.1) !important;
 }
 
 a.selected-nav span {
-  color: white !important;
+  color: black !important;
+  opacity: 1;
+}
+
+a.selected-nav img {
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(-49%) contrast(119%);
   opacity: 1;
 }
 
@@ -220,6 +240,7 @@ a.selected-nav img {
 
 hr {
   color: white;
-  background: rgba(255, 255, 255, 0.4);
+  background: #848381;
+  opacity: 0.2;
   margin: 0;
 }

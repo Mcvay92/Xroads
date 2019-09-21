@@ -15,7 +15,7 @@ import joinTeamSymbol from '../assets/images/team.svg';
 import localResourcesSymbol from '../assets/images/book.svg';
 import startProjectSymbol from '../assets/images/add.svg';
 import logoutSymbol from '../assets/images/logout.svg';
-
+import logoC from '../assets/images/alphabetC.png';
 
 // import ListSubheader from '@material-ui/core/ListSubheader';
 // import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -41,7 +41,6 @@ import logoutSymbol from '../assets/images/logout.svg';
 // import StarBorder from '@material-ui/icons/StarBorder';
 // import Toolbar from '@material-ui/core/Toolbar';
 
-
 const styles = theme => ({
   fontFamilys: {
     fontFamily: 'Adamina, serif',
@@ -59,8 +58,9 @@ const styles = theme => ({
   },
   root: {
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    BackgroundColor: 'yellow',
     marginLeft: '-13px',
+    paddingTop: '0',
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
@@ -79,6 +79,11 @@ const styles = theme => ({
   },
   white: {
     color: 'white',
+  },
+  yellowBackTab: {
+    BackgroundColor: 'yellow',
+    paddingLeft: '24px',
+    paddingRight: '24px',
   },
 });
 
@@ -117,12 +122,12 @@ class NavBar extends React.Component {
             <AppBar position="static">
                 <div style={{ width: '250px' }}>
                     <List component="nav" className={classes.root}>
-                        <ListItem button className={classes.tab} component={NavLink} {...{ to: '/' }}>
+                        <ListItem button className={classes.yellowBackTab} component={NavLink} {...{ to: '/' }}>
                             <ListItemAvatar className={classes.squareAvatar}>
                                 <Avatar
                                     alt="Avatar"
                                     className={classes.avatarSmall}
-                                    src="https://i-love-png.com/images/cropped-x.png"
+                                    src={logoC}
                                 />
                             </ListItemAvatar>
                             <ListItemText primary="X Roads" />
@@ -182,7 +187,9 @@ class NavBar extends React.Component {
                                 className={classes.tab}
                                 component={NavLink}
                                 {...{ to: '/signin', activeClassName: 'selected-nav', exact: true }}
-                                onClick={()=>{this.logout()}}
+                                onClick={() => {
+                                  this.logout();
+                                }}
                             >
                                 <ListItemAvatar className={classes.squareAvatar}>
                                     <Avatar alt="Avatar" className={classes.avatarSmall} src={logoutSymbol} />
