@@ -18,6 +18,7 @@ import JobPostDetails from './JobPostDetails';
 import Incubators from './Resources/Incubators.jsx';
 import Organizations from './Resources/Organizations.jsx';
 import Courses from './Resources/Courses.jsx';
+import Startups from './Startups';
 
 const JobPostingPage = () => (
     <div>
@@ -56,6 +57,7 @@ const Routes = () => (
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/startups" component={Startups} />
         <Route exact path="/editProfile/:id" component={AddProfile} />
         <Route exact path="/addProfile" component={AddProfile} />
     </div>
