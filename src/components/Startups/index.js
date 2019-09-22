@@ -8,8 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ItemsCarousel from 'react-items-carousel';
 import { userService } from '../../services';
-import HorizontalNonLinearStepper from './HorizontalNonLinearStepper';
-import StartupCaed from './StartupCard';
+import StartupCard from './StartupCard';
 import facebookLogo from '../../assets/images/facebook.svg';
 import linkedinLogo from '../../assets/images/linkedin.svg';
 import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
@@ -115,9 +114,15 @@ export default class Startups extends Component {
     return (
         <div className="col-sm-12 margin-auto float-none">
             <Grid container justify="space-between" alignItems="center" direction="row">
-                <StartupCaed />
-                <StartupCaed />
-                <StartupCaed />
+                <StartupCard />
+                <StartupCard />
+                <StartupCard />
+                <StartupCard />
+                <StartupCard />
+                <StartupCard />
+                <StartupCard />
+                <StartupCard />
+                <StartupCard />
             </Grid>
         </div>
     );

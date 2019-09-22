@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import {
-  BrowserRouter as Router, Route, Link, Redirect,
+  BrowserRouter as Router, Route, NavLink, Redirect,
 } from 'react-router-dom';
 
 const styles = theme => ({
@@ -35,8 +35,18 @@ const styles = theme => ({
     paddingRight: 5,
   },
   closer: {
-    marginTop: '-5px',
+    marginTop: '-10px',
     marginBottom: '15px',
+    fontSize: '12px',
+  },
+  greenBG: {
+    background: '#00FF1E',
+    padding: '3px',
+    borderRadius: '3px',
+    fontSize: '12px',
+  },
+  biggerFont: {
+    fontSize: '25px',
   },
 });
 
@@ -51,22 +61,26 @@ function StartupCard(props) {
           />
           <CardContent>
               <Grid container justify="space-between" alignItems="center" direction="row">
-                  <Typography gutterBottom variant="h5" component="h3">
+                  <Typography
+                      gutterBottom
+                      variant="h5"
+                      component={NavLink}
+                      {...{ to: '/' }}
+                      className={classes.biggerFont}
+                  >
             Groupator
                   </Typography>
-                  <small>
-                      <Typography gutterBottom variant="h5" component="p">
-              Available Roles : 2
-                      </Typography>
-                  </small>
-              </Grid>
-              <small>
-                  <Typography gutterBottom variant="h5" component="p" className={classes.closer}>
-                      <b>posted</b>
-                      {' '}
-in 3/4/1996
+
+                  <Typography gutterBottom variant="h5" component="p" className={classes.greenBG}>
+            Available Roles : 2
                   </Typography>
-              </small>
+              </Grid>
+              <Typography gutterBottom variant="h5" component="p" className={classes.closer}>
+                  <b>posted</b>
+                  {' '}
+in 3/4/1996
+              </Typography>
+
               <Typography component="p" className={classes.scroll}>
           Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
           across all continents except Antarctica Lizards are a widespread group of squamate
