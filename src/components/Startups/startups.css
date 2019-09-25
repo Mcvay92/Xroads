@@ -1,0 +1,137 @@
+
+
+.signup-banner{
+    position: relative;
+    /* background: #FFF6FB; */
+    top: -59px;
+    /* background: #f8eae8; */
+    /* background: #F7E8DB; */
+    /* padding-top: 15px; */
+    /* padding-bottom: 15px; */
+    padding: 15px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin-bottom: -25px;
+}
+
+.signup-banner ul {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.signup-banner ul li{
+    width:30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-banner ul li.flex-spread{
+    justify-content: space-between;
+    align-items: space-between;
+}
+
+
+.signup-banner ul li img{
+    width:80px;
+}
+
+.signup-banner .btn-signup{
+     width: 100%;
+     background: #EED7D3;
+     padding: 10px;
+     font-size: 1.2em;
+     color: black;
+     border-radius: 0;
+     border: 1px solid #A6008A;
+     text-align: center;
+}
+
+.signup-banner ul li > .btn-signup:active{
+    background: #EED7D3 ;
+    border: 1px solid #A6008A ;
+    color: black ; 
+}
+
+/* 
+@media only screen and (max-width: 850px) {
+    .signup-banner{
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+    /* 
+    .signup-banner ul {
+     flex-direction: column;
+    } 
+
+    .relative-padding{
+        padding-top:200px;
+    }
+    
+}
+
+@media only screen and (max-width: 600px) {
+    
+    .signup-banner{
+        padding:5px;
+    }
+    
+} */
+
+
+@media only screen and (max-width: 750px) {
+    
+    .signup-banner ul {
+        flex-direction: column;
+       } 
+
+    .signup-banner ul li {
+        width: 60%;
+        align-self: center;
+       }
+} 
+
+
+
+/* == == */
+
+.startup-cards{
+    display: flex;
+    justify-content:flex-start ;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.startup-cards > div:nth-child(3n+2){
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+@media only screen and (max-width: 967px) {
+    
+    .startup-cards > div:nth-child(3n+2){
+        margin-left: 0%;
+        margin-right: 0%;
+    }
+    .startup-cards > div:nth-child(odd){
+    margin-right: 4%;
+}
+
+}
+
+
+@media only screen and (max-width: 667px) {
+
+    .startup-cards > div:nth-child(3n+2){
+        margin-left: 0%;
+        margin-right: 0%;
+    }
+
+    .startup-cards > div{
+        margin:10px auto !important;
+    }
+
+}

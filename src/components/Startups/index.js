@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 // import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import { Link } from 'react-router-dom';
+import './startups.css';
 import ReadMoreAndLess from 'react-read-more-less';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -9,122 +11,80 @@ import Typography from '@material-ui/core/Typography';
 import ItemsCarousel from 'react-items-carousel';
 import { userService } from '../../services';
 import StartupCard from './StartupCard';
-import facebookLogo from '../../assets/images/facebook.svg';
-import linkedinLogo from '../../assets/images/linkedin.svg';
-import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
-import twitterLogo from '../../assets/images/twitter.svg';
-import githubLogo from '../../assets/images/github.svg';
-import phoneLogo from '../../assets/images/phone.svg';
-import mailLogo from '../../assets/images/mail.svg';
-import addUser from '../../assets/images/add-user.svg';
-import userLogo from '../../assets/images/user.svg';
-import roleLogo from '../../assets/images/hand-shake.svg';
-import addImage from '../../assets/images/add.svg';
+import teamDevLogo from '../../assets/images/team-dev.svg';
+import ideaLogo from '../../assets/images/lightbulb.svg';
+
 
 export default class Startups extends Component {
-  constructor() {
-    super();
-    this.state = {
-      activeMemberIndex: 0,
-      activeRoleIndex: 0,
-      modalIsOpen: false,
-      profileData: null,
-      isLoading: true,
-    };
-    // this.openModal = this.openModal.bind(this);
-    // this.closeModal = this.closeModal.bind(this);
-    // this.logoUploader = React.createRef();
-  }
+    constructor() {
+        super();
+        this.state = {
+            isTokenValid: typeof localStorage.getItem('access_token') !== 'string' ? false : true,
+            isLoading: true,
+            profilesData: null,
+        };
+        // this.openModal = this.openModal.bind(this);
+        this.getProfilesData = this.getProfilesData.bind(this);
+        // this.logoUploader = React.createRef();
+    }
 
-  // componentDidMount() {
-  //   const { id } = this.props.match.params;
-  //   userService
-  //     .getProfile(id)
-  //     .then((response) => {
-  //       if (response.token == 'invalid') {
-  //         this.props.history.push('/signin');
-  //       } else {
-  //         this.setState({
-  //           profileData: response.data,
-  //           isLoading: false,
-  //         });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       this.setState({ error, isLoading: false });
-  //     });
-  // }
+    componentDidMount() {
+        this.getProfilesData();
+    }
 
-  //   getCardsNum = (cardsType) => {
-  //     if (window.innerWidth > 800) {
-  //       if (cardsType === 0) {
-  //         return 4;
-  //       }
-  //       return 3;
-  //     }
-  //     if (window.innerWidth < 800 && window.innerWidth > 400) {
-  //       return 2;
-  //     }
-  //     return 1;
-  //   };
+    getProfilesData() {
+        userService.getAllUsersProfiles()
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoading: false,
+                        isOpen: false,
+                        profilesData: response.data,
+                    });
+                },
+                (error) => {
+                    this.setState({ error, isLoading: false });
+                },
+            );
+    }
 
-  //   openModal() {
-  //     this.setState({ roleMail: 'ex@example.com', roleNum: '0021286854355' }, () => {
-  //       this.setState({ modalIsOpen: true });
-  //     });
-  //   }
 
-  //   closeModal() {
-  //     this.setState({ modalIsOpen: false });
-  //   }
 
-  //   updatePhoto(logo) {
-  //     const data = this.state.profileData;
-  //     const userData = JSON.parse(localStorage.getItem('user'));
-  //     data.user_id = userData._id;
-  //     const imagedata = document.querySelector('input[type="file"]').files[0];
-  //     data.logo = imagedata;
-  //     const form = new FormData();
-  //     form.append('team_name', data.team_name);
-  //     form.append('user_id', data.user_id);
-  //     form.append('description', data.description);
-  //     form.append('stage', data.stage);
-  //     form.append('start_date', data.start_date);
-  //     form.append('contact', data.contact);
-  //     if (data && logo) {
-  //       form.append('logo', logo);
-  //     }
-  //     form.append('members', JSON.stringify(data.members));
-  //     form.append('roles', JSON.stringify(data.roles));
+    render() {
+        const { isLoading, profilesData, isTokenValid } = this.state;
+        if (this.state.isLoading) {
+            return <div />;
+        }
+        console.log(isTokenValid);
+        return (
+            <div className={`col-sm-12 margin-auto float-none`}>
+                {isTokenValid ? <Fragment><h4 className=" mb-20">sponsored by Eng inc </h4>
+                    <span className="float-right mb-10"><Link to="/addProfile" className="btn btn-info">Create a project</Link></span></Fragment> :
+                    <section className="signup-banner">
+                        <ul>
+                            <li className="flex-spread">
+                                <p>looking for a local student startup to join at Texas A&M</p>
+                                <img src={teamDevLogo} alt="team" />
+                            </li>
+                            <li>
+                                <Link to="/signup" className="btn-signup ">Sign up !</Link>
+                                <p>Sponsored by Engineering Inc. at Texas A&M University</p>
+                            </li>
+                            <li className="flex-spread">
+                                <p>Have a startup or a project idea you like to share with roles needed to build it</p>
+                                <img src={ideaLogo} alt="idea" />
+                            </li>
+                        </ul>
+                    </section>}
 
-  //     userService
-  //       .editProfile(form, data._id)
-  //       .then(() => document.location.reload())
-  //       .catch(err => console.error(err));
-  //   }
-
-  render() {
-    // if (this.state.isLoading) {
-    //   return <div />;
-    // }
-    // const {
-    //   description, team_name, stage, members, roles, logo,
-    // } = this.state.profileData;
-
-    return (
-        <div className="col-sm-12 margin-auto float-none">
-            <Grid container justify="space-between" alignItems="center" direction="row">
-                <StartupCard />
-                <StartupCard />
-                <StartupCard />
-                <StartupCard />
-                <StartupCard />
-                <StartupCard />
-                <StartupCard />
-                <StartupCard />
-                <StartupCard />
-            </Grid>
-        </div>
-    );
-  }
+                <div className="startup-cards">
+                    {profilesData ? profilesData.map(startup => <StartupCard profileData={startup} key={startup._id} />) : null}
+                </div>
+            </div >
+        );
+    }
 }
+
+
+
+// ${hasToken && isTokenValid ? null : 'relative-padding'}

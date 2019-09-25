@@ -198,6 +198,7 @@ nav > a:hover > div > span {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 40;
 }
 
 .burger-menu-symbol .line {
@@ -243,6 +244,7 @@ hr {
   background: #848381;
   opacity: 0.2;
   margin: 0;
+}
 /* Project page */
 
 .project-avatar {
