@@ -63,7 +63,7 @@ export default class Startups extends Component {
                     <section className="signup-banner">
                         <ul>
                             <li className="flex-spread">
-                                <p>looking for a local student startup to join at Texas A&M</p>
+                                <p>Are you looking for a local student startup or project to join at Texas A&M?</p>
                                 <img src={teamDevLogo} alt="team" />
                             </li>
                             <li>
@@ -71,7 +71,7 @@ export default class Startups extends Component {
                                 <p>Sponsored by Engineering Inc. at Texas A&M University</p>
                             </li>
                             <li className="flex-spread">
-                                <p>Have a startup or a project idea you like to share with roles needed to build it</p>
+                                <p>Post your idea with the roles you need to bring it to life</p>
                                 <img src={ideaLogo} alt="idea" />
                             </li>
                         </ul>

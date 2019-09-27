@@ -11,6 +11,7 @@ import defaultStartupLogo from '../../assets/images/startup.svg'
 import {
     BrowserRouter as Router, Route, NavLink, Redirect,
 } from 'react-router-dom';
+import moment from 'moment';
 
 const styles = theme => ({
     card: {
@@ -44,12 +45,12 @@ const styles = theme => ({
         fontSize: '12px',
     },
     greenBG: {
-        background: '#00FF1E',
+        background: '#5aac44',
         padding: '3px',
         borderRadius: '3px',
         fontSize: '12px',
         marginBottom: '15px',
-        color: '#037727'
+        color: 'white'
     },
     biggerFont: {
         fontSize: '25px',
@@ -83,11 +84,11 @@ function StartupCard(props) {
                         </Typography> : null}
 
                 </Grid>
-                {/* <Typography gutterBottom variant="h5" component="p" className={classes.closer}>
-                    <b>posted</b>
+                {profileData.created_on ? <Typography gutterBottom variant="h5" component="p" className={classes.closer}>
+                    <b>posted on:</b>
                     {' '}
-                    in 3/4/1996
-              </Typography> */}
+                    {moment(profileData.created_on).format("D-M-YYYY")}
+                </Typography> : null}
 
                 <Typography component="p" className={classes.scroll}>
                     {profileData.description}

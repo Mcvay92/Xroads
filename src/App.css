@@ -327,3 +327,9 @@ hr {
   border: none;
   cursor: pointer;
 }
+
+
+div > button > span > span > svg > path {
+  /*completed stepper button style*/
+  color:#1976d2;
+}
