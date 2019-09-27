@@ -118,89 +118,89 @@ class NavBar extends React.Component {
       currentTab, userSigned, isOpen, isDialog,
     } = this.state;
     return (
-        <div className={this.props.isOpenedInSm ? 'opened-in-sm' : 'closed-in-sm'}>
-            <AppBar position="static">
-                <div style={{ width: '250px' }}>
-                    <List component="nav" className={classes.root}>
-                        <ListItem button className={classes.yellowBackTab} component={NavLink} {...{ to: '/' }}>
-                            <ListItemAvatar className={classes.squareAvatar}>
-                                <Avatar
-                                    alt="Avatar"
-                                    className={classes.avatarSmall}
-                                    src={logoC}
-                                />
-                            </ListItemAvatar>
-                            <ListItemText primary="X Roads" />
-                        </ListItem>
-                        <hr />
-                        <ListItem
-                            button
-                            className={classes.tab}
-                            component={NavLink}
-                            {...{
-                              to: isUser ? '/profile' : '/signin',
-                              activeClassName: 'selected-nav',
-                              exact: true,
-                            }}
-                        >
-                            <ListItemAvatar className={classes.squareAvatar}>
-                                <Avatar alt="Avatar" className={classes.avatarSmall} src={startupProfileSymbol} />
-                            </ListItemAvatar>
-                            <ListItemText primary={isUser ? 'Startup Profile' : 'sign in'} />
-                        </ListItem>
-                        <ListItem
-                            button
-                            className={classes.tab}
-                            component={NavLink}
-                            {...{ to: '/', activeClassName: 'selected-nav', exact: true }}
-                        >
-                            <ListItemAvatar className={classes.squareAvatar}>
-                                <Avatar alt="Avatar" className={classes.avatarSmall} src={joinTeamSymbol} />
-                            </ListItemAvatar>
-                            <ListItemText primary="Join a team" />
-                        </ListItem>
-                        <ListItem
-                            button
-                            className={classes.tab}
-                            component={NavLink}
-                            {...{ to: '/organizations', activeClassName: 'selected-nav', exact: true }}
-                        >
-                            <ListItemAvatar className={classes.squareAvatar}>
-                                <Avatar alt="Avatar" className={classes.avatarSmall} src={localResourcesSymbol} />
-                            </ListItemAvatar>
-                            <ListItemText primary="local Resources" />
-                        </ListItem>
-                        <ListItem
-                            button
-                            className={classes.tab}
-                            component={NavLink}
-                            {...{ to: '/addProfile', activeClassName: 'selected-nav', exact: true }}
-                        >
-                            <ListItemAvatar className={classes.squareAvatar}>
-                                <Avatar alt="Avatar" className={classes.avatarSmall} src={startProjectSymbol} />
-                            </ListItemAvatar>
-                            <ListItemText primary="start a project" />
-                        </ListItem>
-                        {isUser ? (
-                            <ListItem
-                                button
-                                className={classes.tab}
-                                component={NavLink}
-                                {...{ to: '/signin', activeClassName: 'selected-nav', exact: true }}
-                                onClick={() => {
-                                  this.logout();
-                                }}
-                            >
-                                <ListItemAvatar className={classes.squareAvatar}>
-                                    <Avatar alt="Avatar" className={classes.avatarSmall} src={logoutSymbol} />
-                                </ListItemAvatar>
-                                <ListItemText primary="logout" />
-                            </ListItem>
-                        ) : null}
-                    </List>
-                </div>
-            </AppBar>
-        </div>
+      <div className={this.props.isOpenedInSm ? 'opened-in-sm' : 'closed-in-sm'}>
+        <AppBar position="static">
+          <div style={{ width: '250px' }}>
+            <List component="nav" className={classes.root}>
+              <ListItem button className={classes.yellowBackTab} component={NavLink} {...{ to: '/' }}>
+                <ListItemAvatar className={classes.squareAvatar}>
+                  <Avatar
+                    alt="Avatar"
+                    className={classes.avatarSmall}
+                    src={logoC}
+                  />
+                </ListItemAvatar>
+                <ListItemText primary="X Roads" />
+              </ListItem>
+              <hr />
+              <ListItem
+                button
+                className={classes.tab}
+                component={NavLink}
+                {...{
+                  to: isUser ? '/profile' : '/signin',
+                  activeClassName: 'selected-nav',
+                  exact: true,
+                }}
+              >
+                <ListItemAvatar className={classes.squareAvatar}>
+                  <Avatar alt="Avatar" className={classes.avatarSmall} src={startupProfileSymbol} />
+                </ListItemAvatar>
+                <ListItemText primary={isUser ? 'Startup Profile' : 'sign in'} />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.tab}
+                component={NavLink}
+                {...{ to: '/join-now', activeClassName: 'selected-nav', exact: true }}
+              >
+                <ListItemAvatar className={classes.squareAvatar}>
+                  <Avatar alt="Avatar" className={classes.avatarSmall} src={joinTeamSymbol} />
+                </ListItemAvatar>
+                <ListItemText primary="Join a team" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.tab}
+                component={NavLink}
+                {...{ to: '/organizations', activeClassName: 'selected-nav', exact: true }}
+              >
+                <ListItemAvatar className={classes.squareAvatar}>
+                  <Avatar alt="Avatar" className={classes.avatarSmall} src={localResourcesSymbol} />
+                </ListItemAvatar>
+                <ListItemText primary="local Resources" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.tab}
+                component={NavLink}
+                {...{ to: '/addProfile', activeClassName: 'selected-nav', exact: true }}
+              >
+                <ListItemAvatar className={classes.squareAvatar}>
+                  <Avatar alt="Avatar" className={classes.avatarSmall} src={startProjectSymbol} />
+                </ListItemAvatar>
+                <ListItemText primary="start a project" />
+              </ListItem>
+              {isUser ? (
+                <ListItem
+                  button
+                  className={classes.tab}
+                  component={NavLink}
+                  {...{ to: '/signin', activeClassName: 'selected-nav', exact: true }}
+                  onClick={() => {
+                    this.logout();
+                  }}
+                >
+                  <ListItemAvatar className={classes.squareAvatar}>
+                    <Avatar alt="Avatar" className={classes.avatarSmall} src={logoutSymbol} />
+                  </ListItemAvatar>
+                  <ListItemText primary="logout" />
+                </ListItem>
+              ) : null}
+            </List>
+          </div>
+        </AppBar>
+      </div>
     );
   }
 }
