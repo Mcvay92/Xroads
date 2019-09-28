@@ -10,11 +10,13 @@ var profileSchema = new Schema({
     },
     description: {
         type: String,
-        trim: true
+        trim: true,
+        required: 'Description is required'
     },
     stage: {
         type: String,
-        trim: true
+        trim: true,
+        required: 'Stage is required'
     },
     status: {
         type: String,
@@ -45,7 +47,7 @@ var profileSchema = new Schema({
             linkedin: {type: String}
         }],
     roles: [{
-            name: {type: String, required: 'Role name is required.'}
+            name: {type: String}
         }],
     github: {
         type: String,
