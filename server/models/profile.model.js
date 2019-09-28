@@ -30,7 +30,7 @@ var profileSchema = new Schema({
         required: 'Team name is required',
         unique: 'Team Name must be unique.'
     },
-    contact: {
+    contact_phone: {
         type: String,
         trim: true
     },
@@ -47,7 +47,7 @@ var profileSchema = new Schema({
     roles: [{
             name: {type: String, required: 'Role name is required.'}
         }],
-    git: {
+    github: {
         type: String,
         trim: true
     },
@@ -63,7 +63,7 @@ var profileSchema = new Schema({
         type: String,
         trim: true
     },
-    inbox: {
+    email: {
         type: String,
         trim: true
     },

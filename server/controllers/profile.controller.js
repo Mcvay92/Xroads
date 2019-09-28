@@ -46,12 +46,12 @@
                         user_id: req.body.user_id,
                         description: req.body.description,
                         stage: req.body.stage,
-                        git: req.body.git,
+                        github: req.body.github,
                         facebook: req.body.facebook,
                         instagram: req.body.instagram,
                         linkedin: req.body.linkedin,
-                        inbox: req.body.inbox,
-                        contact: req.body.contact,
+                        email: req.body.email,
+                        contact_phone: req.body.contact_phone,
                         start_date: req.body.start_date,
                         logo: req.body.logo,
                         team_name: req.body.team_name,
@@ -104,17 +104,17 @@
             const selectedFields = {
                 'team_name': 1,
                 'roles': 1,
-                'contact': 1,
+                'contact_phone': 1,
                 'description': 1,
                 'members': 1,
                 'logo': 1,
                 'stage': 1,
                 'start_date': 1,
-                'git': 1,
+                'github': 1,
                 'facebook': 1,
                 'instagram': 1,
                 'linkedin': 1,
-                'inbox': 1
+                'email': 1
             };
             Profile.findOne({'_id': profileId, status: 'active'}, selectedFields, function (error, response) {
                 if (error) {
@@ -140,17 +140,17 @@
             const selectedFields = {
                 'team_name': 1,
                 'roles': 1,
-                'contact': 1,
+                'contact_phone': 1,
                 'description': 1,
                 'members': 1,
                 'logo': 1,
                 'stage': 1,
                 'start_date': 1,
-                'git': 1,
+                'github': 1,
                 'facebook': 1,
                 'instagram': 1,
                 'linkedin': 1,
-                'inbox': 1
+                'email': 1
             };
             Profile.find(query, selectedFields, function (error, response) {
                 if (error) {
@@ -174,18 +174,18 @@
             const selectedFields = {
                 'team_name': 1,
                 'roles': 1,
-                'contact': 1,
+                'contact_phone': 1,
                 'user_id': 1,
                 'description': 1,
                 'members': 1,
                 'logo': 1,
                 'stage': 1,
                 'start_date': 1,
-                'git': 1,
+                'github': 1,
                 'facebook': 1,
                 'instagram': 1,
                 'linkedin': 1,
-                'inbox': 1
+                'email': 1
             };
             Profile.find(query).select(selectedFields).populate({path: 'user_id', 'select':{'email':1}}).
                     exec(function (error, response) {
@@ -220,14 +220,14 @@
                 if (req.body.stage) {
                     updateFields['stage'] = req.body.stage;
                 }
-                if (req.body.contact) {
-                    updateFields['contact'] = req.body.contact;
+                if (req.body.contact_phone) {
+                    updateFields['contact_phone'] = req.body.contact_phone;
                 }
                 if (req.body.description) {
                     updateFields['description'] = req.body.description;
                 }
-                if (req.body.git) {
-                    updateFields['git'] = req.body.git;
+                if (req.body.github) {
+                    updateFields['github'] = req.body.github;
                 }
                 if (req.body.facebook) {
                     updateFields['facebook'] = req.body.facebook;
@@ -238,8 +238,8 @@
                 if (req.body.linkedin) {
                     updateFields['linkedin'] = req.body.linkedin;
                 }
-                if (req.body.inbox) {
-                    updateFields['inbox'] = req.body.inbox;
+                if (req.body.email) {
+                    updateFields['email'] = req.body.email;
                 }
                 if (req.body.removeLogo && req.body.removeLogo === 'true' && (updateFields['logo'] == undefined || null)) {
                     updateFields['logo'] = null;

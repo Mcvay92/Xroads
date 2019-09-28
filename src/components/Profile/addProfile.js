@@ -60,12 +60,12 @@ const ProfileForm = (props) => {
               wrapperClassName="form-group"
           />
           <TextField
-              value={profileData ? profileData.contact : null}
-              name="contact"
+              value={profileData ? profileData.contact_phone : null}
+              name="contact_phone"
               errorStyles={errorClasses}
               className="form-control"
-              label="Contact"
-              placeholder="Contact"
+              label="Contact Phone"
+              placeholder="Contact Phone"
               wrapperClassName="form-group"
           />
           <SelectField
