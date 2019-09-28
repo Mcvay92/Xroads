@@ -13,6 +13,7 @@
     left: 0;
     right: 0;
     margin-bottom: -25px;
+    margin-top: 35px;
 }
 
 .signup-banner ul {
@@ -54,46 +55,46 @@
 .signup-banner ul li > .btn-signup:active{
     background: #EED7D3 ;
     border: 1px solid #A6008A ;
-    color: black ; 
+    color: black ;
 }
 
-/* 
+/*
 @media only screen and (max-width: 850px) {
     .signup-banner{
         padding-top: 10px;
         padding-bottom: 5px;
     }
-    /* 
+    /*
     .signup-banner ul {
      flex-direction: column;
-    } 
+    }
 
     .relative-padding{
         padding-top:200px;
     }
-    
+
 }
 
 @media only screen and (max-width: 600px) {
-    
+
     .signup-banner{
         padding:5px;
     }
-    
+
 } */
 
 
 @media only screen and (max-width: 750px) {
-    
+
     .signup-banner ul {
         flex-direction: column;
-       } 
+       }
 
     .signup-banner ul li {
         width: 60%;
         align-self: center;
        }
-} 
+}
 
 
 
@@ -112,7 +113,7 @@
 }
 
 @media only screen and (max-width: 967px) {
-    
+
     .startup-cards > div:nth-child(3n+2){
         margin-left: 0%;
         margin-right: 0%;
