@@ -68,6 +68,15 @@ const ProfileForm = (props) => {
               placeholder="Contact Phone"
               wrapperClassName="form-group"
           />
+          <TextField
+              value={profileData ? profileData.email : null}
+              name="email"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Contact Email"
+              placeholder="Contact Email"
+              wrapperClassName="form-group"
+          />
           <SelectField
               value={profileData ? profileData.stage : 0}
               name="stage"

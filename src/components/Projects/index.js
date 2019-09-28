@@ -13,7 +13,6 @@ import MaterialCard from './MaterialCard';
 import facebookLogo from '../../assets/images/facebook.svg';
 import linkedinLogo from '../../assets/images/linkedin.svg';
 import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
-import twitterLogo from '../../assets/images/twitter.svg';
 import githubLogo from '../../assets/images/github.svg';
 import phoneLogo from '../../assets/images/phone.svg';
 import mailLogo from '../../assets/images/mail.svg';
@@ -24,7 +23,7 @@ import addImage from '../../assets/images/add.svg';
 
 Modal.setAppElement('#root');
 
-const socialMediaIcons = [githubLogo, twitterLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
+const socialMediaIcons = [githubLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
 
 const avatarDimensions = { height: '190px', width: '190px' };
 const socialMediaDimensions = { height: '30px', width: '30px' };
@@ -220,6 +219,8 @@ export default class Projects extends Component {
                                       {members[i] ? (
                                           <a
                                               href={members[i].linkedin}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
                                               style={{ position: 'absolute', right: 0, bottom: 0 }}
                                           >
                                               <img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
@@ -260,6 +261,8 @@ export default class Projects extends Component {
                                       {members[i] ? (
                                           <a
                                               href={members[i].linkedin}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
                                               style={{ position: 'absolute', right: 0, bottom: 0 }}
                                           >
                                               <img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
