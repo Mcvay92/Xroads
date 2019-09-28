@@ -130,7 +130,7 @@ class NavBar extends React.Component {
 										src={logoC}
 									/>
 								</ListItemAvatar>
-								<ListItemText primary="crossroads" />
+								<ListItemText primary="Crossroads" />
 							</ListItem>
 							<hr />
 							<ListItem
@@ -146,18 +146,18 @@ class NavBar extends React.Component {
 								<ListItemAvatar className={classes.squareAvatar}>
 									<Avatar alt="Avatar" className={classes.avatarSmall} src={startupProfileSymbol} />
 								</ListItemAvatar>
-								<ListItemText primary={isUser ? 'Startup Profile' : 'sign in'} />
+								<ListItemText primary={isUser ? 'Startup Profile' : 'Sign In'} />
 							</ListItem>
 							<ListItem
 								button
 								className={classes.tab}
 								component={NavLink}
-								{...{ to: '/join-now', activeClassName: 'selected-nav', exact: true }}
+								{...{ to: '/', activeClassName: 'selected-nav', exact: true }}
 							>
 								<ListItemAvatar className={classes.squareAvatar}>
 									<Avatar alt="Avatar" className={classes.avatarSmall} src={joinTeamSymbol} />
 								</ListItemAvatar>
-								<ListItemText primary="Join a team" />
+								<ListItemText primary="Join a Team" />
 							</ListItem>
 							<ListItem
 								button
@@ -168,7 +168,7 @@ class NavBar extends React.Component {
 								<ListItemAvatar className={classes.squareAvatar}>
 									<Avatar alt="Avatar" className={classes.avatarSmall} src={localResourcesSymbol} />
 								</ListItemAvatar>
-								<ListItemText primary="local Resources" />
+								<ListItemText primary="Local Resources" />
 							</ListItem>
 							<ListItem
 								button
@@ -179,7 +179,7 @@ class NavBar extends React.Component {
 								<ListItemAvatar className={classes.squareAvatar}>
 									<Avatar alt="Avatar" className={classes.avatarSmall} src={startProjectSymbol} />
 								</ListItemAvatar>
-								<ListItemText primary="start a project" />
+								<ListItemText primary="Start a Project" />
 							</ListItem>
 							{isUser ? (
 								<ListItem
@@ -194,7 +194,7 @@ class NavBar extends React.Component {
 									<ListItemAvatar className={classes.squareAvatar}>
 										<Avatar alt="Avatar" className={classes.avatarSmall} src={logoutSymbol} />
 									</ListItemAvatar>
-									<ListItemText primary="logout" />
+									<ListItemText primary="Logout" />
 								</ListItem>
 							) : null}
 						</List>

@@ -71,7 +71,7 @@ export default class Startups extends Component {
                                 <p>Sponsored by Engineering Inc. at Texas A&M University</p>
                             </li>
                             <li className="flex-spread">
-                                <p>Post your idea with the roles you need to bring it to life</p>
+                                <p>Post your idea with the roles you need to bring it to life!</p>
                                 <img src={ideaLogo} alt="idea" />
                             </li>
                         </ul>
