@@ -85,6 +85,43 @@ const ProfileForm = (props) => {
               label="Start Date"
               wrapperClassName="form-group"
           />
+
+          <div className="members-heading">
+              <b>Optional Links:</b>
+          </div>
+          <TextField
+              value={profileData ? profileData.linkedin : null}
+              name="linkedin"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="LinkedIn"
+              wrapperClassName="form-group"
+          />
+          <TextField
+              value={profileData ? profileData.github : null}
+              name="github"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Github"
+              wrapperClassName="form-group"
+          />
+          <TextField
+              value={profileData ? profileData.facebook : null}
+              name="facebook"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Facebook"
+              wrapperClassName="form-group"
+          />
+          <TextField
+              value={profileData ? profileData.instagram : null}
+              name="instagram"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Instagram"
+              wrapperClassName="form-group"
+          />
+          <br />
           <div className="members-heading">
               <b>Members:</b>
           </div>
@@ -111,7 +148,7 @@ const ProfileForm = (props) => {
                   />
                   <TextField
                       name="linkedin"
-                      label="LinkedIn Link"
+                      label="LinkedIn URL"
                       className="form-control"
                       wrapperClassName="form-group"
                   />
