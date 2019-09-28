@@ -32,6 +32,7 @@ const styles = theme => ({
     },
     media: {
         height: 140,
+        margin: 10,
         backgroundSize: 'contain'
     },
     scroll: {
