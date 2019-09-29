@@ -185,6 +185,7 @@
                 'facebook': 1,
                 'instagram': 1,
                 'linkedin': 1,
+                'created_on': 1,
                 'email': 1
             };
             Profile.find(query).select(selectedFields).populate({path: 'user_id', 'select':{'email':1}}).
