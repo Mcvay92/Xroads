@@ -86,7 +86,6 @@ import {  Link } from 'react-router-dom';
         if (this.state.profileData != null && this.state.profileData.length > 0) {
             profiles = this.state.profileData.map((item, key) =>
                 <tr key={item._id}>
-                    <td>{key + 1}</td>
                     <td><Link to={`/profile/${item._id}`}>{item.team_name}</Link></td>
                     <td>{config.stages[item.stage]}</td>
                     <td>{moment(new Date(item.start_date)).format("LL")}</td>
@@ -102,7 +101,6 @@ import {  Link } from 'react-router-dom';
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Sr</th>
                                                 <th>Team Name</th>
                                                 <th>Stage</th>
                                                 <th>Start Date</th>

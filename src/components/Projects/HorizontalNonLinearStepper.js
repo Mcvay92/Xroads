@@ -57,7 +57,7 @@ class HorizontalNonLinearAlternativeLabelStepper extends React.Component {
   handleStep = step => () => {
     const data = { ...this.props.profileData };
     data.stage =  step;
-    
+
 
     const userData = JSON.parse(localStorage.getItem('user'));
     data.user_id = userData._id;
@@ -102,6 +102,7 @@ class HorizontalNonLinearAlternativeLabelStepper extends React.Component {
                   return (
                       <Step key={label} {...props}>
                           <StepButton
+                              disabled={true}
                               onClick={this.handleStep(index)}
                               completed={this.isStepComplete(index)}
                               {...buttonProps}
