@@ -10,24 +10,16 @@ import ItemsCarousel from 'react-items-carousel';
 import { userService } from '../../services';
 import HorizontalNonLinearStepper from './HorizontalNonLinearStepper';
 import MaterialCard from './MaterialCard';
-import facebookLogo from '../../assets/images/facebook.svg';
-import linkedinLogo from '../../assets/images/linkedin.svg';
-import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
-import twitterLogo from '../../assets/images/twitter.svg';
-import githubLogo from '../../assets/images/github.svg';
-import phoneLogo from '../../assets/images/phone.svg';
-import mailLogo from '../../assets/images/mail.svg';
 import addUser from '../../assets/images/add-user.svg';
 import userLogo from '../../assets/images/user.svg';
 import roleLogo from '../../assets/images/hand-shake.svg';
 import addImage from '../../assets/images/add.svg';
+import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
+import ProfileContacts from './ProfileContacts';
 
 Modal.setAppElement('#root');
 
-const socialMediaIcons = [githubLogo, twitterLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
-
 const avatarDimensions = { height: '190px', width: '190px' };
-const socialMediaDimensions = { height: '30px', width: '30px' };
 const customStyles = {
 	content: {
 		top: '50%',
@@ -86,8 +78,8 @@ export default class Projects extends Component {
 		return 1;
 	};
 
-	openModal() {
-		this.setState({ roleMail: 'ex@example.com', roleNum: '0021286854355' }, () => {
+	openModal(MailTo, NumTo) {
+		this.setState({ roleMail: MailTo, roleNum: NumTo }, () => {
 			this.setState({ modalIsOpen: true });
 		});
 	}
@@ -126,7 +118,18 @@ export default class Projects extends Component {
 			return <div />;
 		}
 		const {
-			description, team_name, stage, members, roles, logo,
+			description,
+			team_name,
+			stage,
+			members,
+			roles,
+			logo,
+			contact,
+			facebook,
+			git,
+			inbox,
+			instagram,
+			linkedin,
 		} = this.state.profileData;
 
 		return (
@@ -165,15 +168,16 @@ export default class Projects extends Component {
 					>
 						{description}
 					</ReadMoreAndLess>
-					<ul className="social-media-list">
-						{socialMediaIcons.map(icon => (
-							<li className="social-media-item" key={icon}>
-								<a href="/">
-									<Avatar src={icon} style={socialMediaDimensions} />
-								</a>
-							</li>
-						))}
-					</ul>
+					<ProfileContacts contacts={{
+						contact,
+						facebook,
+						git,
+						inbox,
+						instagram,
+						linkedin
+					}}
+						openModal={this.openModal}
+					/>
 					<HorizontalNonLinearStepper currentStage={stage} profileData={this.state.profileData} />
 
 					{members.length >= this.getCardsNum(0) ? (
@@ -294,7 +298,7 @@ export default class Projects extends Component {
 							>
 								{Array.from(new Array(roles.length + 1)).map((_, i) => (
 									// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-									<div className="card-wrapper card-wrapper-clickable" onClick={this.openModal}>
+									<div className="card-wrapper card-wrapper-clickable" onClick={() => this.openModal('ex@gmail.com', '0021286854355')}>
 										<div
 											className="card-image"
 											style={{
@@ -318,7 +322,7 @@ export default class Projects extends Component {
 										// eslint-disable-next-line jsx-a11y/click-events-have-key-events
 										<div
 											className="card-wrapper card-wrapper-clickable"
-											onClick={this.openModal}
+											onClick={() => this.openModal('ex@gmail.com', '0021286854355')}
 											style={{ width: `${Math.round(100 / this.getCardsNum(1)) - 1.5}%` }}
 										>
 											<div
