@@ -221,7 +221,7 @@ export default class Projects extends Component {
 											</Typography>
 										) : null}
 
-										{members[i].linkedin ? (
+										{members[i] ? (
 											<a
 												href={members[i].linkedin}
 												style={{ position: 'absolute', right: 0, bottom: 0 }}
@@ -277,7 +277,7 @@ export default class Projects extends Component {
 							</div>
 						)}
 
-					{roles.length >= this.getCardsNum(1) ? (
+					{roles.length >= this.getCardsNum(0) ? (
 						<div className="carousel">
 							<Typography gutterBottom variant="headline" component="h3">
 								Roles Available
@@ -286,7 +286,7 @@ export default class Projects extends Component {
 								gutter={12}
 								activePosition="center"
 								chevronWidth={60}
-								numberOfCards={this.getCardsNum(1)}
+								numberOfCards={this.getCardsNum(0)}
 								slidesToScroll={1}
 								outsideChevron
 								showSlither={false}
@@ -297,42 +297,40 @@ export default class Projects extends Component {
 								leftChevron={<p className="card-controller">{'<'}</p>}
 							>
 								{Array.from(new Array(roles.length + 1)).map((_, i) => (
-									// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-									<div className="card-wrapper card-wrapper-clickable" onClick={() => this.openModal('ex@gmail.com', '0021286854355')}>
+									<MaterialCard openModal={this.openModal} clickable>
 										<div
 											className="card-image"
 											style={{
 												background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
 											}}
 										/>
-										<p>{roles[i] ? roles[i].name : 'Add Role'}</p>
-									</div>
+										<Typography gutterBottom variant="body1" component="p">
+											{roles[i] ? roles[i].name : 'Add Role'}
+										</Typography>
+
+									</MaterialCard>
 								))}
 							</ItemsCarousel>
 						</div>
 					) : (
 							<div className="normal-cards-view">
 								<Typography gutterBottom variant="headline" component="h3">
-									Roles Available
+									roles Available
                           </Typography>
 								<div>
-									{Array.from(new Array(this.getCardsNum(1))).map((_, i) => (
-										// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-										// eslint-disable-next-line jsx-a11y/no-static-element-interactions
-										// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-										<div
-											className="card-wrapper card-wrapper-clickable"
-											onClick={() => this.openModal('ex@gmail.com', '0021286854355')}
-											style={{ width: `${Math.round(100 / this.getCardsNum(1)) - 1.5}%` }}
-										>
+									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
+										<MaterialCard openModal={this.openModal} clickable CustomWidth={`${Math.round(100 / this.getCardsNum(0)) - 1.5}%`}>
 											<div
 												className="card-image"
 												style={{
 													background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
 												}}
 											/>
-											<p>{roles[i] ? roles[i].name : 'Add Role'}</p>
-										</div>
+											<Typography gutterBottom variant="body1" component="p">
+												{roles[i] ? roles[i].name : 'Add Role'}
+											</Typography>
+
+										</MaterialCard>
 									))}
 									{' '}
 								</div>
