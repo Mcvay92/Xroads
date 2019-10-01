@@ -10,15 +10,11 @@ import ItemsCarousel from 'react-items-carousel';
 import { userService } from '../../services';
 import HorizontalNonLinearStepper from './HorizontalNonLinearStepper';
 import MaterialCard from './MaterialCard';
-<<<<<<< HEAD
-=======
 import facebookLogo from '../../assets/images/facebook.svg';
 import linkedinLogo from '../../assets/images/linkedin.svg';
-import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
 import githubLogo from '../../assets/images/github.svg';
 import phoneLogo from '../../assets/images/phone.svg';
 import mailLogo from '../../assets/images/mail.svg';
->>>>>>> c38a93602f7f32dbb4e82b4c69dc97dec47c4939
 import addUser from '../../assets/images/add-user.svg';
 import userLogo from '../../assets/images/user.svg';
 import roleLogo from '../../assets/images/hand-shake.svg';
@@ -28,11 +24,8 @@ import ProfileContacts from './ProfileContacts';
 
 Modal.setAppElement('#root');
 
-<<<<<<< HEAD
-=======
 const socialMediaIcons = [githubLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
 
->>>>>>> c38a93602f7f32dbb4e82b4c69dc97dec47c4939
 const avatarDimensions = { height: '190px', width: '190px' };
 const customStyles = {
 	content: {
