@@ -131,10 +131,10 @@ export default class Projects extends Component {
 			members,
 			roles,
 			logo,
-			contact,
+			contact_phone,
 			facebook,
-			git,
-			inbox,
+			github,
+			email,
 			instagram,
 			linkedin,
 		} = this.state.profileData;
@@ -176,10 +176,10 @@ export default class Projects extends Component {
 						{description}
 					</ReadMoreAndLess>
 					<ProfileContacts contacts={{
-						contact,
+						contact_phone,
 						facebook,
-						git,
-						inbox,
+						github,
+						email,
 						instagram,
 						linkedin
 					}}
@@ -245,7 +245,7 @@ export default class Projects extends Component {
 					) : (
 							<div className="normal-cards-view">
 								<Typography gutterBottom variant="headline" component="h3">
-									Team members
+									Team Members
                           </Typography>
 								<div>
 									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
@@ -326,7 +326,7 @@ export default class Projects extends Component {
 					) : (
 							<div className="normal-cards-view">
 								<Typography gutterBottom variant="headline" component="h3">
-									roles Available
+									Roles Available
                           </Typography>
 								<div>
 									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (

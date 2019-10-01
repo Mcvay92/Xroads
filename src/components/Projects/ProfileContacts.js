@@ -16,26 +16,26 @@ export default class ProfileContacts extends Component {
 
     render() {
         const {
-            git,
+            github,
             facebook,
             linkedin,
             instagram,
-            contact,
-            inbox,
+            contact_phone,
+            email,
         } = this.props.contacts;
-        const links = [git, facebook, linkedin, instagram];
+        const links = [github, facebook, linkedin, instagram];
         return (
             <ul className="social-media-list">
                 {links.map((link, index) => <li className="social-media-item" key={link}>
-                    <a href={`https://${link}`} target='_blank'>
+                    <a href={`${link}`} target='_blank'>
                         <Avatar src={socialMediaIcons[index]} style={socialMediaDimensions} />
                     </a>
                 </li>)}
-                <li className="social-media-item" onClick={() => this.props.openModal(inbox, contact)}>
+                <li className="social-media-item" onClick={() => this.props.openModal(email, contact_phone)}>
                     <Avatar src={phoneLogo} style={socialMediaDimensions} />
                 </li>
                 <li className="social-media-item" >
-                    <a href={`mailto:${inbox}`} target='_blank'>
+                    <a href={`mailto:${email}`} target='_blank'>
                         <Avatar src={mailLogo} style={socialMediaDimensions} />
                     </a>
                 </li>
