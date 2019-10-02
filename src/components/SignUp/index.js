@@ -50,7 +50,7 @@ render() {
     const {errorMsg, successMsg} = this.state;
         return (
                 <div className="col-sm-6 margin-auto float-none">
-                    <Typography gutterBottom variant="headline" component="h1">Sign In Here</Typography>
+                    <Typography gutterBottom variant="headline" component="h1">Register</Typography>
                     <div  className="form-container">
                         <Form
                             schema={signupSchema}
@@ -59,13 +59,13 @@ render() {
                             >
                             <TextField name="email" label="Email" className="form-control" errorStyles={errorClasses} wrapperClassName="form-group" type="text" />
                             <TextField name="password" label="Password" className="form-control" errorStyles={errorClasses} wrapperClassName="form-group" type="password" />
-                            <SubmitField value="Submit" className="btn btn-success mb-20" />
+                            <SubmitField value="Create Account" className="btn btn-success mb-20" />
                         </Form>
                         {errorMsg &&
                         <div className="alert alert-danger">{errorMsg}</div>}
                         {successMsg &&
                         <div className="alert alert-success">{successMsg}</div>}
-                        <p>Already a user? Sign In <Link to="/signup">Here</Link></p>
+                        <p>Already have an account? <Link to="/signin">Log In</Link></p>
                     </div>
                 </div>
 

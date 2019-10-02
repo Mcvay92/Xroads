@@ -58,8 +58,8 @@ export default class Startups extends Component {
         console.log(isTokenValid);
         return (
             <div className={`col-sm-12 margin-auto float-none`}>
-                {isTokenValid ? <Fragment><h4 className=" mb-20">sponsored by Eng inc </h4>
-                    <span className="float-right mb-10"><Link to="/addProfile" className="btn btn-info">Create a project</Link></span></Fragment> :
+                {isTokenValid ? <Fragment><h4 className=" mb-20">Sponsored by Eng inc </h4>
+                    <span className="float-right mb-10"><Link to="/addProfile" className="btn btn-info">Create a Project</Link></span></Fragment> :
                     <section className="signup-banner">
                         <ul>
                             <li className="flex-spread">
@@ -67,11 +67,11 @@ export default class Startups extends Component {
                                 <img src={teamDevLogo} alt="team" />
                             </li>
                             <li>
-                                <Link to="/signup" className="btn-signup ">Sign up !</Link>
+                                <Link to="/signup" className="btn-signup ">Sign Up!</Link>
                                 <p>Sponsored by Engineering Inc. at Texas A&M University</p>
                             </li>
                             <li className="flex-spread">
-                                <p>Post your idea with the roles you need to bring it to life</p>
+                                <p>Post your idea with the roles you need to bring it to life!</p>
                                 <img src={ideaLogo} alt="idea" />
                             </li>
                         </ul>

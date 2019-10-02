@@ -10,11 +10,13 @@ var profileSchema = new Schema({
     },
     description: {
         type: String,
-        trim: true
+        trim: true,
+        required: 'Description is required'
     },
     stage: {
         type: String,
-        trim: true
+        trim: true,
+        required: 'Stage is required'
     },
     status: {
         type: String,
@@ -30,7 +32,7 @@ var profileSchema = new Schema({
         required: 'Team name is required',
         unique: 'Team Name must be unique.'
     },
-    contact: {
+    contact_phone: {
         type: String,
         trim: true
     },
@@ -45,9 +47,9 @@ var profileSchema = new Schema({
             linkedin: {type: String}
         }],
     roles: [{
-            name: {type: String, required: 'Role name is required.'}
+            name: {type: String}
         }],
-    git: {
+    github: {
         type: String,
         trim: true
     },
@@ -63,7 +65,7 @@ var profileSchema = new Schema({
         type: String,
         trim: true
     },
-    inbox: {
+    email: {
         type: String,
         trim: true
     },

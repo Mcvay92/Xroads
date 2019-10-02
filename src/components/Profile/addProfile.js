@@ -60,12 +60,21 @@ const ProfileForm = (props) => {
               wrapperClassName="form-group"
           />
           <TextField
-              value={profileData ? profileData.contact : null}
-              name="contact"
+              value={profileData ? profileData.contact_phone : null}
+              name="contact_phone"
               errorStyles={errorClasses}
               className="form-control"
-              label="Contact"
-              placeholder="Contact"
+              label="Contact Phone"
+              placeholder="Contact Phone"
+              wrapperClassName="form-group"
+          />
+          <TextField
+              value={profileData ? profileData.email : null}
+              name="email"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Contact Email"
+              placeholder="Contact Email"
               wrapperClassName="form-group"
           />
           <SelectField
@@ -85,6 +94,43 @@ const ProfileForm = (props) => {
               label="Start Date"
               wrapperClassName="form-group"
           />
+
+          <div className="members-heading">
+              <b>Optional Links:</b>
+          </div>
+          <TextField
+              value={profileData ? profileData.linkedin : null}
+              name="linkedin"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="LinkedIn"
+              wrapperClassName="form-group"
+          />
+          <TextField
+              value={profileData ? profileData.github : null}
+              name="github"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Github"
+              wrapperClassName="form-group"
+          />
+          <TextField
+              value={profileData ? profileData.facebook : null}
+              name="facebook"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Facebook"
+              wrapperClassName="form-group"
+          />
+          <TextField
+              value={profileData ? profileData.instagram : null}
+              name="instagram"
+              errorStyles={errorClasses}
+              className="form-control"
+              label="Instagram"
+              wrapperClassName="form-group"
+          />
+          <br />
           <div className="members-heading">
               <b>Members:</b>
           </div>
@@ -111,7 +157,7 @@ const ProfileForm = (props) => {
                   />
                   <TextField
                       name="linkedin"
-                      label="LinkedIn Link"
+                      label="LinkedIn URL"
                       className="form-control"
                       wrapperClassName="form-group"
                   />
@@ -301,7 +347,12 @@ class AddProfile extends React.Component {
     form.append('description', data.description);
     form.append('stage', data.stage);
     form.append('start_date', data.start_date);
-    form.append('contact', data.contact);
+    form.append('contact_phone', data.contact_phone);
+    form.append('email', data.email);
+    form.append('linkedin', data.linkedin);
+    form.append('github', data.github);
+    form.append('facebook', data.facebook);
+    form.append('instagram', data.instagram);
     if (data && data.logo) {
       form.append('logo', data.logo);
     }

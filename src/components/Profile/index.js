@@ -26,7 +26,7 @@ import {  Link } from 'react-router-dom';
         this.handleClose = this.handleClose.bind(this);
 //        this.deleteProfileId = this.deleteProfileId.bind(this);
     }
-    
+
     deleteProfileId(deleteProfileId) {
         console.log(deleteProfileId,'deleteProfileId');
 //        userService.deleteSingleProfile(this.state.deleteProfileId)
@@ -86,7 +86,6 @@ import {  Link } from 'react-router-dom';
         if (this.state.profileData != null && this.state.profileData.length > 0) {
             profiles = this.state.profileData.map((item, key) =>
                 <tr key={item._id}>
-                    <td>{key + 1}</td>
                     <td><Link to={`/profile/${item._id}`}>{item.team_name}</Link></td>
                     <td>{config.stages[item.stage]}</td>
                     <td>{moment(new Date(item.start_date)).format("LL")}</td>
@@ -96,13 +95,12 @@ import {  Link } from 'react-router-dom';
         }
         return (
                 <div className="col-12">
-                    
-                    <h4 className="mb-20">All profiles <span className="float-right"><Link to="/addProfile" className="btn btn-info">Add New Profile</Link></span></h4>
+
+                    <h4 className="mb-20">All Profiles <span className="float-right"><Link to="/addProfile" className="btn btn-info">Add New Profile</Link></span></h4>
                     {profileData != null && profileData.length > 0 && profiles != null &&
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Sr</th>
                                                 <th>Team Name</th>
                                                 <th>Stage</th>
                                                 <th>Start Date</th>

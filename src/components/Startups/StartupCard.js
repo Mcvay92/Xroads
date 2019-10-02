@@ -32,6 +32,7 @@ const styles = theme => ({
     },
     media: {
         height: 140,
+        margin: 10,
         backgroundSize: 'contain'
     },
     scroll: {
@@ -85,7 +86,7 @@ function StartupCard(props) {
 
                 </Grid>
                 {profileData.created_on ? <Typography gutterBottom variant="h5" component="p" className={classes.closer}>
-                    <b>posted on:</b>
+                    <b>Posted on:</b>
                     {' '}
                     {moment(profileData.created_on).format("D-M-YYYY")}
                 </Typography> : null}

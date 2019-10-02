@@ -51,7 +51,27 @@ export const profileSchema = new Schema({
     type: Date,
     errorStyles: 'alert',
   },
-  contact: {
+  contact_phone: {
+    type: String,
+    errorStyles: 'alert',
+  },
+  email: {
+    type: String,
+    errorStyles: 'alert',
+  },
+  linkedin: {
+    type: String,
+    errorStyles: 'alert',
+  },
+  github: {
+    type: String,
+    errorStyles: 'alert',
+  },
+  facebook: {
+    type: String,
+    errorStyles: 'alert',
+  },
+  instagram: {
     type: String,
     errorStyles: 'alert',
   },

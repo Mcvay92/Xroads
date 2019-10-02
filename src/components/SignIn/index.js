@@ -49,7 +49,7 @@ class SignIn extends React.Component {
 const {errorMsg, successMsg} = this.state;
     return (
         <div className="col-sm-6 margin-auto float-none">
-            <Typography gutterBottom variant="headline" component="h1">Sign In Here</Typography>
+            <Typography gutterBottom variant="headline" component="h1">Log In</Typography>
             <div  className="form-container">
              <Form
         schema={loginSchema}
@@ -58,13 +58,13 @@ const {errorMsg, successMsg} = this.state;
         >
         <TextField name="email" label="Email" className="form-control" errorStyles={errorClasses} wrapperClassName="form-group" type="text" />
         <TextField name="password" label="Password" className="form-control" errorStyles={errorClasses} wrapperClassName="form-group" type="password" />
-        <SubmitField value="Submit" className="btn btn-success mb-20" />
+        <SubmitField value="Log In" className="btn btn-success mb-20" />
          {errorMsg &&
                         <div className="alert alert-danger">{errorMsg}</div>}
                         {successMsg &&
                         <div className="alert alert-success">{successMsg}</div>}
             </Form>
-            <p>Already a user? Sign In <Link to="/signup">Here</Link></p>
+            <p>Don't have an account? <Link to="/signup">Register</Link></p>
         </div>
         </div>
     );

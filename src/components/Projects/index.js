@@ -10,6 +10,11 @@ import ItemsCarousel from 'react-items-carousel';
 import { userService } from '../../services';
 import HorizontalNonLinearStepper from './HorizontalNonLinearStepper';
 import MaterialCard from './MaterialCard';
+import facebookLogo from '../../assets/images/facebook.svg';
+import linkedinLogo from '../../assets/images/linkedin.svg';
+import githubLogo from '../../assets/images/github.svg';
+import phoneLogo from '../../assets/images/phone.svg';
+import mailLogo from '../../assets/images/mail.svg';
 import addUser from '../../assets/images/add-user.svg';
 import userLogo from '../../assets/images/user.svg';
 import roleLogo from '../../assets/images/hand-shake.svg';
@@ -18,6 +23,8 @@ import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
 import ProfileContacts from './ProfileContacts';
 
 Modal.setAppElement('#root');
+
+const socialMediaIcons = [githubLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
 
 const avatarDimensions = { height: '190px', width: '190px' };
 const customStyles = {
@@ -124,10 +131,10 @@ export default class Projects extends Component {
 			members,
 			roles,
 			logo,
-			contact,
+			contact_phone,
 			facebook,
-			git,
-			inbox,
+			github,
+			email,
 			instagram,
 			linkedin,
 		} = this.state.profileData;
@@ -169,10 +176,10 @@ export default class Projects extends Component {
 						{description}
 					</ReadMoreAndLess>
 					<ProfileContacts contacts={{
-						contact,
+						contact_phone,
 						facebook,
-						git,
-						inbox,
+						github,
+						email,
 						instagram,
 						linkedin
 					}}
@@ -224,6 +231,8 @@ export default class Projects extends Component {
 										{members[i] ? (
 											<a
 												href={members[i].linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
 												style={{ position: 'absolute', right: 0, bottom: 0 }}
 											>
 												<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
@@ -236,7 +245,7 @@ export default class Projects extends Component {
 					) : (
 							<div className="normal-cards-view">
 								<Typography gutterBottom variant="headline" component="h3">
-									Team members
+									Team Members
                           </Typography>
 								<div>
 									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
@@ -264,6 +273,8 @@ export default class Projects extends Component {
 											{members[i] ? (
 												<a
 													href={members[i].linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
 													style={{ position: 'absolute', right: 0, bottom: 0 }}
 												>
 													<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
@@ -315,7 +326,7 @@ export default class Projects extends Component {
 					) : (
 							<div className="normal-cards-view">
 								<Typography gutterBottom variant="headline" component="h3">
-									roles Available
+									Roles Available
                           </Typography>
 								<div>
 									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
