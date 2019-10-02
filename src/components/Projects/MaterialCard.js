@@ -25,13 +25,13 @@ const styles = {
 };
 
 function MaterialCard(props) {
-  const { classes, clickable, openModal } = props;
+  const { classes, clickable, openModal, ModalData } = props;
   return (
     <Card
       className={classes.card}
       style={{ width: props.CustomWidth ? props.CustomWidth : 'auto' }
       }
-      onClick={() => { if (clickable) { openModal('exxx@yahoo.com', '00000') } }}
+      onClick={() => { if (clickable) { openModal(ModalData.inbox, ModalData.contact) } }}
     >
       <CardContent className={classes.content}>{props.children}</CardContent>
     </Card>
