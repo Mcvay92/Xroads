@@ -20,6 +20,7 @@ import userLogo from '../../assets/images/user.svg';
 import roleLogo from '../../assets/images/hand-shake.svg';
 import addImage from '../../assets/images/add.svg';
 import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
+import defaultStartupLogo from '../../assets/images/startup.svg';
 import ProfileContacts from './ProfileContacts';
 
 Modal.setAppElement('#root');
@@ -144,7 +145,7 @@ export default class Projects extends Component {
 				<Grid container justify="center" alignItems="center" direction="column">
 					<Avatar
 						alt="team logo"
-						src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : addImage}
+						src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : defaultStartupLogo}
 						style={avatarDimensions}
 						onClick={(e) => {
 							if (!logo) {
