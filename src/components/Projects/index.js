@@ -61,6 +61,7 @@ export default class Projects extends Component {
 				if (response.token == 'invalid') {
 					this.props.history.push('/signin');
 				} else {
+					console.log(response.data, 'here')
 					this.setState({
 						profileData: response.data,
 						isLoading: false,
@@ -137,6 +138,8 @@ export default class Projects extends Component {
 			email,
 			instagram,
 			linkedin,
+			inbox,
+			contact
 		} = this.state.profileData;
 
 		return (
@@ -231,8 +234,8 @@ export default class Projects extends Component {
 										{members[i] ? (
 											<a
 												href={members[i].linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
+												target="_blank"
+												rel="noopener noreferrer"
 												style={{ position: 'absolute', right: 0, bottom: 0 }}
 											>
 												<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
@@ -273,8 +276,8 @@ export default class Projects extends Component {
 											{members[i] ? (
 												<a
 													href={members[i].linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
+													target="_blank"
+													rel="noopener noreferrer"
 													style={{ position: 'absolute', right: 0, bottom: 0 }}
 												>
 													<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
