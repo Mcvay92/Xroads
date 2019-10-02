@@ -61,7 +61,6 @@ export default class Projects extends Component {
 				if (response.token == 'invalid') {
 					this.props.history.push('/signin');
 				} else {
-					console.log(response.data, 'here')
 					this.setState({
 						profileData: response.data,
 						isLoading: false,
@@ -138,8 +137,6 @@ export default class Projects extends Component {
 			email,
 			instagram,
 			linkedin,
-			inbox,
-			contact
 		} = this.state.profileData;
 
 		return (
@@ -311,7 +308,7 @@ export default class Projects extends Component {
 								leftChevron={<p className="card-controller">{'<'}</p>}
 							>
 								{Array.from(new Array(roles.length + 1)).map((_, i) => (
-									<MaterialCard openModal={this.openModal} ModalData={{ inbox, contact }} clickable>
+									<MaterialCard openModal={this.openModal} ModalData={{ email, contact_phone }} clickable>
 										<div
 											className="card-image"
 											style={{
@@ -333,7 +330,7 @@ export default class Projects extends Component {
                           </Typography>
 								<div>
 									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
-										<MaterialCard openModal={this.openModal} ModalData={{ inbox, contact }} clickable CustomWidth={`${Math.round(100 / this.getCardsNum(0)) - 1.5}%`}>
+										<MaterialCard openModal={this.openModal} ModalData={{ email, contact_phone }} clickable CustomWidth={`${Math.round(100 / this.getCardsNum(0)) - 1.5}%`}>
 											<div
 												className="card-image"
 												style={{

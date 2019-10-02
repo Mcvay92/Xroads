@@ -26,19 +26,31 @@ export default class ProfileContacts extends Component {
         const links = [github, facebook, linkedin, instagram];
         return (
             <ul className="social-media-list">
-                {links.map((link, index) => <li className="social-media-item" key={link}>
-                    <a href={`${link}`} target='_blank'>
-                        <Avatar src={socialMediaIcons[index]} style={socialMediaDimensions} />
-                    </a>
-                </li>)}
-                <li className="social-media-item" onClick={() => this.props.openModal(email, contact_phone)}>
-                    <Avatar src={phoneLogo} style={socialMediaDimensions} />
-                </li>
-                <li className="social-media-item" >
-                    <a href={`mailto:${email}`} target='_blank'>
-                        <Avatar src={mailLogo} style={socialMediaDimensions} />
-                    </a>
-                </li>
+                {links.map((link, index) => {
+                    if (link) {
+                        return (<li className="social-media-item" key={link}>
+                            <a href={`${link}`} target='_blank'>
+                                <Avatar src={socialMediaIcons[index]} style={socialMediaDimensions} />
+                            </a>
+                        </li>)
+                    } else { return null }
+                })}
+                {
+                    contact_phone && email &&
+                    <li className="social-media-item" onClick={() => this.props.openModal(email, contact_phone)}>
+                        <Avatar src={phoneLogo} style={socialMediaDimensions} />
+                    </li>
+
+                }
+
+                {
+                    email &&
+                    <li className="social-media-item" >
+                        <a href={`mailto:${email}`} target='_blank'>
+                            <Avatar src={mailLogo} style={socialMediaDimensions} />
+                        </a>
+                    </li>
+                }
             </ul>
         )
     }

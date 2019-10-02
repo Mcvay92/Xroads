@@ -32,7 +32,7 @@ function MaterialCard(props) {
       className={classes.card}
       style={{ width: props.CustomWidth ? props.CustomWidth : 'auto' }
       }
-      onClick={() => { if (clickable && ModalData.inbox && ModalData.contact) { openModal(ModalData.inbox, ModalData.contact) } }}
+      onClick={() => { if (clickable && ModalData.email && ModalData.contact_phone) { openModal(ModalData.email, ModalData.contact_phone) } }}
     >
       <CardContent className={classes.content}>{props.children}</CardContent>
     </Card>
