@@ -58,7 +58,7 @@ export default class Startups extends Component {
         console.log(isTokenValid);
         return (
             <div className={`col-sm-12 margin-auto float-none`}>
-                {isTokenValid ? <Fragment><h4 className=" mb-20">Sponsored by Eng inc </h4>
+                {isTokenValid ? <Fragment><h4 className=" mb-20">Sponsored by Engineering Inc. </h4>
                     <span className="float-right mb-10"><Link to="/addProfile" className="btn btn-info">Create a Project</Link></span></Fragment> :
                     <section className="signup-banner">
                         <ul>

@@ -7,11 +7,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import defaultStartupLogo from '../../assets/images/startup.svg'
 import {
     BrowserRouter as Router, Route, NavLink, Redirect,
 } from 'react-router-dom';
 import moment from 'moment';
+import defaultStartupLogo from '../../assets/images/startup.svg';
 
 const styles = theme => ({
     card: {

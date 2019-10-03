@@ -12,7 +12,6 @@ import HorizontalNonLinearStepper from './HorizontalNonLinearStepper';
 import MaterialCard from './MaterialCard';
 import facebookLogo from '../../assets/images/facebook.svg';
 import linkedinLogo from '../../assets/images/linkedin.svg';
-import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
 import githubLogo from '../../assets/images/github.svg';
 import phoneLogo from '../../assets/images/phone.svg';
 import mailLogo from '../../assets/images/mail.svg';
@@ -20,13 +19,15 @@ import addUser from '../../assets/images/add-user.svg';
 import userLogo from '../../assets/images/user.svg';
 import roleLogo from '../../assets/images/hand-shake.svg';
 import addImage from '../../assets/images/add.svg';
+import linkedinLogoSquare from '../../assets/images/linkedin-logo-square.svg';
+import defaultStartupLogo from '../../assets/images/startup.svg';
+import ProfileContacts from './ProfileContacts';
 
 Modal.setAppElement('#root');
 
 const socialMediaIcons = [githubLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
 
 const avatarDimensions = { height: '190px', width: '190px' };
-const socialMediaDimensions = { height: '30px', width: '30px' };
 const customStyles = {
 	content: {
 		top: '50%',
@@ -85,8 +86,8 @@ export default class Projects extends Component {
 		return 1;
 	};
 
-	openModal() {
-		this.setState({ roleMail: 'ex@example.com', roleNum: '0021286854355' }, () => {
+	openModal(MailTo, NumTo) {
+		this.setState({ roleMail: MailTo, roleNum: NumTo }, () => {
 			this.setState({ modalIsOpen: true });
 		});
 	}
@@ -125,7 +126,18 @@ export default class Projects extends Component {
 			return <div />;
 		}
 		const {
-			description, team_name, stage, members, roles, logo,
+			description,
+			team_name,
+			stage,
+			members,
+			roles,
+			logo,
+			contact_phone,
+			facebook,
+			github,
+			email,
+			instagram,
+			linkedin,
 		} = this.state.profileData;
 
 		return (
@@ -133,7 +145,7 @@ export default class Projects extends Component {
 				<Grid container justify="center" alignItems="center" direction="column">
 					<Avatar
 						alt="team logo"
-						src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : addImage}
+						src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : defaultStartupLogo}
 						style={avatarDimensions}
 						onClick={(e) => {
 							if (!logo) {
@@ -164,15 +176,16 @@ export default class Projects extends Component {
 					>
 						{description}
 					</ReadMoreAndLess>
-					<ul className="social-media-list">
-						{socialMediaIcons.map(icon => (
-							<li className="social-media-item" key={icon}>
-								<a href="/">
-									<Avatar src={icon} style={socialMediaDimensions} />
-								</a>
-							</li>
-						))}
-					</ul>
+					<ProfileContacts contacts={{
+						contact_phone,
+						facebook,
+						github,
+						email,
+						instagram,
+						linkedin
+					}}
+						openModal={this.openModal}
+					/>
 					<HorizontalNonLinearStepper currentStage={stage} profileData={this.state.profileData} />
 
 					{members.length >= this.getCardsNum(0) ? (
@@ -216,11 +229,11 @@ export default class Projects extends Component {
 											</Typography>
 										) : null}
 
-										{members[i].linkedin ? (
+										{members[i] ? (
 											<a
 												href={members[i].linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
+												target="_blank"
+												rel="noopener noreferrer"
 												style={{ position: 'absolute', right: 0, bottom: 0 }}
 											>
 												<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
@@ -233,7 +246,7 @@ export default class Projects extends Component {
 					) : (
 							<div className="normal-cards-view">
 								<Typography gutterBottom variant="headline" component="h3">
-									Team members
+									Team Members
                           </Typography>
 								<div>
 									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
@@ -261,8 +274,8 @@ export default class Projects extends Component {
 											{members[i] ? (
 												<a
 													href={members[i].linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
+													target="_blank"
+													rel="noopener noreferrer"
 													style={{ position: 'absolute', right: 0, bottom: 0 }}
 												>
 													<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
@@ -276,7 +289,7 @@ export default class Projects extends Component {
 							</div>
 						)}
 
-					{roles.length >= this.getCardsNum(1) ? (
+					{roles.length >= this.getCardsNum(0) ? (
 						<div className="carousel">
 							<Typography gutterBottom variant="headline" component="h3">
 								Roles Available
@@ -285,7 +298,7 @@ export default class Projects extends Component {
 								gutter={12}
 								activePosition="center"
 								chevronWidth={60}
-								numberOfCards={this.getCardsNum(1)}
+								numberOfCards={this.getCardsNum(0)}
 								slidesToScroll={1}
 								outsideChevron
 								showSlither={false}
@@ -296,16 +309,18 @@ export default class Projects extends Component {
 								leftChevron={<p className="card-controller">{'<'}</p>}
 							>
 								{Array.from(new Array(roles.length + 1)).map((_, i) => (
-									// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-									<div className="card-wrapper card-wrapper-clickable" onClick={this.openModal}>
+									<MaterialCard openModal={this.openModal} ModalData={{ email, contact_phone }} clickable>
 										<div
 											className="card-image"
 											style={{
 												background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
 											}}
 										/>
-										<p>{roles[i] ? roles[i].name : 'Add Role'}</p>
-									</div>
+										<Typography gutterBottom variant="body1" component="p">
+											{roles[i] ? roles[i].name : 'Add Role'}
+										</Typography>
+
+									</MaterialCard>
 								))}
 							</ItemsCarousel>
 						</div>
@@ -315,23 +330,19 @@ export default class Projects extends Component {
 									Roles Available
                           </Typography>
 								<div>
-									{Array.from(new Array(this.getCardsNum(1))).map((_, i) => (
-										// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-										// eslint-disable-next-line jsx-a11y/no-static-element-interactions
-										// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-										<div
-											className="card-wrapper card-wrapper-clickable"
-											onClick={this.openModal}
-											style={{ width: `${Math.round(100 / this.getCardsNum(1)) - 1.5}%` }}
-										>
+									{Array.from(new Array(this.getCardsNum(0))).map((_, i) => (
+										<MaterialCard openModal={this.openModal} ModalData={{ email, contact_phone }} clickable CustomWidth={`${Math.round(100 / this.getCardsNum(0)) - 1.5}%`}>
 											<div
 												className="card-image"
 												style={{
 													background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
 												}}
 											/>
-											<p>{roles[i] ? roles[i].name : 'Add Role'}</p>
-										</div>
+											<Typography gutterBottom variant="body1" component="p">
+												{roles[i] ? roles[i].name : 'Add Role'}
+											</Typography>
+
+										</MaterialCard>
 									))}
 									{' '}
 								</div>
@@ -345,7 +356,7 @@ export default class Projects extends Component {
 					style={customStyles}
 					contentLabel="Role Contacts"
 				>
-					<h5>Contacts</h5>
+					<h5>Contact Information</h5>
 					<p>
 						Email:
                       {this.state.roleMail}
@@ -355,7 +366,7 @@ export default class Projects extends Component {
                       {this.state.roleNum}
 					</p>
 					<button type="button" onClick={this.closeModal} className="close-modal-button">
-						close
+						Close
                   </button>
 				</Modal>
 			</div>
