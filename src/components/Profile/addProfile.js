@@ -347,7 +347,12 @@ class AddProfile extends React.Component {
     form.append('description', data.description);
     form.append('stage', data.stage);
     form.append('start_date', data.start_date);
-    form.append('contact', data.contact);
+    form.append('contact_phone', data.contact_phone);
+    form.append('email', data.email);
+    form.append('linkedin', data.linkedin);
+    form.append('github', data.github);
+    form.append('facebook', data.facebook);
+    form.append('instagram', data.instagram);
     if (data && data.logo) {
       form.append('logo', data.logo);
     }

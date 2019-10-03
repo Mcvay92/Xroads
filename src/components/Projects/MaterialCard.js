@@ -9,10 +9,10 @@ import CardContent from '@material-ui/core/CardContent';
 const styles = {
   card: {
     textAlign: ' center',
-    border: ' 1px solid black',
     minHeight: '200px',
     paddingBottom: '0px',
     position: 'relative',
+    margin: '2px'
   },
   content: {
     textAlign: ' center',
@@ -25,14 +25,17 @@ const styles = {
 };
 
 function MaterialCard(props) {
-  const { classes } = props;
+  const { classes, clickable, openModal, ModalData } = props;
+  console.log(ModalData);
   return (
-      <Card
-          className={classes.card}
-          style={{ width: props.CustomWidth ? props.CustomWidth : 'auto' }}
-      >
-          <CardContent className={classes.content}>{props.children}</CardContent>
-      </Card>
+    <Card
+      className={classes.card}
+      style={{ width: props.CustomWidth ? props.CustomWidth : 'auto' }
+      }
+      onClick={() => { if (clickable && ModalData.email && ModalData.contact_phone) { openModal(ModalData.email, ModalData.contact_phone) } }}
+    >
+      <CardContent className={classes.content}>{props.children}</CardContent>
+    </Card>
   );
 }
 

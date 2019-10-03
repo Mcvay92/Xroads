@@ -198,6 +198,7 @@ nav > a:hover > div > span {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 40;
 }
 
 .burger-menu-symbol .line {
@@ -325,4 +326,10 @@ hr {
   color: white;
   border: none;
   cursor: pointer;
+}
+
+
+div > button > span > span > svg > path {
+  /*completed stepper button style*/
+  color:#1976d2;
 }

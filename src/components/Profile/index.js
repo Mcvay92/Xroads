@@ -96,7 +96,7 @@ import {  Link } from 'react-router-dom';
         return (
                 <div className="col-12">
 
-                    <h4 className="mb-20">All profiles <span className="float-right"><Link to="/addProfile" className="btn btn-info">Add New Profile</Link></span></h4>
+                    <h4 className="mb-20">All Profiles <span className="float-right"><Link to="/addProfile" className="btn btn-info">Add New Profile</Link></span></h4>
                     {profileData != null && profileData.length > 0 && profiles != null &&
                                     <table className="table table-bordered">
                                         <thead>
