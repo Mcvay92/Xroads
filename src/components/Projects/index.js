@@ -364,7 +364,7 @@ export default class Projects extends Component {
 					style={customStyles}
 					contentLabel="Role Contacts"
 				>
-					<h5>Contacts</h5>
+					<h5>Contact Information</h5>
 					<p>
 						Email:
                       {this.state.roleMail}
@@ -374,7 +374,7 @@ export default class Projects extends Component {
                       {this.state.roleNum}
 					</p>
 					<button type="button" onClick={this.closeModal} className="close-modal-button">
-						close
+						Close
                   </button>
 				</Modal>
 			</div>

@@ -28,11 +28,13 @@ export default class ProfileContacts extends Component {
             <ul className="social-media-list">
                 {links.map((link, index) => {
                     if (link) {
-                        return (<li className="social-media-item" key={link}>
+                        return (
+                          <li className="social-media-item" key={link}>
                             <a href={`${link}`} target='_blank'>
                                 <Avatar src={socialMediaIcons[index]} style={socialMediaDimensions} />
                             </a>
-                        </li>)
+                          </li>
+                        )
                     } else { return null }
                 })}
                 {
