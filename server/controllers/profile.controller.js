@@ -212,40 +212,42 @@
                     });
                 }
                 const profileId = req.params.id;
-                if (req.body.team_name) {
+                if (req.body.team_name  != undefined) {
                     updateFields['team_name'] = req.body.team_name;
                 }
-                if (req.body.start_date) {
+                if (req.body.start_date  != undefined) {
                     updateFields['start_date'] = req.body.start_date;
                 }
-                if (req.body.stage) {
+                if (req.body.stage  != undefined) {
                     updateFields['stage'] = req.body.stage;
                 }
-                if (req.body.contact_phone) {
+                if (req.body.contact_phone  != undefined) {
                     updateFields['contact_phone'] = req.body.contact_phone;
                 }
-                if (req.body.description) {
+                if (req.body.description  != undefined) {
                     updateFields['description'] = req.body.description;
                 }
-                if (req.body.github) {
+                if (req.body.github  != undefined) {
                     updateFields['github'] = req.body.github;
                 }
-                if (req.body.facebook) {
+                if (req.body.facebook  != undefined) {
                     updateFields['facebook'] = req.body.facebook;
                 }
-                if (req.body.instagram) {
+                console.log(req.body.instagram, 'req.body.instagram')
+                if (req.body.instagram != undefined) {
+                console.log('req.body.instagram inside req.body.instagram')
                     updateFields['instagram'] = req.body.instagram;
                 }
-                if (req.body.linkedin) {
+                if (req.body.linkedin != undefined) {
                     updateFields['linkedin'] = req.body.linkedin;
                 }
-                if (req.body.email) {
+                if (req.body.email != undefined) {
                     updateFields['email'] = req.body.email;
                 }
                 if (req.body.removeLogo && req.body.removeLogo === 'true' && (updateFields['logo'] == undefined || null)) {
                     updateFields['logo'] = null;
                 }
-                if (req.body.roles) {
+                if (req.body.roles  != undefined) {
                     updateFields['roles'] = req.body.role;
                     const roleArray = typeof req.body.roles == 'string' ? JSON.parse(req.body.roles) : req.body.roles;
                     let roles = [];
@@ -260,7 +262,7 @@
                     })
                     updateFields['roles'] = roles;
                 }
-                if (req.body.members) {
+                if (req.body.members  != undefined) {
                     const memberArray = typeof req.body.members == 'string' ? JSON.parse(req.body.members) : req.body.members;
                     let memebers = [];
                     memberArray.map((v, k) => {
