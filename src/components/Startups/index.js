@@ -19,7 +19,7 @@ export default class Startups extends Component {
     constructor() {
         super();
         this.state = {
-            isTokenValid: typeof localStorage.getItem('access_token') !== 'string' ? false : true,
+            isLoggedIn: typeof localStorage.getItem('access_token') !== 'string' ? false : true,
             isLoading: true,
             profilesData: null,
         };
@@ -51,22 +51,25 @@ export default class Startups extends Component {
 
 
     render() {
-        const { isLoading, profilesData, isTokenValid } = this.state;
+        const { isLoading, profilesData, isLoggedIn } = this.state;
         if (this.state.isLoading) {
             return <div />;
         }
-        console.log(isTokenValid);
+        let messageLeft = "Are you looking for a local student startup or project to join at Texas A&M?";
+        if(isLoggedIn) {
+          messageLeft = "Reach the community of students at Texas A&M with your idea."
+        }
         return (
             <div className={`col-sm-12 margin-auto float-none`}>
 
                 <section className="signup-banner">
                     <ul>
                         <li className="flex-spread">
-                            <p>Are you looking for a local student startup or project to join at Texas A&M?</p>
+                            <p>{messageLeft}</p>
                             <img src={teamDevLogo} alt="team" />
                         </li>
                         <li>
-                            <Link to={isTokenValid ? "/addProfile" : "/signup"} className="btn-signup "> {isTokenValid ? 'Create a Project' : 'Sign Up!'}</Link>
+                            <Link to={isLoggedIn ? "/addProfile" : "/signup"} className="btn-signup "> {isLoggedIn ? 'Create a Project' : 'Sign Up!'}</Link>
                             <p>Sponsored by Engineering Inc. at Texas A&M University</p>
                         </li>
                         <li className="flex-spread">
@@ -76,10 +79,6 @@ export default class Startups extends Component {
                     </ul>
                 </section>
 
-                <Fragment><h4 className=" mb-20">Sponsored by Eng inc </h4>
-                    <span className="float-right mb-10"><Link to="/addProfile" className="btn btn-info">Create a Project</Link></span></Fragment>
-
-
                 <div className="startup-cards">
                     {profilesData ? profilesData.map(startup => <StartupCard profileData={startup} key={startup._id} />) : null}
                 </div>
@@ -87,7 +86,3 @@ export default class Startups extends Component {
         );
     }
 }
-
-
-
-// ${hasToken && isTokenValid ? null : 'relative-padding'}
