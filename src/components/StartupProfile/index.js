@@ -214,7 +214,7 @@ export default class StartupProfile extends Component {
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
-											{members[i] ? members[i].name : 'Add Member'}
+											{members[i] ? members[i].name : ''}
 										</Typography>
 										{members[i] ? (
 											<Typography gutterBottom variant="body1" component="p">
@@ -258,7 +258,7 @@ export default class StartupProfile extends Component {
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
-												{members[i] ? members[i].name : 'Add Member'}
+												{members[i] ? members[i].name : ''}
 											</Typography>
 											{members[i] ? (
 												<Typography gutterBottom variant="body1" component="p">
@@ -319,7 +319,7 @@ export default class StartupProfile extends Component {
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
-											{roles[i] ? roles[i].name === "" ? 'Add Role' : roles[i].name : 'Add Role'}
+											{roles[i] ? roles[i].name === "" ? '' : roles[i].name : ''}
 										</Typography>
 
 									</MaterialCard>
@@ -343,7 +343,7 @@ export default class StartupProfile extends Component {
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
-												{roles[i] ? roles[i].name === "" ? 'Add Role' : roles[i].name : 'Add Role'}
+												{roles[i] ? roles[i].name === "" ? '' : roles[i].name : ''}
 											</Typography>
 
 										</MaterialCard>

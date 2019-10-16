@@ -22,7 +22,7 @@ import { profileSchema } from './schemas';
 import FileField from '../common/FileField';
 import config from '../../config';
 
-const addMemberButton = { className: 'button button-info', value: 'Add Memeber' };
+const addMemberButton = { className: 'button button-info', value: 'Add Member' };
 const addRoleButton = { className: 'button button-info', value: 'Add Role' };
 const removeMemberButton = { className: 'button button-info', value: 'Remove Memeber' };
 const removeRoleButton = { className: 'button button-info', value: 'Remove Role' };
