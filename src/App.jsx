@@ -39,7 +39,6 @@ class App extends Component {
       isValidToken: localStorage.getItem('token_valid'),
       isNavOpened: false,
     };
-    console.log(this.props);
   }
 
   componentDidUpdate() {

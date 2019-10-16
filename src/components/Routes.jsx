@@ -9,7 +9,7 @@ import StartupGuide from './StartupGuide/StartupGuide';
 import JobPostingForm from './JobPostingForm';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
-import Projects from './Projects';
+import StartupProfile from './StartupProfile';
 import Profile from './Profile';
 import AddProfile from './Profile/addProfile';
 import HowToStartup from './StartupGuide/HowToStartup.jsx';
@@ -51,7 +51,7 @@ const Routes = () => (
         <Route exact path="/mentorMatchingForm" component={MentorMatchingForm} />
 
         <Route exact path="/organizations" component={Organizations} />
-        <Route exact path="/profile/:id" component={Projects} />
+        <Route exact path="/profile/:id" component={StartupProfile} />
         <Route exact path="/incubators" component={Incubators} />
         <Route exact path="/join-now" component={Home} />
         <Route exact path="/courses" component={Courses} />

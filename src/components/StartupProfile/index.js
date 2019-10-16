@@ -27,7 +27,7 @@ Modal.setAppElement('#root');
 
 const socialMediaIcons = [githubLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
 
-const avatarDimensions = { height: '190px', width: '190px' };
+const avatarDimensions = { height: '190px', width: '190px', borderRadius: '0' };
 const customStyles = {
 	content: {
 		top: '50%',
@@ -39,7 +39,7 @@ const customStyles = {
 	},
 };
 
-export default class Projects extends Component {
+export default class StartupProfile extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -59,14 +59,10 @@ export default class Projects extends Component {
 		userService
 			.getProfile(id)
 			.then((response) => {
-				if (response.token == 'invalid') {
-					this.props.history.push('/signin');
-				} else {
 					this.setState({
 						profileData: response.data,
 						isLoading: false,
 					});
-				}
 			})
 			.catch((error) => {
 				this.setState({ error, isLoading: false });
@@ -213,6 +209,8 @@ export default class Projects extends Component {
 											className="card-image"
 											style={{
 												background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
+												backgroundRepeat: 'no-repeat',
+												backgroundPosition: 'center center'
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
@@ -234,7 +232,7 @@ export default class Projects extends Component {
 												href={members[i].linkedin}
 												target="_blank"
 												rel="noopener noreferrer"
-												style={{ position: 'absolute', right: 0, bottom: 0 }}
+												style={{ position: 'absolute', right: 0, bottom: 0, display: members[i].linkedin ? 'block' : 'none' }}
 											>
 												<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
 											</a>
@@ -255,6 +253,8 @@ export default class Projects extends Component {
 												className="card-image"
 												style={{
 													background: members[i] ? `url(${userLogo})` : `url(${addUser})`,
+													backgroundRepeat: 'no-repeat',
+													backgroundPosition: 'center center'
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
@@ -276,7 +276,7 @@ export default class Projects extends Component {
 													href={members[i].linkedin}
 													target="_blank"
 													rel="noopener noreferrer"
-													style={{ position: 'absolute', right: 0, bottom: 0 }}
+													style={{ position: 'absolute', right: 0, bottom: 0, display: members[i].linkedin ? 'block' : 'none' }}
 												>
 													<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
 												</a>
@@ -313,11 +313,13 @@ export default class Projects extends Component {
 										<div
 											className="card-image"
 											style={{
-												background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
+												background: roles[i] ? roles[i].name === '' ? `url(${addUser})` : `url(${roleLogo})` : `url(${addUser})`,
+												backgroundRepeat: 'no-repeat',
+												backgroundPosition: 'center center'
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
-											{roles[i] ? roles[i].name : 'Add Role'}
+											{roles[i] ? roles[i].name === "" ? 'Add Role' : roles[i].name : 'Add Role'}
 										</Typography>
 
 									</MaterialCard>
@@ -335,11 +337,13 @@ export default class Projects extends Component {
 											<div
 												className="card-image"
 												style={{
-													background: roles[i] ? `url(${roleLogo})` : `url(${addUser})`,
+													background: roles[i] ? roles[i].name === '' ? `url(${addUser})` : `url(${roleLogo})` : `url(${addUser})`,
+													backgroundRepeat: 'no-repeat',
+													backgroundPosition: 'center center'
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
-												{roles[i] ? roles[i].name : 'Add Role'}
+												{roles[i] ? roles[i].name === "" ? 'Add Role' : roles[i].name : 'Add Role'}
 											</Typography>
 
 										</MaterialCard>
