@@ -26,7 +26,6 @@ const styles = {
 
 function MaterialCard(props) {
   const { classes, clickable, openModal, ModalData } = props;
-  console.log(ModalData);
   return (
     <Card
       className={classes.card}

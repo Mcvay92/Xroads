@@ -39,7 +39,7 @@ const customStyles = {
 	},
 };
 
-export default class Projects extends Component {
+export default class StartupProfile extends Component {
 	constructor() {
 		super();
 		this.state = {

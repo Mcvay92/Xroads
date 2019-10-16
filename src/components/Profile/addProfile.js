@@ -37,7 +37,6 @@ const ProfileForm = (props) => {
   const addRoleButton = { className: 'btn btn-info mt-30 mb-20', value: 'Add Role' };
   const removeRoleButton = { className: 'btn btn-info', value: 'Remove Role' };
   const profileData = props.profiledata;
-  console.log(profileData, 'profileData', typeof profileData);
   const stageOject = config.stageSelect;
   return (
       <div className="form-container">
@@ -222,7 +221,6 @@ const ProfileForm = (props) => {
   );
 };
 const removeImage = () => {
-  console.log('removeImage');
   const imgLayer = document.getElementsByClassName('img-layer');
   const imgOuter = document.getElementsByClassName('img-outer');
   document.getElementById('remove-image').remove();
@@ -340,7 +338,6 @@ class AddProfile extends React.Component {
     data.logo = imagedata;
     data = data;
     this.setState({ loading: true, successMsg: null, errorMsg: null });
-    console.log(removeImageData, 'removeImageData', data.logo);
     const form = new FormData();
     form.append('team_name', data.team_name);
     form.append('user_id', data.user_id);
