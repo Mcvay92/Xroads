@@ -68,7 +68,7 @@ function getAllProfiles() {
 function getProfile(profileId) {
     const requestOptions = {
         method: 'GET',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token') }
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
     };
 
     return fetch(`/api/profile/${profileId}`, requestOptions)

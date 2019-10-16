@@ -59,14 +59,10 @@ export default class Projects extends Component {
 		userService
 			.getProfile(id)
 			.then((response) => {
-				if (response.token == 'invalid') {
-					this.props.history.push('/signin');
-				} else {
 					this.setState({
 						profileData: response.data,
 						isLoading: false,
 					});
-				}
 			})
 			.catch((error) => {
 				this.setState({ error, isLoading: false });
