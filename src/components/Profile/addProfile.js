@@ -400,7 +400,7 @@ Profile
             >
                 <DialogContent>
                     <DialogContentText>
-                Your session is expired. Please login to continue.
+                Please Sign up or Sign in to view your profiles.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
