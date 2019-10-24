@@ -9,6 +9,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Routes from './components/Routes';
 import NavBar from './components/NavBar';
 import BurgerMenuSymbol from './assets/images/burger-menu-symbol.svg';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-150838671-1', {
+  //debug: true,
+  siteSpeedSampleRate: 100
+});
 
 const theme = createMuiTheme({
   palette: {
