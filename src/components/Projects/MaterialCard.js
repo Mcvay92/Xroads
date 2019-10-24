@@ -9,10 +9,8 @@ import CardContent from '@material-ui/core/CardContent';
 const styles = {
   card: {
     textAlign: ' center',
-    minHeight: '200px',
-    paddingBottom: '0px',
-    position: 'relative',
-    margin: '2px'
+    height: '250px',
+    position: 'relative'
   },
   content: {
     textAlign: ' center',
@@ -20,7 +18,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    height: '195px',
+    height: '100%',
   },
 };
 

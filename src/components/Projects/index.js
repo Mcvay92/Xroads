@@ -141,7 +141,7 @@ export default class Projects extends Component {
 		} = this.state.profileData;
 
 		return (
-			<div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
+			<div className="col-sm-12 col-lg-10 col-md-10 margin-auto float-none">
 				<Grid container justify="center" alignItems="center" direction="column">
 					<img
 						alt="Team Logo"
@@ -186,7 +186,7 @@ export default class Projects extends Component {
 					{members.length >= this.getCardsNum(0) ? (
 						<div className="carousel">
 							<Typography gutterBottom variant="headline" component="h3">
-								members Available
+								Team Members
                           </Typography>
 							<ItemsCarousel
 								gutter={12}
@@ -211,7 +211,7 @@ export default class Projects extends Component {
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
-											{members[i] ? members[i].name : 'Add Member'}
+											<strong>{members[i] ? members[i].name : 'Add Member'}</strong>
 										</Typography>
 										{members[i] ? (
 											<Typography gutterBottom variant="body1" component="p">
@@ -231,7 +231,7 @@ export default class Projects extends Component {
 												rel="noopener noreferrer"
 												style={{ position: 'absolute', right: 0, bottom: 0 }}
 											>
-												<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
+												<img src={linkedinLogoSquare} style={{ width: '35px', height: '35px' }} alt="user linkedin account" />
 											</a>
 										) : null}
 									</MaterialCard>
@@ -253,7 +253,7 @@ export default class Projects extends Component {
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
-												{members[i] ? members[i].name : 'Add Member'}
+												<strong>{members[i] ? members[i].name : 'Add Member'}</strong>
 											</Typography>
 											{members[i] ? (
 												<Typography gutterBottom variant="body1" component="p">
@@ -273,7 +273,7 @@ export default class Projects extends Component {
 													rel="noopener noreferrer"
 													style={{ position: 'absolute', right: 0, bottom: 0 }}
 												>
-													<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
+													<img src={linkedinLogoSquare} style={{ width: '35px', height: '35px' }} alt="user linkedin account" />
 												</a>
 											) : null}
 										</MaterialCard>
@@ -312,7 +312,7 @@ export default class Projects extends Component {
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
-											{roles[i] ? roles[i].name : 'Add Role'}
+											<strong>{roles[i] ? roles[i].name : 'Add Role'}</strong>
 										</Typography>
 
 									</MaterialCard>
@@ -334,7 +334,7 @@ export default class Projects extends Component {
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
-												{roles[i] ? roles[i].name : 'Add Role'}
+												<strong>{roles[i] ? roles[i].name : 'Add Role'}</strong>
 											</Typography>
 
 										</MaterialCard>
