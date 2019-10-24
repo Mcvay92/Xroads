@@ -15,7 +15,7 @@ import defaultStartupLogo from '../../assets/images/startup.svg';
 
 const styles = theme => ({
     card: {
-        height: '325px',
+        height: '360px',
         width: '30%',
         marginBottom: '20px ',
         marginTop: '20px ',
@@ -64,9 +64,9 @@ function StartupCard(props) {
         <Card className={classes.card}>
             <CardMedia
                 className={classes.media}
+                href="www.google.com"
                 image={profileData.logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${profileData.logo}` :
                     defaultStartupLogo}
-                title="Contemplative Reptile"
             />
             <CardContent>
                 <Grid container justify="space-between" alignItems="center" direction="row">
@@ -88,7 +88,7 @@ function StartupCard(props) {
                 {profileData.created_on ? <Typography gutterBottom variant="h5" component="p" className={classes.closer}>
                     <b>Posted on:</b>
                     {' '}
-                    {moment(profileData.created_on).format("D-M-YYYY")}
+                    {moment(profileData.created_on).format("M-D-YYYY")}
                 </Typography> : null}
 
                 <Typography component="p" className={classes.scroll}>
