@@ -27,7 +27,7 @@ Modal.setAppElement('#root');
 
 const socialMediaIcons = [githubLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
 
-const avatarDimensions = { height: '190px', width: '190px', borderRadius: '0' };
+const avatarDimensions = { maxHeight: '250px', maxWidth: '250px' };
 const customStyles = {
 	content: {
 		top: '50%',
@@ -137,17 +137,12 @@ export default class StartupProfile extends Component {
 		} = this.state.profileData;
 
 		return (
-			<div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
+			<div className="col-sm-12 col-lg-10 col-md-10 margin-auto float-none">
 				<Grid container justify="center" alignItems="center" direction="column">
-					<Avatar
-						alt="team logo"
+					<img
+						alt="Team Logo"
 						src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : defaultStartupLogo}
 						style={avatarDimensions}
-						onClick={(e) => {
-							if (!logo) {
-								this.logoUploader.current.click();
-							}
-						}}
 					/>
 					<br />
 					<input
@@ -187,7 +182,7 @@ export default class StartupProfile extends Component {
 					{members.length >= this.getCardsNum(0) ? (
 						<div className="carousel">
 							<Typography gutterBottom variant="headline" component="h3">
-								members Available
+								Team Members
                           </Typography>
 							<ItemsCarousel
 								gutter={12}
@@ -214,7 +209,7 @@ export default class StartupProfile extends Component {
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
-											{members[i] ? members[i].name : ''}
+											<strong>{members[i] ? members[i].name : 'Add Member'}</strong>
 										</Typography>
 										{members[i] ? (
 											<Typography gutterBottom variant="body1" component="p">
@@ -234,7 +229,7 @@ export default class StartupProfile extends Component {
 												rel="noopener noreferrer"
 												style={{ position: 'absolute', right: 0, bottom: 0, display: members[i].linkedin ? 'block' : 'none' }}
 											>
-												<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
+												<img src={linkedinLogoSquare} style={{ width: '35px', height: '35px' }} alt="user linkedin account" />
 											</a>
 										) : null}
 									</MaterialCard>
@@ -258,7 +253,7 @@ export default class StartupProfile extends Component {
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
-												{members[i] ? members[i].name : ''}
+												<strong>{members[i] ? members[i].name : 'Add Member'}</strong>
 											</Typography>
 											{members[i] ? (
 												<Typography gutterBottom variant="body1" component="p">
@@ -278,7 +273,7 @@ export default class StartupProfile extends Component {
 													rel="noopener noreferrer"
 													style={{ position: 'absolute', right: 0, bottom: 0, display: members[i].linkedin ? 'block' : 'none' }}
 												>
-													<img src={linkedinLogoSquare} style={{ width: '28px', height: '28px' }} alt="user linkedin account" />
+													<img src={linkedinLogoSquare} style={{ width: '35px', height: '35px' }} alt="user linkedin account" />
 												</a>
 											) : null}
 										</MaterialCard>
@@ -319,7 +314,7 @@ export default class StartupProfile extends Component {
 											}}
 										/>
 										<Typography gutterBottom variant="body1" component="p">
-											{roles[i] ? roles[i].name === "" ? '' : roles[i].name : ''}
+											<strong>{roles[i] ? roles[i].name : 'Add Role'}</strong>
 										</Typography>
 
 									</MaterialCard>
@@ -343,7 +338,7 @@ export default class StartupProfile extends Component {
 												}}
 											/>
 											<Typography gutterBottom variant="body1" component="p">
-												{roles[i] ? roles[i].name === "" ? '' : roles[i].name : ''}
+												<strong>{roles[i] ? roles[i].name : 'Add Role'}</strong>
 											</Typography>
 
 										</MaterialCard>
