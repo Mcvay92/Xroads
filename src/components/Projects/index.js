@@ -27,7 +27,7 @@ Modal.setAppElement('#root');
 
 const socialMediaIcons = [githubLogo, facebookLogo, linkedinLogo, phoneLogo, mailLogo];
 
-const avatarDimensions = { height: '190px', width: '190px' };
+const avatarDimensions = { maxHeight: '250px', maxWidth: '250px' };
 const customStyles = {
 	content: {
 		top: '50%',
@@ -143,15 +143,10 @@ export default class Projects extends Component {
 		return (
 			<div className="col-sm-12 col-lg-8 col-md-10 margin-auto float-none">
 				<Grid container justify="center" alignItems="center" direction="column">
-					<Avatar
-						alt="team logo"
+					<img
+						alt="Team Logo"
 						src={logo ? `https://crossroad-test.s3.us-east-2.amazonaws.com/logo/${logo}` : defaultStartupLogo}
 						style={avatarDimensions}
-						onClick={(e) => {
-							if (!logo) {
-								this.logoUploader.current.click();
-							}
-						}}
 					/>
 					<br />
 					<input
