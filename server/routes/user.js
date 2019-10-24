@@ -10,7 +10,7 @@ router.post('/signin', userController.signIn);
 router.post('/addProfile', authMiddleware, profileController.addProfile);
 router.get('/allProfiles', authMiddleware, profileController.getAllUserProfiles);
 router.get('/getAllProfiles', profileController.getAllProfiles);
-router.get('/profile/:id', authMiddleware, profileController.getSingleProfile);
+router.get('/profile/:id', profileController.getSingleProfile);
 router.put('/editprofile/:id', authMiddleware, profileController.editProfile);
 router.delete('/deleteprofile/:id', authMiddleware, profileController.deleteProfile);
 

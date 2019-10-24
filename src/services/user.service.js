@@ -58,7 +58,6 @@ function getAllProfiles() {
     return fetch(`${config.API_PATH}/allProfiles`, requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             if (data.token == 'invalid') {
                 localStorage.setItem('token_valid', false);
             }
@@ -68,13 +67,12 @@ function getAllProfiles() {
 function getProfile(profileId) {
     const requestOptions = {
         method: 'GET',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'access_token': localStorage.getItem('access_token') }
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
     };
 
     return fetch(`/api/profile/${profileId}`, requestOptions)
         .then(response => response.json())
         .then(profiles => {
-            console.log(profiles)
             if (profiles.token == 'invalid') {
                 localStorage.setItem('token_valid', false);
             }
@@ -154,7 +152,6 @@ function getAllUsersProfiles() {
     return fetch(`${config.API_PATH}/getAllProfiles`, requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             return data;
         })
 }

@@ -24,6 +24,14 @@ We are using eslint to maintain coding style standards. Here is how to get it wo
 -   run `npm start` in the terminal in the project directory.
 -   run `npm run dev` in the terminal in the project directory to start react and the server at the same time.
 
+### How to run the production server:
+
+- Run an 'npm install' to install all the dependencies
+- Make sure the MongoDB server is running
+- Run 'npm run build' to create a production build for the React app
+- Run 'pm2 start prod-server.js' to start the production server
+	- If the production is already running, run 'pm2 restart prod-server' to restart it
+
 ### How to Test Code:
 ## TDD
 -   Install jest by following this link: https://jestjs.io/docs/en/getting-started
