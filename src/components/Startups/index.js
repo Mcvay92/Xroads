@@ -14,7 +14,6 @@ import StartupCard from './StartupCard';
 import teamDevLogo from '../../assets/images/team-dev.svg';
 import ideaLogo from '../../assets/images/lightbulb.svg';
 
-
 export default class Startups extends Component {
     constructor() {
         super();

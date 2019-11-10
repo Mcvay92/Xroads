@@ -1,12 +1,12 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import { Link } from "react-router-dom";
 import {
   Form,
   TextField,
@@ -15,217 +15,241 @@ import {
   ListField,
   DateField,
   SelectField,
-  SubmitField,
-} from 'react-components-form';
-import { userService } from '../../services';
-import { profileSchema } from './schemas';
-import FileField from '../common/FileField';
-import config from '../../config';
+  SubmitField
+} from "react-components-form";
+import { userService } from "../../services";
+import { profileSchema } from "./schemas";
+import FileField from "../common/FileField";
+import config from "../../config";
+import ReactGA from "react-ga";
 
-const addMemberButton = { className: 'button button-info', value: 'Add Member' };
-const addRoleButton = { className: 'button button-info', value: 'Add Role' };
-const removeMemberButton = { className: 'button button-info', value: 'Remove Memeber' };
-const removeRoleButton = { className: 'button button-info', value: 'Remove Role' };
+const addMemberButton = {
+  className: "button button-info",
+  value: "Add Member"
+};
+const addRoleButton = { className: "button button-info", value: "Add Role" };
+const removeMemberButton = {
+  className: "button button-info",
+  value: "Remove Memeber"
+};
+const removeRoleButton = {
+  className: "button button-info",
+  value: "Remove Role"
+};
 const errorClasses = {
-  className: 'alert alert-danger',
-  fieldClassName: 'has-error',
+  className: "alert alert-danger",
+  fieldClassName: "has-error"
 };
 let removeImageData = false;
-const ProfileForm = (props) => {
-  const addMemberButton = { className: 'btn btn-info mt-30 mb-20', value: 'Add Memeber' };
-  const removeMemberButton = { className: 'btn btn-info', value: 'Remove Memeber' };
-  const addRoleButton = { className: 'btn btn-info mt-30 mb-20', value: 'Add Role' };
-  const removeRoleButton = { className: 'btn btn-info', value: 'Remove Role' };
+const ProfileForm = props => {
+  const addMemberButton = {
+    className: "btn btn-info mt-30 mb-20",
+    value: "Add Memeber"
+  };
+  const removeMemberButton = {
+    className: "btn btn-info",
+    value: "Remove Memeber"
+  };
+  const addRoleButton = {
+    className: "btn btn-info mt-30 mb-20",
+    value: "Add Role"
+  };
+  const removeRoleButton = { className: "btn btn-info", value: "Remove Role" };
   const profileData = props.profiledata;
   const stageOject = config.stageSelect;
   return (
-      <div className="form-container">
-          <TextField
-              value={profileData ? profileData.team_name : null}
-              name="team_name"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Team Name"
-              placeholder="Team Name"
-              wrapperClassName="form-group"
-          />
-          <TextField
-              value={profileData ? profileData.description : null}
-              name="description"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Description"
-              placeholder="Description"
-              wrapperClassName="form-group"
-          />
-          <TextField
-              value={profileData ? profileData.contact_phone : null}
-              name="contact_phone"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Contact Phone"
-              placeholder="Contact Phone"
-              wrapperClassName="form-group"
-          />
-          <TextField
-              value={profileData ? profileData.email : null}
-              name="email"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Contact Email"
-              placeholder="Contact Email"
-              wrapperClassName="form-group"
-          />
-          <SelectField
-              value={profileData ? profileData.stage : 0}
-              name="stage"
-              errorStyles={errorClasses}
-              className="form-control"
-              options={stageOject}
-              label="Stage"
-              wrapperClassName="form-group"
-          />
-          <DateField
-              value={profileData ? new Date(profileData.start_date) : null}
-              name="start_date"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Start Date"
-              wrapperClassName="form-group"
-          />
+    <div className="form-container">
+      <TextField
+        value={profileData ? profileData.team_name : null}
+        name="team_name"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Team Name"
+        placeholder="Team Name"
+        wrapperClassName="form-group"
+      />
+      <TextField
+        value={profileData ? profileData.description : null}
+        name="description"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Description"
+        placeholder="Description"
+        wrapperClassName="form-group"
+      />
+      <TextField
+        value={profileData ? profileData.contact_phone : null}
+        name="contact_phone"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Contact Phone"
+        placeholder="Contact Phone"
+        wrapperClassName="form-group"
+      />
+      <TextField
+        value={profileData ? profileData.email : null}
+        name="email"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Contact Email"
+        placeholder="Contact Email"
+        wrapperClassName="form-group"
+      />
+      <SelectField
+        value={profileData ? profileData.stage : 0}
+        name="stage"
+        errorStyles={errorClasses}
+        className="form-control"
+        options={stageOject}
+        label="Stage"
+        wrapperClassName="form-group"
+      />
+      <DateField
+        value={profileData ? new Date(profileData.start_date) : null}
+        name="start_date"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Start Date"
+        wrapperClassName="form-group"
+      />
 
-          <div className="members-heading">
-              <b>Optional Links:</b>
-          </div>
+      <div className="members-heading">
+        <b>Optional Links:</b>
+      </div>
+      <TextField
+        value={profileData ? profileData.linkedin : null}
+        name="linkedin"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="LinkedIn"
+        wrapperClassName="form-group"
+      />
+      <TextField
+        value={profileData ? profileData.github : null}
+        name="github"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Github"
+        wrapperClassName="form-group"
+      />
+      <TextField
+        value={profileData ? profileData.facebook : null}
+        name="facebook"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Facebook"
+        wrapperClassName="form-group"
+      />
+      <TextField
+        value={profileData ? profileData.instagram : null}
+        name="instagram"
+        errorStyles={errorClasses}
+        className="form-control"
+        label="Instagram"
+        wrapperClassName="form-group"
+      />
+      <br />
+      <div className="members-heading">
+        <b>Members:</b>
+      </div>
+      <ListField
+        value={profileData ? profileData.members : null}
+        name="members"
+        addButton={addMemberButton}
+        removeButton={removeMemberButton}
+        wrapperClassName="member-wrapper"
+        className="member-inner"
+      >
+        <ObjectField>
           <TextField
-              value={profileData ? profileData.linkedin : null}
-              name="linkedin"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="LinkedIn"
-              wrapperClassName="form-group"
+            name="name"
+            label="Member Name"
+            className="form-control"
+            wrapperClassName="form-group"
           />
           <TextField
-              value={profileData ? profileData.github : null}
-              name="github"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Github"
-              wrapperClassName="form-group"
+            name="major"
+            label="Major"
+            className="form-control"
+            wrapperClassName="form-group"
           />
           <TextField
-              value={profileData ? profileData.facebook : null}
-              name="facebook"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Facebook"
-              wrapperClassName="form-group"
+            name="linkedin"
+            label="LinkedIn URL"
+            className="form-control"
+            wrapperClassName="form-group"
           />
           <TextField
-              value={profileData ? profileData.instagram : null}
-              name="instagram"
-              errorStyles={errorClasses}
-              className="form-control"
-              label="Instagram"
-              wrapperClassName="form-group"
+            value={profileData ? profileData.role : null}
+            name="role"
+            errorStyles={errorClasses}
+            className="form-control"
+            label="Member Role"
+            placeholder="Member Role"
+            wrapperClassName="form-group"
           />
-          <br />
-          <div className="members-heading">
-              <b>Members:</b>
-          </div>
-          <ListField
-              value={profileData ? profileData.members : null}
-              name="members"
-              addButton={addMemberButton}
-              removeButton={removeMemberButton}
-              wrapperClassName="member-wrapper"
-              className="member-inner"
-          >
-              <ObjectField>
-                  <TextField
-                      name="name"
-                      label="Member Name"
-                      className="form-control"
-                      wrapperClassName="form-group"
-                  />
-                  <TextField
-                      name="major"
-                      label="Major"
-                      className="form-control"
-                      wrapperClassName="form-group"
-                  />
-                  <TextField
-                      name="linkedin"
-                      label="LinkedIn URL"
-                      className="form-control"
-                      wrapperClassName="form-group"
-                  />
-                  <TextField
-                      value={profileData ? profileData.role : null}
-                      name="role"
-                      errorStyles={errorClasses}
-                      className="form-control"
-                      label="Member Role"
-                      placeholder="Member Role"
-                      wrapperClassName="form-group"
-                  />
-              </ObjectField>
-          </ListField>
+        </ObjectField>
+      </ListField>
 
-          <div className="members-heading">
-              <b>Available Roles:</b>
-          </div>
-          <ListField
-              value={profileData ? profileData.roles : null}
-              name="roles"
-              addButton={addRoleButton}
-              removeButton={removeRoleButton}
-              wrapperClassName="member-wrapper"
-              className="member-inner"
-          >
-              <ObjectField>
-                  <TextField
-                      name="name"
-                      label="Role Name"
-                      className="form-control"
-                      wrapperClassName="form-group"
-                  />
-              </ObjectField>
-          </ListField>
+      <div className="members-heading">
+        <b>Available Roles:</b>
+      </div>
+      <ListField
+        value={profileData ? profileData.roles : null}
+        name="roles"
+        addButton={addRoleButton}
+        removeButton={removeRoleButton}
+        wrapperClassName="member-wrapper"
+        className="member-inner"
+      >
+        <ObjectField>
+          <TextField
+            name="name"
+            label="Role Name"
+            className="form-control"
+            wrapperClassName="form-group"
+          />
+        </ObjectField>
+      </ListField>
 
-          {profileData && profileData.logo && (
+      {profileData &&
+        profileData.logo && (
           <div className="form-group">
-              <FileField
-                  name="logo"
-                  id="imageupload"
-                  className="form-control"
-                  label="Logo"
-                  wrapperClassName="img-outer"
-                  imgSrc={config.LOGO_IMG_PATH + profileData.logo}
-              />
-              <span id="remove-image" className="btn btn-close close" onClick={removeImage}>
-            X
-              </span>
-          </div>
-          )}
-          {(profileData == null || (profileData && !profileData.logo)) && (
-          <FileField
+            <FileField
               name="logo"
               id="imageupload"
               className="form-control"
               label="Logo"
-              wrapperClassName="form-group"
-          />
-          )}
-      </div>
+              wrapperClassName="img-outer"
+              imgSrc={config.LOGO_IMG_PATH + profileData.logo}
+            />
+            <span
+              id="remove-image"
+              className="btn btn-close close"
+              onClick={removeImage}
+            >
+              X
+            </span>
+          </div>
+        )}
+      {(profileData == null || (profileData && !profileData.logo)) && (
+        <FileField
+          name="logo"
+          id="imageupload"
+          className="form-control"
+          label="Logo"
+          wrapperClassName="form-group"
+        />
+      )}
+    </div>
   );
 };
 const removeImage = () => {
-  const imgLayer = document.getElementsByClassName('img-layer');
-  const imgOuter = document.getElementsByClassName('img-outer');
-  document.getElementById('remove-image').remove();
+  const imgLayer = document.getElementsByClassName("img-layer");
+  const imgOuter = document.getElementsByClassName("img-outer");
+  document.getElementById("remove-image").remove();
   imgLayer[0].remove();
-  imgOuter[0].classList.remove('img-outer');
+  imgOuter[0].classList.remove("img-outer");
   removeImageData = true;
 };
 class AddProfile extends React.Component {
@@ -237,10 +261,10 @@ class AddProfile extends React.Component {
       profileId: false,
       profileData: null,
       fileUploaded: false,
-      isOpen: localStorage.getItem('token_valid') !== 'true',
-      isDialog: typeof localStorage.getItem('access_token') === 'string',
+      isOpen: localStorage.getItem("token_valid") !== "true",
+      isDialog: typeof localStorage.getItem("access_token") === "string",
       errorMsg: null,
-      successMsg: null,
+      successMsg: null
     };
     this.submitProfile = this.submitProfile.bind(this);
     this.getProfilesData = this.getProfilesData.bind(this);
@@ -251,79 +275,85 @@ class AddProfile extends React.Component {
 
   handleClose() {
     this.setState({ isOpen: false });
-    this.context.router.history.push('/signin');
+    this.context.router.history.push("/signin");
   }
 
-  handleChange = name => (event) => {
+  handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
 
   tokenHandler(response) {
-    if (response && response.token == 'invalid') {
+    if (response && response.token == "invalid") {
       this.setState({
         isDialog: false,
-        isOpen: true,
+        isOpen: true
       });
     } else {
       this.setState({
         isDialog: true,
-        isOpen: false,
+        isOpen: false
       });
     }
   }
 
   getProfilesData(profileId) {
     userService.getProfile(profileId).then(
-      (response) => {
+      response => {
         this.tokenHandler(response);
         this.setState({ profileData: response.data, loading: false });
       },
-      error => this.setState({ error, loading: false }),
+      error => this.setState({ error, loading: false })
     );
   }
 
   updateProfilesData(formData, profileId) {
     userService.editProfile(formData, profileId).then(
-      (response) => {
+      response => {
         this.tokenHandler(response);
         if (response.status == true) {
-          this.setState({ successMsg: 'Profile updated successfully.', loading: false });
+          this.setState({
+            successMsg: "Profile updated successfully.",
+            loading: false
+          });
           setTimeout(() => {
-            this.context.router.history.push('/profile');
+            this.context.router.history.push("/profile");
           }, 1000);
         } else {
           this.setState({ erroMsg: response.error });
         }
       },
-      error => this.setState({ error, loading: false }),
+      error => this.setState({ error, loading: false })
     );
   }
 
   addProfilesData(formData) {
     userService.addProfile(formData).then(
-      (response) => {
+      response => {
         this.tokenHandler(response);
         if (response.status == true) {
-          this.setState({ successMsg: 'Profile added successfully.', loading: false });
+          this.setState({
+            successMsg: "Profile added successfully.",
+            loading: false
+          });
           setTimeout(() => {
-            this.context.router.history.push('/profile');
+            this.context.router.history.push("/profile");
           }, 1000);
         } else {
           let erroMsg = null;
           const { errors } = response.error;
-          Object.keys(errors).map((k) => {
+          Object.keys(errors).map(k => {
             erroMsg = errors[k].message;
           });
           this.setState({ errorMsg: erroMsg });
         }
       },
-      error => this.setState({ error, loading: false }),
+      error => this.setState({ error, loading: false })
     );
   }
 
   componentWillMount() {
     const {
-      match: { params },
+      match: { params }
     } = this.props;
     if (params.id !== undefined) {
       this.getProfilesData(params.id);
@@ -331,33 +361,39 @@ class AddProfile extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.state.profileId) {
+      ReactGA.pageview("/editProfile");
+    }
+  }
+
   submitProfile(data) {
-    const userData = JSON.parse(localStorage.getItem('user'));
+    const userData = JSON.parse(localStorage.getItem("user"));
     data.user_id = userData._id;
     const imagedata = document.querySelector('input[type="file"]').files[0];
     data.logo = imagedata;
     data = data;
     this.setState({ loading: true, successMsg: null, errorMsg: null });
     const form = new FormData();
-    form.append('team_name', data.team_name);
-    form.append('user_id', data.user_id);
-    form.append('description', data.description);
-    form.append('stage', data.stage);
-    form.append('start_date', data.start_date);
-    form.append('contact_phone', data.contact_phone);
-    form.append('email', data.email);
-    form.append('linkedin', data.linkedin);
-    form.append('github', data.github);
-    form.append('facebook', data.facebook);
-    form.append('instagram', data.instagram);
+    form.append("team_name", data.team_name);
+    form.append("user_id", data.user_id);
+    form.append("description", data.description);
+    form.append("stage", data.stage);
+    form.append("start_date", data.start_date);
+    form.append("contact_phone", data.contact_phone);
+    form.append("email", data.email);
+    form.append("linkedin", data.linkedin);
+    form.append("github", data.github);
+    form.append("facebook", data.facebook);
+    form.append("instagram", data.instagram);
     if (data && data.logo) {
-      form.append('logo', data.logo);
+      form.append("logo", data.logo);
     }
     if (data && data.logo == undefined && removeImageData) {
-      form.append('removeLogo', removeImageData);
+      form.append("removeLogo", removeImageData);
     }
-    form.append('members', JSON.stringify(data.members));
-    form.append('roles', JSON.stringify(data.roles));
+    form.append("members", JSON.stringify(data.members));
+    form.append("roles", JSON.stringify(data.roles));
     if (this.state.profileId) {
       this.updateProfilesData(form, this.state.profileId);
     } else {
@@ -368,53 +404,55 @@ class AddProfile extends React.Component {
   render() {
     const { errorMsg, successMsg } = this.state;
     return (
-        <div className="col-sm-6 margin-auto float-none">
-            <Typography gutterBottom variant="headline" component="h1">
-                {this.state.profileId ? 'Edit' : 'Add'}
-                {' '}
-Profile
-            </Typography>
-            <Form
-                schema={profileSchema}
-                encType="multipart/form-data"
-                onSubmit={data => this.submitProfile(data)}
-                className="custom-form"
-                onError={errors => console.log('error', errors)}
-            >
-                {this.state.profileData && <ProfileForm profiledata={this.state.profileData} />}
-                {!this.state.profileData && <ProfileForm profiledata={null} />}
-                {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
-                {successMsg && <div className="alert alert-success">{successMsg}</div>}
-                <div className="mt-50">
-                    <SubmitField
-                        className="btn btn-success"
-                        value={this.state.profileData ? 'Update' : 'Save'}
-                    />
-                </div>
-            </Form>
-            {(this.state.isDialog == false || this.state.isOpen == true) && (
-            <Dialog
-                open={this.state.isOpen}
-                onClose={this.handleClose}
-                aria-labelledby="draggable-dialog-title"
-            >
-                <DialogContent>
-                    <DialogContentText>
+      <div className="col-sm-6 margin-auto float-none">
+        <Typography gutterBottom variant="headline" component="h1">
+          {this.state.profileId ? "Edit" : "Add"} Profile
+        </Typography>
+        <Form
+          schema={profileSchema}
+          encType="multipart/form-data"
+          onSubmit={data => this.submitProfile(data)}
+          className="custom-form"
+          onError={errors => console.log("error", errors)}
+        >
+          {this.state.profileData && (
+            <ProfileForm profiledata={this.state.profileData} />
+          )}
+          {!this.state.profileData && <ProfileForm profiledata={null} />}
+          {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
+          {successMsg && (
+            <div className="alert alert-success">{successMsg}</div>
+          )}
+          <div className="mt-50">
+            <SubmitField
+              className="btn btn-success"
+              value={this.state.profileData ? "Update" : "Save"}
+            />
+          </div>
+        </Form>
+        {(this.state.isDialog == false || this.state.isOpen == true) && (
+          <Dialog
+            open={this.state.isOpen}
+            onClose={this.handleClose}
+            aria-labelledby="draggable-dialog-title"
+          >
+            <DialogContent>
+              <DialogContentText>
                 Please Sign up or Sign in to view your profiles.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
                 Ok
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            )}
-        </div>
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
+      </div>
     );
   }
 }
 AddProfile.contextTypes = {
-  router: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 };
 export default AddProfile;
