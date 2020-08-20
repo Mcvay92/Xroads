@@ -9,7 +9,7 @@
         "ajv": "^6.9.1",
         "aws-sdk": "^2.494.0",
         "axios": "^0.18.0",
-        "bcrypt": "^3.0.6",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.18.3",
         "chromedriver": "^2.46.0",
         "cors": "^2.8.5",
