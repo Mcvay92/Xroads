@@ -20,7 +20,7 @@
         "fs": "0.0.1-security",
         "geckodriver": "^1.15.1",
         "generate-password": "^1.4.2",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "moment": "^2.24.0",
         "mongoose": "^5.6.4",
         "mongoose-beautiful-unique-validation": "^7.1.1",
